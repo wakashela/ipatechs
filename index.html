@@ -1411,56 +1411,143 @@
         }
 
         /* PARTNERS */
+        /* ── PARTNERS SECTION ── */
         .partners {
-            padding: 5rem 0;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
+            padding: 6rem 0;
+            background: var(--dark);
+            position: relative;
+            overflow: hidden;
         }
 
-        .partners-label {
+        .partners::before,
+        .partners::after {
+            content: '';
+            position: absolute;
+            top: 0; bottom: 0;
+            width: 140px;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .partners::before {
+            left: 0;
+            background: linear-gradient(to right, var(--dark) 0%, transparent 100%);
+        }
+        .partners::after {
+            right: 0;
+            background: linear-gradient(to left, var(--dark) 0%, transparent 100%);
+        }
+
+        .partners-header {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .partners-header .label {
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .partners-kicker {
+            font-family: 'Barlow', sans-serif;
+            font-size: 0.95rem;
+            color: var(--muted);
+            letter-spacing: 0.02em;
+        }
+
+        .partners-rows {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
         }
 
         .partners-track {
             display: flex;
-            gap: 2rem;
+            gap: 1.2rem;
             overflow: hidden;
+            width: 100%;
         }
 
         .partners-list {
             display: flex;
-            gap: 2rem;
+            gap: 1.2rem;
             align-items: center;
+            flex-shrink: 0;
             width: max-content;
-            animation: ticker 40s linear infinite;
+        }
+
+        .partners-list--fwd  { animation: ticker-fwd  45s linear infinite; }
+        .partners-list--rev  { animation: ticker-rev  45s linear infinite; }
+
+        @keyframes ticker-fwd {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes ticker-rev {
+            0%   { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+
+        .partners-track:hover .partners-list {
+            animation-play-state: paused;
         }
 
         .partner-item {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            padding: 0.6rem 1.4rem;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
-            transition: background 0.3s, border-color 0.3s, transform 0.3s;
+            width: 148px;
+            height: 80px;
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 0.9rem 1.2rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+            transition: transform 0.3s cubic-bezier(0.4,0,0.2,1),
+                        box-shadow 0.3s cubic-bezier(0.4,0,0.2,1);
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .partner-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 14px;
+            border: 2px solid transparent;
+            transition: border-color 0.3s;
         }
 
         .partner-item:hover {
-            background: rgba(255, 255, 255, 0.13);
-            border-color: rgba(255, 102, 0, 0.4);
-            transform: translateY(-3px);
+            transform: translateY(-5px) scale(1.04);
+            box-shadow: 0 8px 28px rgba(255, 102, 0, 0.25), 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .partner-item:hover::after {
+            border-color: var(--orange);
         }
 
         .partner-item img {
-            height: 38px;
-            width: auto;
-            max-width: 130px;
+            width: 100%;
+            height: 44px;
             object-fit: contain;
-            filter: brightness(1);
-            transition: filter 0.3s;
+        }
+
+        .partner-item span {
+            display: block;
+            font-family: 'Barlow', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-top: 0.35rem;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
         }
 
         /* PORTFOLIO */
@@ -3151,7 +3238,7 @@
                 <!-- 09 CEMENT -->
                 <div class="industry-card reveal" onclick="openIndustryModal(8)">
                     <img src="https://images.unsplash.com/photo-1541976535096-28240a7606fb?w=600&q=80" alt="Cement"
-                        onerror="this.src='https://images.unsplash.com/photo-1590644365607-1c5a519a7a37?w=600&q=80'" />
+                        onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80'" />
                     <div class="industry-card-overlay">
                         <div class="ind-num">09</div>
                         <h4>Cement Industries</h4>
@@ -3162,8 +3249,8 @@
 
                 <!-- 10 FILTRATION -->
                 <div class="industry-card reveal" style="transition-delay:0.1s" onclick="openIndustryModal(9)">
-                    <img src="https://images.unsplash.com/photo-1581093458791-9f3c3250bb8b?w=600&q=80" alt="Filtration"
-                        onerror="this.src='https://images.unsplash.com/photo-1622322528563-f823ee2505aa?w=600&q=80'" />
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Filtration"
+                        onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80'" />
                     <div class="industry-card-overlay">
                         <div class="ind-num">10</div>
                         <h4>Filtration Industries</h4>
@@ -3310,71 +3397,82 @@
     <!-- PARTNERS -->
     <div class="partners">
         <div class="container">
-            <div class="partners-label">
+            <div class="partners-header">
                 <div class="label" style="justify-content:center">Our Global Brand Partners</div>
+                <p class="partners-kicker">Trusted by industry leaders worldwide — sourcing from 29+ premium brands</p>
             </div>
+        </div>
+
+        <div class="partners-rows">
+            <!-- ROW 1 — scrolls LEFT -->
             <div class="partners-track">
-                <div class="partners-list" id="partners-list-1">
-                    <div class="partner-item"><img src="assets/brands/abb.svg" alt="ABB" /></div>
-                    <div class="partner-item"><img src="assets/brands/siemens.svg" alt="Siemens" /></div>
-                    <div class="partner-item"><img src="assets/brands/grundfos.svg" alt="Grundfos" /></div>
-                    <div class="partner-item"><img src="assets/brands/skf.svg" alt="SKF" /></div>
-                    <div class="partner-item"><img src="assets/brands/timken.svg" alt="Timken" /></div>
-                    <div class="partner-item"><img src="assets/brands/cummins.svg" alt="Cummins" /></div>
-                    <div class="partner-item"><img src="assets/brands/endress.svg" alt="Endress+Hauser" /></div>
-                    <div class="partner-item"><img src="assets/brands/terex.svg" alt="Terex" /></div>
-                    <div class="partner-item"><img src="assets/brands/caterpillar.svg" alt="Caterpillar" /></div>
-                    <div class="partner-item"><img src="assets/brands/honeywell.svg" alt="Honeywell" /></div>
-                    <div class="partner-item"><img src="assets/brands/wika.svg" alt="WIKA" /></div>
-                    <div class="partner-item"><img src="assets/brands/omron.svg" alt="Omron" /></div>
-                    <div class="partner-item"><img src="assets/brands/rockwellautomation.svg" alt="Rockwell Automation" /></div>
-                    <div class="partner-item"><img src="assets/brands/se.svg" alt="Schneider Electric" /></div>
-                    <div class="partner-item"><img src="assets/brands/mitsubishielectric.svg" alt="Mitsubishi Electric" /></div>
-                    <div class="partner-item"><img src="assets/brands/emerson.svg" alt="Emerson" /></div>
-                    <div class="partner-item"><img src="assets/brands/pepperl-fuchs.svg" alt="Pepperl+Fuchs" /></div>
-                    <div class="partner-item"><img src="assets/brands/fluke.svg" alt="Fluke" /></div>
-                    <div class="partner-item"><img src="assets/brands/mt.svg" alt="Mettler Toledo" /></div>
-                    <div class="partner-item"><img src="assets/brands/konecranes.svg" alt="Konecranes" /></div>
-                    <div class="partner-item"><img src="assets/brands/rotork.svg" alt="Rotork" /></div>
-                    <div class="partner-item"><img src="assets/brands/volvo.svg" alt="Volvo" /></div>
-                    <div class="partner-item"><img src="assets/brands/donaldson.svg" alt="Donaldson" /></div>
-                    <div class="partner-item"><img src="assets/brands/yuken.svg" alt="Yuken" /></div>
-                    <div class="partner-item"><img src="assets/brands/lewa.svg" alt="LEWA" /></div>
-                    <div class="partner-item"><img src="assets/brands/xylem.svg" alt="Flygt by Xylem" /></div>
-                    <div class="partner-item"><img src="assets/brands/klinger.svg" alt="Klinger" /></div>
-                    <div class="partner-item"><img src="assets/brands/warom.svg" alt="Warom" /></div>
-                    <div class="partner-item"><img src="assets/brands/meccalte.svg" alt="Mecc Alte" /></div>
+                <div class="partners-list partners-list--fwd">
+                    <div class="partner-item"><img src="https://img.logo.dev/abb.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="ABB" /><span>ABB</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/siemens.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Siemens" /><span>Siemens</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/grundfos.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Grundfos" /><span>Grundfos</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/skf.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="SKF" /><span>SKF</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/timken.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Timken" /><span>Timken</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/cummins.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Cummins" /><span>Cummins</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/endress.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Endress+Hauser" /><span>Endress+Hauser</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/terex.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Terex" /><span>Terex</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/caterpillar.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Caterpillar" /><span>Caterpillar</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/honeywell.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Honeywell" /><span>Honeywell</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/wika.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="WIKA" /><span>WIKA</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/omron.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Omron" /><span>Omron</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/rockwellautomation.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Rockwell Automation" /><span>Rockwell Automation</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/se.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Schneider Electric" /><span>Schneider Electric</span></div>
+                    <!-- duplicate for seamless loop -->
+                    <div class="partner-item"><img src="https://img.logo.dev/abb.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="ABB" /><span>ABB</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/siemens.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Siemens" /><span>Siemens</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/grundfos.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Grundfos" /><span>Grundfos</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/skf.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="SKF" /><span>SKF</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/timken.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Timken" /><span>Timken</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/cummins.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Cummins" /><span>Cummins</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/endress.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Endress+Hauser" /><span>Endress+Hauser</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/terex.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Terex" /><span>Terex</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/caterpillar.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Caterpillar" /><span>Caterpillar</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/honeywell.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Honeywell" /><span>Honeywell</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/wika.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="WIKA" /><span>WIKA</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/omron.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Omron" /><span>Omron</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/rockwellautomation.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Rockwell Automation" /><span>Rockwell Automation</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/se.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Schneider Electric" /><span>Schneider Electric</span></div>
                 </div>
-                <div class="partners-list" id="partners-list-2" aria-hidden="true">
-                    <div class="partner-item"><img src="assets/brands/abb.svg" alt="ABB" /></div>
-                    <div class="partner-item"><img src="assets/brands/siemens.svg" alt="Siemens" /></div>
-                    <div class="partner-item"><img src="assets/brands/grundfos.svg" alt="Grundfos" /></div>
-                    <div class="partner-item"><img src="assets/brands/skf.svg" alt="SKF" /></div>
-                    <div class="partner-item"><img src="assets/brands/timken.svg" alt="Timken" /></div>
-                    <div class="partner-item"><img src="assets/brands/cummins.svg" alt="Cummins" /></div>
-                    <div class="partner-item"><img src="assets/brands/endress.svg" alt="Endress+Hauser" /></div>
-                    <div class="partner-item"><img src="assets/brands/terex.svg" alt="Terex" /></div>
-                    <div class="partner-item"><img src="assets/brands/caterpillar.svg" alt="Caterpillar" /></div>
-                    <div class="partner-item"><img src="assets/brands/honeywell.svg" alt="Honeywell" /></div>
-                    <div class="partner-item"><img src="assets/brands/wika.svg" alt="WIKA" /></div>
-                    <div class="partner-item"><img src="assets/brands/omron.svg" alt="Omron" /></div>
-                    <div class="partner-item"><img src="assets/brands/rockwellautomation.svg" alt="Rockwell Automation" /></div>
-                    <div class="partner-item"><img src="assets/brands/se.svg" alt="Schneider Electric" /></div>
-                    <div class="partner-item"><img src="assets/brands/mitsubishielectric.svg" alt="Mitsubishi Electric" /></div>
-                    <div class="partner-item"><img src="assets/brands/emerson.svg" alt="Emerson" /></div>
-                    <div class="partner-item"><img src="assets/brands/pepperl-fuchs.svg" alt="Pepperl+Fuchs" /></div>
-                    <div class="partner-item"><img src="assets/brands/fluke.svg" alt="Fluke" /></div>
-                    <div class="partner-item"><img src="assets/brands/mt.svg" alt="Mettler Toledo" /></div>
-                    <div class="partner-item"><img src="assets/brands/konecranes.svg" alt="Konecranes" /></div>
-                    <div class="partner-item"><img src="assets/brands/rotork.svg" alt="Rotork" /></div>
-                    <div class="partner-item"><img src="assets/brands/volvo.svg" alt="Volvo" /></div>
-                    <div class="partner-item"><img src="assets/brands/donaldson.svg" alt="Donaldson" /></div>
-                    <div class="partner-item"><img src="assets/brands/yuken.svg" alt="Yuken" /></div>
-                    <div class="partner-item"><img src="assets/brands/lewa.svg" alt="LEWA" /></div>
-                    <div class="partner-item"><img src="assets/brands/xylem.svg" alt="Flygt by Xylem" /></div>
-                    <div class="partner-item"><img src="assets/brands/klinger.svg" alt="Klinger" /></div>
-                    <div class="partner-item"><img src="assets/brands/warom.svg" alt="Warom" /></div>
-                    <div class="partner-item"><img src="assets/brands/meccalte.svg" alt="Mecc Alte" /></div>
+            </div>
+
+            <!-- ROW 2 — scrolls RIGHT -->
+            <div class="partners-track">
+                <div class="partners-list partners-list--rev">
+                    <div class="partner-item"><img src="https://img.logo.dev/mitsubishielectric.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Mitsubishi Electric" /><span>Mitsubishi Electric</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/emerson.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Emerson" /><span>Emerson</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/pepperl-fuchs.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Pepperl+Fuchs" /><span>Pepperl+Fuchs</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/fluke.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Fluke" /><span>Fluke</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/mt.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Mettler Toledo" /><span>Mettler Toledo</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/konecranes.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Konecranes" /><span>Konecranes</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/rotork.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Rotork" /><span>Rotork</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/volvo.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Volvo" /><span>Volvo</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/donaldson.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Donaldson" /><span>Donaldson</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/yuken.co.jp?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Yuken" /><span>Yuken</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/lewa.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="LEWA" /><span>LEWA</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/xylem.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Xylem" /><span>Xylem / Flygt</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/klinger.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Klinger" /><span>Klinger</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/warom.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Warom" /><span>Warom</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/meccalte.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Mecc Alte" /><span>Mecc Alte</span></div>
+                    <!-- duplicate for seamless loop -->
+                    <div class="partner-item"><img src="https://img.logo.dev/mitsubishielectric.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Mitsubishi Electric" /><span>Mitsubishi Electric</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/emerson.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Emerson" /><span>Emerson</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/pepperl-fuchs.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Pepperl+Fuchs" /><span>Pepperl+Fuchs</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/fluke.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Fluke" /><span>Fluke</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/mt.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Mettler Toledo" /><span>Mettler Toledo</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/konecranes.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Konecranes" /><span>Konecranes</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/rotork.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Rotork" /><span>Rotork</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/volvo.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Volvo" /><span>Volvo</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/donaldson.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Donaldson" /><span>Donaldson</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/yuken.co.jp?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Yuken" /><span>Yuken</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/lewa.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="LEWA" /><span>LEWA</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/xylem.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Xylem" /><span>Xylem / Flygt</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/klinger.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Klinger" /><span>Klinger</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/warom.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Warom" /><span>Warom</span></div>
+                    <div class="partner-item"><img src="https://img.logo.dev/meccalte.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Mecc Alte" /><span>Mecc Alte</span></div>
                 </div>
             </div>
         </div>

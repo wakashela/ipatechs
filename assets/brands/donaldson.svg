@@ -1,4 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100">
-  <text x="10" y="70" font-family="Arial, sans-serif" font-weight="bold" font-size="60" fill="#0181C6">Donaldson</text>
-  <path d="M320,30 Q350,10 380,30 T380,70 Q350,90 320,70" fill="none" stroke="#F25E20" stroke-width="8" />
-</svg>

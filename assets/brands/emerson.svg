@@ -1,5 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 80">
-  <circle cx="40" cy="40" r="35" fill="#004a99" />
-  <path d="M30 25 h25 v8 h-17 v8 h15 v8 h-15 v8 h17 v8 h-25 z" fill="white" />
-  <text x="85" y="55" font-family="Arial, sans-serif" font-weight="bold" font-size="42" fill="#004a99" letter-spacing="-1">EMERSON</text>
-</svg>
