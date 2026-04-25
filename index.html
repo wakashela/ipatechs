@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IPATECHS Company Limited — Industrial Parts, Engineering & Construction Equipment</title>
+    <title>Our Company — Industrial Parts, Engineering & Construction Equipment</title>
     <meta name="description"
-        content="IPATECHS Company Limited — Your global partner for industrial spare parts, engineering excellence, and construction equipment. Serving East Africa since 2019." />
+        content="IPATECHS COMPANY LIMITED — Your global partner for industrial spare parts, engineering excellence, and construction equipment. Serving East Africa since 2019." />
     <link rel="icon" type="image/x-icon" href="assets/images/logo.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -297,8 +297,8 @@
         }
 
         .nav-logo-img {
-            width: 36px;
-            height: 36px;
+            width: 72px;
+            height: 72px;
             object-fit: contain;
             filter: drop-shadow(0 0 4px rgba(255, 102, 0, 0.4));
         }
@@ -1424,29 +1424,43 @@
 
         .partners-track {
             display: flex;
-            gap: 4rem;
+            gap: 2rem;
             overflow: hidden;
         }
 
         .partners-list {
             display: flex;
-            gap: 4rem;
+            gap: 2rem;
             align-items: center;
             width: max-content;
-            animation: ticker 22s linear infinite;
+            animation: ticker 40s linear infinite;
         }
 
         .partner-item {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.8rem;
-            letter-spacing: 0.1em;
-            color: rgba(255, 255, 255, 0.15);
-            white-space: nowrap;
-            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            padding: 0.6rem 1.4rem;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            transition: background 0.3s, border-color 0.3s, transform 0.3s;
         }
 
         .partner-item:hover {
-            color: var(--orange);
+            background: rgba(255, 255, 255, 0.13);
+            border-color: rgba(255, 102, 0, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .partner-item img {
+            height: 38px;
+            width: auto;
+            max-width: 130px;
+            object-fit: contain;
+            filter: brightness(1);
+            transition: filter 0.3s;
         }
 
         /* PORTFOLIO */
@@ -2462,7 +2476,7 @@
         <div class="container">
             <div class="nav-inner">
                 <a href="#home" class="nav-logo">
-                    <img src="assets/images/logo.png" alt="IPATECHS Logo" class="nav-logo-img" />
+                    <img src="assets/images/logo.png" alt="IPATECHS Logo" class="nav-logo-img" />IPATECHS CO LTD
                 </a>
                 <ul class="nav-links">
                     <li><a href="#home">Home</a></li>
@@ -2500,7 +2514,7 @@
                     <span class="accent">ENGINEERING</span>
                 </h1>
                 <p class="hero-subtitle">
-                    IPATECHS Company Limited — globally recognized leader in industrial spare parts, engineering
+                    Our Company — globally recognized leader in industrial spare parts, engineering
                     solutions, and construction machinery. Serving East Africa and beyond since 2019.
                 </p>
                 <div class="hero-actions">
@@ -3300,33 +3314,67 @@
                 <div class="label" style="justify-content:center">Our Global Brand Partners</div>
             </div>
             <div class="partners-track">
-                <div class="partners-list">
-                    <div class="partner-item">ABB</div>
-                    <div class="partner-item">Siemens</div>
-                    <div class="partner-item">Grundfos</div>
-                    <div class="partner-item">SKF</div>
-                    <div class="partner-item">FAG</div>
-                    <div class="partner-item">TIMKEN</div>
-                    <div class="partner-item">Cummins</div>
-                    <div class="partner-item">Endress+Hauser</div>
-                    <div class="partner-item">Terex</div>
-                    <div class="partner-item">Rosemount</div>
-                    <div class="partner-item">Caterpillar</div>
-                    <div class="partner-item">Lonking</div>
-                    <div class="partner-item">PneuTech</div>
-                    <div class="partner-item">ABB</div>
-                    <div class="partner-item">Siemens</div>
-                    <div class="partner-item">Grundfos</div>
-                    <div class="partner-item">SKF</div>
-                    <div class="partner-item">FAG</div>
-                    <div class="partner-item">TIMKEN</div>
-                    <div class="partner-item">Cummins</div>
-                    <div class="partner-item">Endress+Hauser</div>
-                    <div class="partner-item">Terex</div>
-                    <div class="partner-item">Rosemount</div>
-                    <div class="partner-item">Caterpillar</div>
-                    <div class="partner-item">Lonking</div>
-                    <div class="partner-item">PneuTech</div>
+                <div class="partners-list" id="partners-list-1">
+                    <div class="partner-item"><img src="assets/brands/abb.svg" alt="ABB" /></div>
+                    <div class="partner-item"><img src="assets/brands/siemens.svg" alt="Siemens" /></div>
+                    <div class="partner-item"><img src="assets/brands/grundfos.svg" alt="Grundfos" /></div>
+                    <div class="partner-item"><img src="assets/brands/skf.svg" alt="SKF" /></div>
+                    <div class="partner-item"><img src="assets/brands/timken.svg" alt="Timken" /></div>
+                    <div class="partner-item"><img src="assets/brands/cummins.svg" alt="Cummins" /></div>
+                    <div class="partner-item"><img src="assets/brands/endress.svg" alt="Endress+Hauser" /></div>
+                    <div class="partner-item"><img src="assets/brands/terex.svg" alt="Terex" /></div>
+                    <div class="partner-item"><img src="assets/brands/caterpillar.svg" alt="Caterpillar" /></div>
+                    <div class="partner-item"><img src="assets/brands/honeywell.svg" alt="Honeywell" /></div>
+                    <div class="partner-item"><img src="assets/brands/wika.svg" alt="WIKA" /></div>
+                    <div class="partner-item"><img src="assets/brands/omron.svg" alt="Omron" /></div>
+                    <div class="partner-item"><img src="assets/brands/rockwellautomation.svg" alt="Rockwell Automation" /></div>
+                    <div class="partner-item"><img src="assets/brands/se.svg" alt="Schneider Electric" /></div>
+                    <div class="partner-item"><img src="assets/brands/mitsubishielectric.svg" alt="Mitsubishi Electric" /></div>
+                    <div class="partner-item"><img src="assets/brands/emerson.svg" alt="Emerson" /></div>
+                    <div class="partner-item"><img src="assets/brands/pepperl-fuchs.svg" alt="Pepperl+Fuchs" /></div>
+                    <div class="partner-item"><img src="assets/brands/fluke.svg" alt="Fluke" /></div>
+                    <div class="partner-item"><img src="assets/brands/mt.svg" alt="Mettler Toledo" /></div>
+                    <div class="partner-item"><img src="assets/brands/konecranes.svg" alt="Konecranes" /></div>
+                    <div class="partner-item"><img src="assets/brands/rotork.svg" alt="Rotork" /></div>
+                    <div class="partner-item"><img src="assets/brands/volvo.svg" alt="Volvo" /></div>
+                    <div class="partner-item"><img src="assets/brands/donaldson.svg" alt="Donaldson" /></div>
+                    <div class="partner-item"><img src="assets/brands/yuken.svg" alt="Yuken" /></div>
+                    <div class="partner-item"><img src="assets/brands/lewa.svg" alt="LEWA" /></div>
+                    <div class="partner-item"><img src="assets/brands/xylem.svg" alt="Flygt by Xylem" /></div>
+                    <div class="partner-item"><img src="assets/brands/klinger.svg" alt="Klinger" /></div>
+                    <div class="partner-item"><img src="assets/brands/warom.svg" alt="Warom" /></div>
+                    <div class="partner-item"><img src="assets/brands/meccalte.svg" alt="Mecc Alte" /></div>
+                </div>
+                <div class="partners-list" id="partners-list-2" aria-hidden="true">
+                    <div class="partner-item"><img src="assets/brands/abb.svg" alt="ABB" /></div>
+                    <div class="partner-item"><img src="assets/brands/siemens.svg" alt="Siemens" /></div>
+                    <div class="partner-item"><img src="assets/brands/grundfos.svg" alt="Grundfos" /></div>
+                    <div class="partner-item"><img src="assets/brands/skf.svg" alt="SKF" /></div>
+                    <div class="partner-item"><img src="assets/brands/timken.svg" alt="Timken" /></div>
+                    <div class="partner-item"><img src="assets/brands/cummins.svg" alt="Cummins" /></div>
+                    <div class="partner-item"><img src="assets/brands/endress.svg" alt="Endress+Hauser" /></div>
+                    <div class="partner-item"><img src="assets/brands/terex.svg" alt="Terex" /></div>
+                    <div class="partner-item"><img src="assets/brands/caterpillar.svg" alt="Caterpillar" /></div>
+                    <div class="partner-item"><img src="assets/brands/honeywell.svg" alt="Honeywell" /></div>
+                    <div class="partner-item"><img src="assets/brands/wika.svg" alt="WIKA" /></div>
+                    <div class="partner-item"><img src="assets/brands/omron.svg" alt="Omron" /></div>
+                    <div class="partner-item"><img src="assets/brands/rockwellautomation.svg" alt="Rockwell Automation" /></div>
+                    <div class="partner-item"><img src="assets/brands/se.svg" alt="Schneider Electric" /></div>
+                    <div class="partner-item"><img src="assets/brands/mitsubishielectric.svg" alt="Mitsubishi Electric" /></div>
+                    <div class="partner-item"><img src="assets/brands/emerson.svg" alt="Emerson" /></div>
+                    <div class="partner-item"><img src="assets/brands/pepperl-fuchs.svg" alt="Pepperl+Fuchs" /></div>
+                    <div class="partner-item"><img src="assets/brands/fluke.svg" alt="Fluke" /></div>
+                    <div class="partner-item"><img src="assets/brands/mt.svg" alt="Mettler Toledo" /></div>
+                    <div class="partner-item"><img src="assets/brands/konecranes.svg" alt="Konecranes" /></div>
+                    <div class="partner-item"><img src="assets/brands/rotork.svg" alt="Rotork" /></div>
+                    <div class="partner-item"><img src="assets/brands/volvo.svg" alt="Volvo" /></div>
+                    <div class="partner-item"><img src="assets/brands/donaldson.svg" alt="Donaldson" /></div>
+                    <div class="partner-item"><img src="assets/brands/yuken.svg" alt="Yuken" /></div>
+                    <div class="partner-item"><img src="assets/brands/lewa.svg" alt="LEWA" /></div>
+                    <div class="partner-item"><img src="assets/brands/xylem.svg" alt="Flygt by Xylem" /></div>
+                    <div class="partner-item"><img src="assets/brands/klinger.svg" alt="Klinger" /></div>
+                    <div class="partner-item"><img src="assets/brands/warom.svg" alt="Warom" /></div>
+                    <div class="partner-item"><img src="assets/brands/meccalte.svg" alt="Mecc Alte" /></div>
                 </div>
             </div>
         </div>
@@ -3470,7 +3518,7 @@
                         <img src="assets/images/logo.png"
                             alt="IPATECHS Logo" class="footer-logo-img" />
                     </a>
-                    <p>IPATECHS Company Limited — your global partner for industrial spare parts, engineering
+                    <p>Our Company — your global partner for industrial spare parts, engineering
                         excellence, and construction equipment. Serving Tanzania and East Africa since 2019.</p>
                     <div class="footer-socials">
                         <a href="#" class="social-link" aria-label="LinkedIn">
