@@ -1675,6 +1675,150 @@
             background: var(--dark3);
             overflow: hidden;
             transition: transform 0.35s;
+            cursor: pointer;
+        }
+
+        /* ── ARTICLE MODAL ── */
+        .article-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(6px);
+            z-index: 9000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+
+        .article-modal-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .article-modal {
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 780px;
+            max-height: 88vh;
+            overflow-y: auto;
+            transform: translateY(30px) scale(0.97);
+            transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+            scrollbar-width: thin;
+            scrollbar-color: var(--orange) transparent;
+        }
+
+        .article-modal-overlay.open .article-modal {
+            transform: translateY(0) scale(1);
+        }
+
+        .article-modal-hero {
+            width: 100%;
+            aspect-ratio: 16/7;
+            object-fit: cover;
+            display: block;
+            border-radius: 16px 16px 0 0;
+            filter: saturate(0.7);
+        }
+
+        .article-modal-body {
+            padding: 2.5rem;
+        }
+
+        .article-modal-cat {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--orange);
+            margin-bottom: 0.75rem;
+        }
+
+        .article-modal-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            color: var(--white);
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .article-modal-meta {
+            font-size: 0.8rem;
+            color: var(--muted);
+            display: flex;
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .article-modal-content {
+            font-family: 'Barlow', sans-serif;
+            font-size: 1rem;
+            color: rgba(240,240,240,0.82);
+            line-height: 1.85;
+        }
+
+        .article-modal-content h4 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--white);
+            margin: 2rem 0 0.75rem;
+        }
+
+        .article-modal-content p {
+            margin-bottom: 1.1rem;
+        }
+
+        .article-modal-content ul {
+            padding-left: 1.4rem;
+            margin-bottom: 1.1rem;
+        }
+
+        .article-modal-content ul li {
+            margin-bottom: 0.4rem;
+        }
+
+        .article-modal-content strong {
+            color: var(--white);
+        }
+
+        .article-modal-close {
+            position: sticky;
+            top: 1rem;
+            float: right;
+            margin: 1rem 1rem 0 0;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid var(--border);
+            color: var(--white);
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, border-color 0.2s;
+            z-index: 10;
+            flex-shrink: 0;
+        }
+
+        .article-modal-close:hover {
+            background: var(--orange);
+            border-color: var(--orange);
         }
 
         .blog-card:hover {
@@ -3542,15 +3686,15 @@
                     <div class="label reveal">News &amp; Updates</div>
                     <h2 class="section-title reveal">INDUSTRY <span>INSIGHTS</span></h2>
                 </div>
-                <a href="https://www.ipatechs.com/blog/" class="btn btn-ghost reveal" target="_blank">
+                <button onclick="openAllArticles()" class="btn btn-ghost reveal">
                     All Articles
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
-                </a>
+                </button>
             </div>
             <div class="blog-grid">
-                <div class="blog-card reveal">
+                <div class="blog-card reveal" onclick="openArticle('mechanical')">
                     <div class="blog-thumb"><img src="https://www.ipatechs.com/wp-content/uploads/2024/11/parts.png"
                             alt="Blog 1"
                             onerror="this.src='https://images.unsplash.com/photo-1558618047-f4e70de53ec2?w=600&q=80'" />
@@ -3561,7 +3705,7 @@
                         <div class="blog-meta"><span>Nov 5, 2024</span><span>11 Min Read</span></div>
                     </div>
                 </div>
-                <div class="blog-card reveal" style="transition-delay:0.15s">
+                <div class="blog-card reveal" style="transition-delay:0.15s" onclick="openArticle('electrical')">
                     <div class="blog-thumb"><img
                             src="https://www.ipatechs.com/wp-content/uploads/2024/11/eletric-motors.jpg" alt="Blog 2"
                             onerror="this.src='https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80'" />
@@ -3572,7 +3716,7 @@
                         <div class="blog-meta"><span>Nov 5, 2024</span><span>12 Min Read</span></div>
                     </div>
                 </div>
-                <div class="blog-card reveal" style="transition-delay:0.3s">
+                <div class="blog-card reveal" style="transition-delay:0.3s" onclick="openArticle('automation')">
                     <div class="blog-thumb"><img
                             src="https://www.ipatechs.com/wp-content/uploads/2024/11/abb_b_family-300x300-1.png"
                             alt="Blog 3"
@@ -3587,6 +3731,20 @@
             </div>
         </div>
     </section>
+
+    <!-- ARTICLE MODAL -->
+    <div class="article-modal-overlay" id="articleModalOverlay" onclick="handleOverlayClick(event)">
+        <div class="article-modal" id="articleModal">
+            <button class="article-modal-close" onclick="closeArticle()" aria-label="Close">✕</button>
+            <img class="article-modal-hero" id="modalHero" src="" alt="" />
+            <div class="article-modal-body">
+                <div class="article-modal-cat" id="modalCat"></div>
+                <div class="article-modal-title" id="modalTitle"></div>
+                <div class="article-modal-meta" id="modalMeta"></div>
+                <div class="article-modal-content" id="modalContent"></div>
+            </div>
+        </div>
+    </div>
 
     <!-- CTA BAND -->
     <div class="cta-band">
@@ -3937,8 +4095,171 @@
         // ACTIVE NAV
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('.nav-links a');
-        const activeObs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { navLinks.forEach(a => a.style.color = ''); const active = document.querySelector(`.nav-links a[href="#${e.target.id}"]`); if (active) active.style.color = 'var(--white)'; } }); }, { threshold: 0.4 });
+        const activeObs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { navLinks.forEach(a => a.style.color = ''); const active = document.querySelector('.nav-links a[href="#' + e.target.id + '"]'); if (active) active.style.color = 'var(--white)'; } }); }, { threshold: 0.4 });
         sections.forEach(s => activeObs.observe(s));
+    </script>
+    <script>
+        // ── ARTICLE DATA ──
+        const articles = {
+            mechanical: {
+                cat: 'Mechanical Engineering',
+                title: 'Heavy-Duty Solutions: Mechanical Engineering Products for Tough Industrial Needs',
+                date: 'Nov 5, 2024',
+                read: '11 Min Read',
+                hero: 'https://www.ipatechs.com/wp-content/uploads/2024/11/parts.png',
+                heroBak: 'https://images.unsplash.com/photo-1558618047-f4e70de53ec2?w=780&q=80',
+                content: `
+                    <p>In the heart of every industrial operation lies a network of mechanical components working in perfect harmony. At IPATECHS, we understand that when these components fail, everything stops. That's why we source and supply only the highest-grade mechanical engineering products designed to endure the most demanding conditions across East Africa and beyond.</p>
+
+                    <h4>Bearings & Power Transmission</h4>
+                    <p>Our bearing portfolio spans the full spectrum of industrial needs — from deep groove ball bearings for high-speed electric motors to heavy-duty spherical roller bearings for mining crushers and conveyor systems. We stock premium brands including <strong>SKF, FAG (Schaeffler), and Timken</strong>, ensuring you get components with certified traceability and guaranteed performance life.</p>
+                    <ul>
+                        <li>Deep groove, angular contact, and cylindrical roller bearings</li>
+                        <li>Spherical and tapered roller bearings for shock-load environments</li>
+                        <li>Pillow block and flange units for easy mounting</li>
+                        <li>Coupling units, pulleys, and belt drives</li>
+                    </ul>
+
+                    <h4>Seals, Gaskets & Fluid Control</h4>
+                    <p>Leaks cost money. Our sealing solutions from <strong>Klinger and Parker</strong> are engineered to perform under extreme pressure, temperature fluctuations, and chemical exposure. Whether it's a rotary shaft seal on a centrifugal pump or a custom gasket set for a heat exchanger, our technical team will specify the right product for your application.</p>
+
+                    <h4>Gearboxes & Drive Systems</h4>
+                    <p>We supply helical, bevel-helical, and worm gearboxes suitable for conveyors, agitators, extruders, and heavy process machinery. Our drive systems are selected to match your torque and speed requirements precisely, reducing energy consumption and extending service intervals.</p>
+
+                    <h4>Why IPATECHS for Mechanical Parts?</h4>
+                    <p>With over 5 years of specialist experience supplying Tanzania's cement, mining, water treatment, and manufacturing sectors, our technical sales team doesn't just sell parts — we solve problems. We offer same-day quotations, competitive lead times, and on-site technical support where needed.</p>
+                    <p>Contact us today for a free technical consultation on your mechanical engineering needs.</p>
+                `
+            },
+            electrical: {
+                cat: 'Electrical Engineering',
+                title: 'Power Up Your Operations with IPATECHS Electrical Engineering Components',
+                date: 'Nov 5, 2024',
+                read: '12 Min Read',
+                hero: 'https://www.ipatechs.com/wp-content/uploads/2024/11/eletric-motors.jpg',
+                heroBak: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=780&q=80',
+                content: `
+                    <p>Reliable electrical infrastructure is the backbone of any productive industrial facility. Power interruptions, motor failures, or switchgear malfunctions don't just cause downtime — they create safety risks and cost your operation thousands. IPATECHS provides a comprehensive range of electrical engineering components to keep your plant running safely and efficiently.</p>
+
+                    <h4>Electric Motors & Variable Speed Drives</h4>
+                    <p>We supply AC and DC motors from leading manufacturers including <strong>ABB, Siemens, and Mitsubishi Electric</strong> — covering IEC frame sizes from fractional kW up to multi-megawatt industrial drives. Our variable frequency drives (VFDs) enable precise speed control, dramatically reducing energy consumption in pump, fan, and compressor applications.</p>
+                    <ul>
+                        <li>IE3 and IE4 high-efficiency motors</li>
+                        <li>Explosion-proof motors for hazardous areas (ATEX/IECEx certified)</li>
+                        <li>Soft starters and direct-on-line starters</li>
+                        <li>Variable frequency drives (VFDs) from 0.37kW to 2,800kW</li>
+                    </ul>
+
+                    <h4>Switchgear & Protection Equipment</h4>
+                    <p>Protecting your electrical assets starts with the right switchgear. We supply moulded case circuit breakers (MCCBs), miniature circuit breakers (MCBs), contactors, and overload relays from <strong>ABB, Schneider Electric, and Rockwell Automation</strong>. Our protection devices are sized and coordinated to your system's fault levels.</p>
+
+                    <h4>Cables, Conduits & Cable Management</h4>
+                    <p>A well-organised cable infrastructure reduces maintenance time and improves safety. We supply armoured and unarmoured power cables, control cables, cable trays, conduit systems, and terminal blocks. All our cable products meet IEC standards and are rated for the temperature and chemical environments common in East African industry.</p>
+
+                    <h4>Transformers & Power Quality</h4>
+                    <p>From distribution transformers to power factor correction capacitor banks and harmonic filters, IPATECHS helps you optimise your power quality, reduce utility penalties, and protect sensitive equipment from voltage fluctuations common in the Tanzanian grid.</p>
+
+                    <p>Speak to our electrical engineering specialists for a full site survey and component specification service.</p>
+                `
+            },
+            automation: {
+                cat: 'Automation & Control',
+                title: 'Enhancing Efficiency with IPATECHS Automation & Control Solutions',
+                date: 'Feb 7, 2024',
+                read: '13 Min Read',
+                hero: 'https://www.ipatechs.com/wp-content/uploads/2024/11/abb_b_family-300x300-1.png',
+                heroBak: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=780&q=80',
+                content: `
+                    <p>The fourth industrial revolution is no longer a distant concept — it is reshaping factories, water treatment plants, and mining operations across East Africa right now. IPATECHS bridges the gap between global automation technology and local industrial realities, supplying the instruments, controllers, and sensors that make smart operations possible.</p>
+
+                    <h4>Process Instrumentation</h4>
+                    <p>Accurate measurement is the foundation of process control. We supply a full range of field instruments from world-class manufacturers including <strong>Endress+Hauser, WIKA, Pepperl+Fuchs, and Honeywell</strong>:</p>
+                    <ul>
+                        <li>Flow meters — electromagnetic, vortex, Coriolis, and ultrasonic</li>
+                        <li>Pressure transmitters and gauges for up to 1,000 bar</li>
+                        <li>Level measurement — radar, guided wave, ultrasonic, and hydrostatic</li>
+                        <li>Temperature sensors — thermocouples, RTDs, and transmitters</li>
+                        <li>pH, conductivity, and analytical instruments</li>
+                    </ul>
+
+                    <h4>PLCs, HMIs & SCADA Systems</h4>
+                    <p>From simple relay logic replacements to complex distributed control systems, our automation team specifies and supplies <strong>Siemens SIMATIC, Allen-Bradley / Rockwell Automation, and Omron</strong> programmable logic controllers. We pair these with intuitive HMI panels and SCADA software to give your operators full visibility of the process from a single screen.</p>
+
+                    <h4>Safety Systems & Hazardous Area Equipment</h4>
+                    <p>Industrial safety is non-negotiable. We supply safety-rated PLCs, emergency stop systems, safety light curtains, and intrinsically safe field devices from <strong>Pepperl+Fuchs and Warom</strong> for use in Zone 1 and Zone 2 hazardous areas — essential for refineries, chemical plants, and flour mills.</p>
+
+                    <h4>Valve Actuation & Control</h4>
+                    <p>Our <strong>Rotork and Emerson</strong> electric, pneumatic, and hydraulic actuators provide reliable valve control in the most demanding applications — from high-cycle on-off duties to modulating control on critical process lines. We also supply positioners, limit switches, and solenoid valve manifolds.</p>
+
+                    <h4>The IPATECHS Automation Advantage</h4>
+                    <p>We don't just supply hardware. Our team provides loop tuning, commissioning support, and operator training to ensure your automation investment delivers measurable results — reduced waste, lower energy consumption, improved product quality, and safer working conditions.</p>
+                    <p>Get in touch to discuss how automation can transform your operation.</p>
+                `
+            }
+        };
+
+        function openArticle(key) {
+            const a = articles[key];
+            if (!a) return;
+            const hero = document.getElementById('modalHero');
+            hero.src = a.hero;
+            hero.onerror = () => { hero.src = a.heroBak; };
+            document.getElementById('modalCat').textContent = a.cat;
+            document.getElementById('modalTitle').textContent = a.title;
+            document.getElementById('modalMeta').innerHTML = `<span>${a.date}</span><span>·</span><span>${a.read}</span>`;
+            document.getElementById('modalContent').innerHTML = a.content;
+            document.getElementById('articleModal').scrollTop = 0;
+            document.getElementById('articleModalOverlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeArticle() {
+            document.getElementById('articleModalOverlay').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function handleOverlayClick(e) {
+            if (e.target === document.getElementById('articleModalOverlay')) closeArticle();
+        }
+
+        function openAllArticles() {
+            var cards = '';
+            var keys = Object.keys(articles);
+            for (var i = 0; i < keys.length; i++) {
+                var key = keys[i];
+                var art = articles[key];
+                cards += '<div'
+                    + ' onclick="openArticle(\'' + key + '\')"'
+                    + ' onmouseover="this.style.borderColor=\'var(--orange)\'"'
+                    + ' onmouseout="this.style.borderColor=\'var(--border)\'"'
+                    + ' style="background:var(--dark4);border:1px solid var(--border);border-radius:10px;'
+                    + 'padding:1.2rem 1.5rem;cursor:pointer;transition:border-color 0.2s;margin-bottom:0.2rem;">'
+                    + '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:0.7rem;font-weight:700;'
+                    + 'letter-spacing:0.2em;text-transform:uppercase;color:var(--orange);margin-bottom:0.4rem;">'
+                    + art.cat + '</div>'
+                    + '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:1.1rem;font-weight:700;'
+                    + 'text-transform:uppercase;color:var(--white);margin-bottom:0.5rem;">'
+                    + art.title + '</div>'
+                    + '<div style="font-size:0.78rem;color:var(--muted);">'
+                    + art.date + ' &middot; ' + art.read + '</div>'
+                    + '</div>';
+            }
+            var content = '<p>Browse our full collection of industry insights, technical guides, and product spotlights from the IPATECHS team.</p>'
+                + '<div style="display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem;">'
+                + cards
+                + '</div>';
+
+            document.getElementById('modalHero').src = 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=780&q=80';
+            document.getElementById('modalCat').textContent = 'All Articles';
+            document.getElementById('modalTitle').textContent = 'Industry Insights';
+            document.getElementById('modalMeta').innerHTML = '';
+            document.getElementById('modalContent').innerHTML = content;
+            document.getElementById('articleModal').scrollTop = 0;
+            document.getElementById('articleModalOverlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeArticle(); });
     </script>
 </body>
 
