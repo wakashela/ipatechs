@@ -47,37 +47,11 @@
             background: var(--dark);
             color: var(--light);
             overflow-x: hidden;
-            cursor: none;
+            cursor: auto;
         }
 
         /* CURSOR */
-        #cursor {
-            width: 10px;
-            height: 10px;
-            background: var(--orange);
-            border-radius: 50%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: transform 0.1s, width 0.2s, height 0.2s;
-        }
-
-        #cursor-ring {
-            width: 36px;
-            height: 36px;
-            border: 1px solid rgba(255, 102, 0, 0.5);
-            border-radius: 50%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 9998;
-            transform: translate(-50%, -50%);
-            transition: transform 0.15s ease, width 0.3s, height 0.3s;
-        }
+        #cursor, #cursor-ring { display: none; }
 
         /* SCROLLBAR */
         ::-webkit-scrollbar {
@@ -160,7 +134,7 @@
             text-transform: uppercase;
             padding: 0.9rem 2rem;
             text-decoration: none;
-            cursor: none;
+            cursor: auto;
             border: none;
             outline: none;
             transition: var(--transition);
@@ -364,7 +338,7 @@
             display: none;
             flex-direction: column;
             gap: 5px;
-            cursor: none;
+            cursor: auto;
             padding: 4px;
         }
 
@@ -874,7 +848,7 @@
             border: none;
             color: var(--muted);
             padding: 0.75rem 1.5rem 0.75rem 0;
-            cursor: none;
+            cursor: auto;
             position: relative;
             transition: color 0.2s;
         }
@@ -1235,7 +1209,7 @@
             position: relative;
             overflow: hidden;
             aspect-ratio: 3/4;
-            cursor: none;
+            cursor: auto;
             clip-path: polygon(0 0, 90% 0, 100% 10%, 100% 100%, 10% 100%, 0 90%);
         }
 
@@ -1387,7 +1361,7 @@
             border: 1px solid var(--border);
             color: var(--muted);
             padding: 0.6rem;
-            cursor: none;
+            cursor: auto;
             transition: var(--transition);
             clip-path: polygon(0 0, 95% 0, 100% 20%, 100% 100%, 5% 100%, 0 80%);
         }
@@ -1569,7 +1543,7 @@
         .portfolio-item {
             position: relative;
             overflow: hidden;
-            cursor: none;
+            cursor: auto;
             clip-path: polygon(0 0, 97% 0, 100% 3%, 100% 100%, 3% 100%, 0 97%);
         }
 
@@ -2154,7 +2128,7 @@
             border: 1px solid var(--border);
             background: none;
             color: var(--muted);
-            cursor: none;
+            cursor: auto;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -2246,7 +2220,7 @@
             background: var(--orange);
             color: #000;
             border: none;
-            cursor: none;
+            cursor: auto;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -4028,17 +4002,6 @@
 
         function closeIndustryModal() { document.getElementById('industryModalOverlay').classList.remove('open'); }
         function closeIndustryModalOutside(e) { if (e.target === document.getElementById('industryModalOverlay')) closeIndustryModal(); }
-
-        // CURSOR
-        const cursor = document.getElementById('cursor'), cursorRing = document.getElementById('cursor-ring');
-        let mx = 0, my = 0, rx = 0, ry = 0;
-        document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx + 'px'; cursor.style.top = my + 'px'; });
-        const animCursor = () => { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; cursorRing.style.left = rx + 'px'; cursorRing.style.top = ry + 'px'; requestAnimationFrame(animCursor); };
-        animCursor();
-        document.querySelectorAll('a,button').forEach(el => {
-            el.addEventListener('mouseenter', () => { cursor.style.width = '20px'; cursor.style.height = '20px'; cursorRing.style.width = '50px'; cursorRing.style.height = '50px'; });
-            el.addEventListener('mouseleave', () => { cursor.style.width = '10px'; cursor.style.height = '10px'; cursorRing.style.width = '36px'; cursorRing.style.height = '36px'; });
-        });
 
         // NAV SCROLL
         const navbar = document.getElementById('navbar');
