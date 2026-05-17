@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>IPATECHS Company Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,400&family=Barlow:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+<style>
+/* ─── PALETTE ─── */
+:root {
+  --cream:   #F7F5F1;      /* warm page base — premium linen */
+  --cream2:  #EFECEA;      /* slightly deeper cream for alternating panels */
+  --white:   #FFFFFF;      /* pure white cards */
+  --orange:  #FF6600;      /* brand accent — primary */
+  --orange2: #FF8800;
+  --orange-lt: #FFF1E8;    /* very light orange tint */
+  --ink:     #111111;      /* main headings */
+  --ink2:    #2A2A2A;      /* card headings */
+  --body:    #4C4A47;      /* body text */
+  --muted:   #8A8884;      /* secondary text */
+  --border:  #E2DED9;      /* dividers */
+  --dark:    #141414;      /* dark accent areas */
+  --dark2:   #1E1C1A;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: #D8D4CE;
+  margin: 0; padding: 24px 0;
+}
+
+/* ─── PAGE SHELL ─── */
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+  margin: 0 auto 32px;
+  background: var(--cream);
+}
+
+/* ═══════════════════════════════════════
+   UTILITY
+═══════════════════════════════════════ */
+.lbl {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--orange);
+  display: flex; align-items: center; gap: 8px;
+}
+.lbl::before {
+  content: ''; width: 18px; height: 2px;
+  background: var(--orange); display: block; flex-shrink: 0;
+}
+.lbl-center { justify-content: center; }
+.lbl-center::before { display: none; }
+.lbl-center::after {
+  content: ''; width: 18px; height: 2px;
+  background: var(--orange); display: block; flex-shrink: 0;
+}
+
+.sec-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  line-height: 0.93;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+}
+.sec-title span { color: var(--orange); }
+.sec-title .outline {
+  -webkit-text-stroke: 1.5px var(--ink);
+  color: transparent;
+}
+
+/* ═══════════════════════════════════════
+   PAGE 1 — FRONT COVER
+═══════════════════════════════════════ */
+.cover {
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  min-height: 297mm;
+}
+
+/* ── TOP STRIPE: dark+image ── */
+.cov-top-zone {
+  position: relative;
+  height: 112mm;
+  background: var(--dark);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.cov-top-img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  opacity: 0.28;
+  filter: saturate(0.25) contrast(1.1);
+}
+
+/* diagonal cut — white triangle at bottom of dark zone */
+.cov-top-cut {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 28mm;
+  background: var(--white);
+  clip-path: polygon(0 100%, 100% 0, 100% 100%);
+}
+
+/* orange bold stripe running left edge */
+.cov-left-stripe {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 8mm;
+  background: var(--orange);
+  z-index: 3;
+}
+
+/* top nav bar */
+.cov-nav {
+  position: absolute;
+  top: 0; left: 8mm; right: 0;
+  z-index: 4;
+  padding: 11mm 14mm 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.cov-logo {
+  display: flex; align-items: center; gap: 9px;
+}
+
+.cov-logo-mark {
+  width: 38px; height: 38px;
+  background: var(--orange);
+  clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 20% 100%, 0 80%);
+  display: flex; align-items: center; justify-content: center;
+}
+.cov-logo-mark svg { width: 19px; height: 19px; color: #000; }
+
+.cov-logo-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.08em;
+  color: var(--white);
+  line-height: 1;
+}
+.cov-logo-text .org { color: var(--orange); }
+
+.cov-badge {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.18);
+  padding: 5px 10px;
+  margin-top: 3px;
+}
+
+/* dark zone headline */
+.cov-dark-hl {
+  position: absolute;
+  bottom: 28mm; left: 8mm; right: 0;
+  z-index: 4;
+  padding: 0 14mm 8mm;
+}
+
+.cov-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--orange);
+  display: flex; align-items: center; gap: 9px;
+  margin-bottom: 8px;
+}
+.cov-eyebrow::before {
+  content: ''; width: 24px; height: 2px; background: var(--orange); display: block;
+}
+
+.cov-h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 74px;
+  line-height: 0.88;
+  letter-spacing: 0.025em;
+  color: var(--white);
+}
+.cov-h1 .outline-w {
+  -webkit-text-stroke: 1.5px rgba(255,255,255,0.55);
+  color: transparent;
+}
+.cov-h1 .accent { color: var(--orange); }
+
+/* ── WHITE BODY ZONE ── */
+.cov-white-zone {
+  flex: 1;
+  padding: 7mm 14mm 0 22mm;  /* extra left pad to clear orange stripe */
+  display: flex;
+  flex-direction: column;
+  gap: 7mm;
+}
+
+.cov-desc {
+  max-width: 148mm;
+}
+
+.cov-desc p {
+  font-size: 10px;
+  font-weight: 300;
+  line-height: 1.80;
+  color: var(--body);
+}
+
+/* orange rule divider */
+.orange-rule {
+  height: 3px;
+  background: var(--orange);
+  width: 40px;
+  margin-bottom: 8px;
+}
+
+/* STAT STRIP */
+.cov-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.cov-stat {
+  text-align: center;
+  padding: 12px 8px;
+  border-right: 1px solid var(--border);
+  background: var(--white);
+}
+.cov-stat:last-child { border-right: none; }
+
+.cov-stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--ink);
+}
+.cov-stat-num span { color: var(--orange); }
+
+.cov-stat-lbl {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 7.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+/* KEY TAGS */
+.cov-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.cov-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 7.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  color: var(--ink2);
+  background: var(--cream);
+}
+
+.cov-tag.active {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #fff;
+}
+
+/* BOTTOM FOOTER BAND */
+.cov-footer {
+  background: var(--dark);
+  padding: 10px 14mm 10px 22mm;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.cov-footer-txt {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  display: flex; align-items: center; gap: 8px;
+}
+
+.cov-footer-txt strong { color: var(--orange); font-weight: 700; }
+
+.cov-footer-dot {
+  display: inline-block;
+  width: 4px; height: 4px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+}
+
+.cov-footer-web {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+
+/* ═══════════════════════════════════════
+   PAGE 2 — INSIDE LEFT (ABOUT)
+═══════════════════════════════════════ */
+.pg2 {
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  min-height: 297mm;
+  position: relative;
+}
+
+/* orange vertical rule on left */
+.pg2-vline {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 5mm;
+  background: var(--orange);
+}
+
+/* top hero image */
+.pg2-hero {
+  position: relative;
+  height: 64mm;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.pg2-hero img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  filter: saturate(0.55) brightness(0.82);
+}
+
+.pg2-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(255,102,0,0.12) 0%,
+    transparent 55%
+  ),
+  linear-gradient(
+    to bottom,
+    transparent 30%,
+    rgba(247,245,241,0.92) 100%
+  );
+}
+
+.pg2-hero-label {
+  position: absolute;
+  bottom: 0; left: 5mm;
+  padding: 0 14mm 10mm;
+}
+
+/* BODY */
+.pg2-body {
+  flex: 1;
+  padding: 9mm 13mm 10mm 19mm;
+  display: flex;
+  flex-direction: column;
+  gap: 8mm;
+}
+
+/* INTRO */
+.pg2-intro .sec-title { margin-top: 5px; margin-bottom: 10px; }
+
+.pg2-intro p {
+  font-size: 9.5px;
+  font-weight: 300;
+  line-height: 1.85;
+  color: var(--body);
+}
+.pg2-intro p + p { margin-top: 7px; }
+
+/* ORANGE HIGHLIGHT BOX */
+.pg2-highlight {
+  background: var(--orange);
+  padding: 13px 16px;
+  clip-path: polygon(0 0, 97% 0, 100% 8%, 100% 100%, 3% 100%, 0 92%);
+}
+
+.pg2-highlight p {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  color: #000;
+  font-style: italic;
+}
+
+/* MISSION + VISION CARDS */
+.mv-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+
+.mv-card {
+  background: var(--white);
+  padding: 12px 14px;
+  border-top: 3px solid var(--orange);
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.mv-card h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+  margin-bottom: 7px;
+}
+
+.mv-card p {
+  font-size: 8.5px;
+  font-weight: 300;
+  line-height: 1.72;
+  color: var(--body);
+}
+
+/* CORE VALUES */
+.core-values h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 9px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--border);
+}
+
+.val-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+
+.val-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 9px 10px;
+  background: var(--white);
+  border: 1px solid var(--border);
+}
+
+.val-ico {
+  width: 28px; height: 28px; flex-shrink: 0;
+  background: var(--orange-lt);
+  border: 1px solid rgba(255,102,0,0.28);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--orange);
+  clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 20% 100%, 0 80%);
+}
+.val-ico svg { width: 13px; height: 13px; }
+
+.val-info h5 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink2);
+  margin-bottom: 2px;
+}
+.val-info p {
+  font-size: 7.5px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* STATS STRIP */
+.pg2-stats {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  background: var(--dark);
+  overflow: hidden;
+}
+
+.pg2-stat {
+  text-align: center;
+  padding: 11px 6px;
+  border-right: 1px solid rgba(255,255,255,0.06);
+}
+.pg2-stat:last-child { border-right: none; }
+
+.pg2-stat .n {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--white);
+}
+.pg2-stat .n span { color: var(--orange); }
+
+.pg2-stat .l {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.38);
+  margin-top: 2px;
+}
+
+
+/* ═══════════════════════════════════════
+   PAGE 3 — INSIDE RIGHT (SERVICES)
+═══════════════════════════════════════ */
+.pg3 {
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  min-height: 297mm;
+  padding: 13mm 13mm 10mm;
+  gap: 8mm;
+  position: relative;
+}
+
+/* right side orange stripe */
+.pg3-vline {
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 5mm;
+  background: var(--orange);
+}
+
+.pg3-header { padding-right: 8mm; }
+
+/* SERVICES 3×3 */
+.svc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 7px;
+  padding-right: 8mm;
+}
+
+.svc {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  padding: 11px 10px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+/* numbered accent colour rotation */
+.svc:nth-child(3n+1) { border-top: 3px solid var(--orange); }
+.svc:nth-child(3n+2) { border-top: 3px solid var(--ink); }
+.svc:nth-child(3n)   { border-top: 3px solid var(--orange); }
+
+.svc-n {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 30px;
+  line-height: 1;
+  color: rgba(0,0,0,0.05);
+  position: absolute;
+  right: 6px; top: 3px;
+}
+
+.svc-ico {
+  width: 28px; height: 28px;
+  background: var(--orange-lt);
+  border: 1px solid rgba(255,102,0,0.25);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--orange);
+  clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 20% 100%, 0 80%);
+  margin-bottom: 7px;
+}
+.svc-ico svg { width: 13px; height: 13px; }
+
+.svc h4 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 4px;
+  line-height: 1.25;
+}
+
+.svc p {
+  font-size: 7.5px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+/* BRAND PARTNERS */
+.brands-sec { padding-right: 8mm; }
+
+.brands-sec h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+.brands-sec h3::before {
+  content: ''; width: 18px; height: 2px; background: var(--orange); display: block;
+}
+
+.brand-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+}
+
+.brand-box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 7px 5px 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.brand-box img {
+  height: 22px;
+  width: 100%;
+  object-fit: contain;
+}
+
+.brand-box span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 6.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* INDUSTRIES */
+.ind-sec { padding-right: 8mm; }
+
+.ind-sec h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+.ind-sec h3::before {
+  content: ''; width: 18px; height: 2px; background: var(--orange); display: block;
+}
+
+.ind-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.ind-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 7.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  color: var(--ink2);
+}
+
+.ind-tag.hl {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--white);
+}
+
+
+/* ═══════════════════════════════════════
+   PAGE 4 — BACK COVER
+═══════════════════════════════════════ */
+.pg4 {
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  min-height: 297mm;
+  position: relative;
+}
+
+/* left orange stripe */
+.pg4-vline {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 5mm;
+  background: var(--orange);
+}
+
+/* hero image strip */
+.pg4-hero {
+  position: relative;
+  height: 60mm;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.pg4-hero img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  filter: saturate(0.5) brightness(0.75);
+}
+
+.pg4-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom, transparent 20%, var(--cream) 100%
+  ),
+  linear-gradient(
+    to right,
+    rgba(255,102,0,0.15) 0%,
+    transparent 60%
+  );
+}
+
+.pg4-hero-tag {
+  position: absolute;
+  bottom: 14mm; left: 5mm;
+  padding: 0 13mm 0;
+  z-index: 3;
+}
+
+/* BODY */
+.pg4-body {
+  flex: 1;
+  padding: 6mm 13mm 0 19mm;
+  display: flex;
+  flex-direction: column;
+  gap: 7mm;
+}
+
+/* WHY GRID */
+.why-hdr h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 9px;
+  padding-bottom: 7px;
+  border-bottom: 2px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+.why-hdr h3::before {
+  content: ''; width: 18px; height: 2px; background: var(--orange); display: block;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.why-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--orange);
+  padding: 10px 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+}
+
+.why-n {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  line-height: 1;
+  color: rgba(255,102,0,0.2);
+  flex-shrink: 0;
+  width: 22px;
+  text-align: right;
+  margin-top: -1px;
+}
+
+.why-txt h5 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink2);
+  margin-bottom: 3px;
+}
+.why-txt p {
+  font-size: 7.5px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* CONTACT BLOCK — DARK */
+.contact-blk {
+  background: var(--dark);
+  clip-path: polygon(0 0, 98% 0, 100% 5%, 100% 100%, 2% 100%, 0 95%);
+  padding: 14px 18px 14px 20px;
+}
+
+.contact-blk-hdr {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.contact-blk-hdr h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  letter-spacing: 0.05em;
+  color: var(--white);
+}
+.contact-blk-hdr h3 span { color: var(--orange); }
+
+.contact-blk-hdr .orange-pill {
+  background: var(--orange);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #000;
+  padding: 3px 8px;
+  margin-left: auto;
+}
+
+.ci-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+}
+
+.ci-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+}
+
+.ci-ico {
+  width: 26px; height: 26px;
+  flex-shrink: 0;
+  background: rgba(255,102,0,0.12);
+  border: 1px solid rgba(255,102,0,0.25);
+  display: flex; align-items: center; justify-content: center;
+  clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 20% 100%, 0 80%);
+  color: var(--orange);
+}
+.ci-ico svg { width: 12px; height: 12px; }
+
+.ci-txt .ci-lbl {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.38);
+  margin-bottom: 2px;
+}
+.ci-txt .ci-val {
+  font-family: 'Barlow', sans-serif;
+  font-size: 9px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: rgba(255,255,255,0.88);
+}
+.ci-txt .ci-val strong {
+  font-weight: 600;
+  color: var(--white);
+}
+
+/* FOOTER */
+.pg4-footer {
+  background: var(--orange);
+  padding: 8px 13mm 8px 19mm;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.pg4-footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 19px;
+  letter-spacing: 0.06em;
+  color: #000;
+}
+
+.pg4-footer-mid {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.6);
+  text-align: center;
+}
+
+.pg4-footer-yr {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.5);
+}
+
+
+/* ─── PRINT ─── */
+@media print {
+  body { background: none; padding: 0; }
+  .page { margin: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- ████  PAGE 1 — FRONT COVER  ████ -->
+<div class="page cover">
+
+  <!-- DARK TOP ZONE -->
+  <div class="cov-top-zone">
+    <img class="cov-top-img"
+         src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=900&q=88&auto=format"
+         alt="Industrial"/>
+    <div class="cov-top-cut"></div>
+    <div class="cov-left-stripe"></div>
+
+    <!-- NAV -->
+    <div class="cov-nav">
+      <div class="cov-logo">
+        <div class="cov-logo-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="cov-logo-text">IPA<span class="org">TECHS</span> CO LTD</div>
+      </div>
+      <div class="cov-badge">Company Profile · 2025</div>
+    </div>
+
+    <!-- HEADLINE in dark zone -->
+    <div class="cov-dark-hl">
+      <div class="cov-eyebrow">Est. 2019 · Dar es Salaam, Tanzania</div>
+      <h1 class="cov-h1">
+        YOUR GLOBAL<br>
+        <span class="outline-w">PARTNER</span> IN<br>
+        <span class="accent">ENGINEERING</span>
+      </h1>
+    </div>
+  </div>
+
+  <!-- WHITE BODY -->
+  <div class="cov-white-zone">
+    <div class="cov-desc">
+      <div class="orange-rule"></div>
+      <p>
+        IPATECHS COMPANY LIMITED is East Africa's trusted supplier of industrial spare
+        parts, precision engineering solutions, and heavy construction equipment. With
+        over 29 global brand partnerships and deep expertise across 12 industries, we
+        connect world-class manufacturers to the businesses that depend on them.
+      </p>
+    </div>
+
+    <!-- STATS -->
+    <div class="cov-stats">
+      <div class="cov-stat">
+        <div class="cov-stat-num">6<span>+</span></div>
+        <div class="cov-stat-lbl">Years Experience</div>
+      </div>
+      <div class="cov-stat">
+        <div class="cov-stat-num">150<span>+</span></div>
+        <div class="cov-stat-lbl">Clients Served</div>
+      </div>
+      <div class="cov-stat">
+        <div class="cov-stat-num">29<span>+</span></div>
+        <div class="cov-stat-lbl">Global Brands</div>
+      </div>
+      <div class="cov-stat">
+        <div class="cov-stat-num">12</div>
+        <div class="cov-stat-lbl">Industries</div>
+      </div>
+    </div>
+
+    <!-- SERVICE TAGS -->
+    <div class="cov-tag-row">
+      <span class="cov-tag active">Industrial Spare Parts</span>
+      <span class="cov-tag active">Mechanical Engineering</span>
+      <span class="cov-tag active">Electrical Engineering</span>
+      <span class="cov-tag">Petroleum &amp; Gas</span>
+      <span class="cov-tag">Power &amp; Energy</span>
+      <span class="cov-tag">Mining Solutions</span>
+      <span class="cov-tag">Automation &amp; Control</span>
+      <span class="cov-tag">Construction Sector</span>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="cov-footer">
+    <div class="cov-footer-txt">
+      <strong>IPATECHS</strong>
+      <span class="cov-footer-dot"></span>
+      Industrial Parts
+      <span class="cov-footer-dot"></span>
+      Engineering Excellence
+      <span class="cov-footer-dot"></span>
+      Construction Equipment
+      <span class="cov-footer-dot"></span>
+      East Africa
+    </div>
+    <div class="cov-footer-web">www.ipatechs.com</div>
+  </div>
+</div>
+
+
+<!-- ████  PAGE 2 — INSIDE LEFT (ABOUT)  ████ -->
+<div class="page pg2">
+  <div class="pg2-vline"></div>
+
+  <!-- HERO -->
+  <div class="pg2-hero">
+    <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=900&q=85&auto=format" alt="Engineering"/>
+    <div class="pg2-hero-overlay"></div>
+    <div class="pg2-hero-label">
+      <div class="lbl" style="margin-bottom:5px">Who We Are</div>
+      <div class="sec-title">ABOUT <span>IPATECHS</span></div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="pg2-body">
+
+    <!-- INTRO -->
+    <div class="pg2-intro">
+      <p>
+        IPATECHS COMPANY LIMITED is a globally recognized leader in the supply and distribution
+        of industrial spare parts, engineering solutions, and construction machinery. With a
+        commitment to quality and innovation, we specialize in providing products and services
+        across diverse industries in Tanzania and the wider East African region.
+      </p>
+      <p style="margin-top:7px">
+        As a trusted partner to both multinational corporations and local enterprises, we bridge
+        the gap between world-class manufacturers and the industries that depend on their
+        products. Our deep technical expertise, combined with robust logistics capabilities,
+        ensures our clients receive exactly what they need — on time and to specification.
+      </p>
+    </div>
+
+    <!-- PULL QUOTE -->
+    <div class="pg2-highlight">
+      <p>"Empowering East African industries with world-class engineering solutions, reliable
+      spare parts, and the global partnerships that drive sustainable growth."</p>
+    </div>
+
+    <!-- VISION & MISSION -->
+    <div class="mv-row">
+      <div class="mv-card">
+        <h4>Our Vision</h4>
+        <p>To be a global leader providing advanced engineering solutions, industrial spare parts,
+        and construction equipment — empowering businesses with innovative and sustainable
+        solutions across all major industries.</p>
+      </div>
+      <div class="mv-card">
+        <h4>Our Mission</h4>
+        <p>To supply world-class products tailored to client needs, ensure timely delivery that
+        reduces downtime, and foster long-term partnerships with clients and leading global
+        brands worldwide.</p>
+      </div>
+    </div>
+
+    <!-- CORE VALUES -->
+    <div class="core-values">
+      <h3>Core Values</h3>
+      <div class="val-grid">
+        <div class="val-row">
+          <div class="val-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="val-info">
+            <h5>Quality First</h5>
+            <p>Certified, genuine products from vetted global manufacturers only</p>
+          </div>
+        </div>
+        <div class="val-row">
+          <div class="val-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="val-info">
+            <h5>Timely Delivery</h5>
+            <p>Strategic logistics minimising operational downtime across East Africa</p>
+          </div>
+        </div>
+        <div class="val-row">
+          <div class="val-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="val-info">
+            <h5>Client Partnership</h5>
+            <p>Long-term relationships built on trust, transparency and expertise</p>
+          </div>
+        </div>
+        <div class="val-row">
+          <div class="val-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M7.5 12.5l3 3 6-6"/></svg>
+          </div>
+          <div class="val-info">
+            <h5>Sustainability</h5>
+            <p>Promoting energy-efficient and eco-friendly engineering technologies</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DARK STATS STRIP -->
+    <div class="pg2-stats">
+      <div class="pg2-stat">
+        <div class="n">2019</div>
+        <div class="l">Year Founded</div>
+      </div>
+      <div class="pg2-stat">
+        <div class="n">6<span>+</span></div>
+        <div class="l">Years Active</div>
+      </div>
+      <div class="pg2-stat">
+        <div class="n">150<span>+</span></div>
+        <div class="l">Clients Served</div>
+      </div>
+      <div class="pg2-stat">
+        <div class="n">29<span>+</span></div>
+        <div class="l">Brand Partners</div>
+      </div>
+      <div class="pg2-stat">
+        <div class="n">12</div>
+        <div class="l">Industries</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ████  PAGE 3 — INSIDE RIGHT (SERVICES)  ████ -->
+<div class="page pg3">
+  <div class="pg3-vline"></div>
+
+  <!-- HEADER -->
+  <div class="pg3-header">
+    <div class="lbl" style="margin-bottom:5px">Key Services &amp; Specializations</div>
+    <div class="sec-title">WHAT WE <span>DELIVER</span></div>
+  </div>
+
+  <!-- SERVICES 3×3 -->
+  <div class="svc-grid">
+    <div class="svc">
+      <div class="svc-n">01</div>
+      <div class="svc-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </div>
+      <h4>Industrial Spare Parts</h4>
+      <p>Bearings, belts, hydraulics, seals, pumps, filters &amp; compressors for all sectors.</p>
+    </div>
+    <div class="svc">
+      <div class="svc-n">02</div>
+      <div class="svc-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+      </div>
+      <h4>Mechanical Engineering</h4>
+      <p>Motors, gearboxes, valves, precision fabrication tools &amp; maintenance support.</p>
+    </div>
+    <div class="svc">
+      <div class="svc-n">03</div>
+      <div class="svc-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      </div>
+      <h4>Electrical Engineering</h4>
+      <p>Switchgears, VFDs, motors, drives, cables &amp; power distribution systems.</p>
+    </div>
+    <div class="svc">
+      <div class="svc-n">04</div>
+      <div class="svc-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3z"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
+      </div>
+      <h4>Material Engineering</h4>
+      <p>Corrosion-resistant alloys, heat-resistant steels &amp; high-performance composites.</p>
+    </div>
+    <div class="svc">
+      <div class="svc-n">05</div>
+      <div class="svc-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M12 2a10 10 0 0 1 0 20M12 2a10 10 0 0 0 0 20"/></svg>
+      </div>
+      <h4>Petroleum &amp; Gas</h4>
+      <p>Pipelines, valves, flow control, safety &amp; monitoring systems for O&amp;G.</p>
+    </div>
+    <div class="svc">
+      <div class="svc-n">06</div>
+      <div class="svc-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+      </div>
+      <h4>Power &amp; Energy</h4>
+      <p>Generators, turbines, solar panels, wind energy &amp; storage solutions.</p>
+    </div>
+    <div class="svc">
+      <div class="svc-n">07</div>
+      <div class="svc-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <h4>Mining Solutions</h4>
+      <p>Crushers, conveyors, excavation machinery &amp; safety wear parts.</p>
+    </div>
+    <div class="svc">
+      <div class="svc-n">08</div>
+      <div class="svc-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </div>
+      <h4>Automation &amp; Control</h4>
+      <p>PLCs, SCADA, IoT sensors, robotics &amp; smart factory control panels.</p>
+    </div>
+    <div class="svc">
+      <div class="svc-n">09</div>
+      <div class="svc-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01M7 20v-4M12 20v-8M17 20V8M22 4v16"/></svg>
+      </div>
+      <h4>Construction Sector</h4>
+      <p>CAT, Komatsu excavators, bulldozers, cranes &amp; heavy construction spares.</p>
+    </div>
+  </div>
+
+  <!-- BRAND PARTNERS -->
+  <div class="brands-sec">
+    <h3>Our Global Brand Partners</h3>
+    <div class="brand-row">
+      <div class="brand-box">
+        <img src="https://img.logo.dev/abb.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="ABB"/>
+        <span>ABB</span>
+      </div>
+      <div class="brand-box">
+        <img src="https://img.logo.dev/siemens.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Siemens"/>
+        <span>Siemens</span>
+      </div>
+      <div class="brand-box">
+        <img src="https://img.logo.dev/skf.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="SKF"/>
+        <span>SKF</span>
+      </div>
+      <div class="brand-box">
+        <img src="https://img.logo.dev/cummins.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Cummins"/>
+        <span>Cummins</span>
+      </div>
+      <div class="brand-box">
+        <img src="https://img.logo.dev/grundfos.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Grundfos"/>
+        <span>Grundfos</span>
+      </div>
+      <div class="brand-box">
+        <img src="https://img.logo.dev/honeywell.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Honeywell"/>
+        <span>Honeywell</span>
+      </div>
+      <div class="brand-box">
+        <img src="https://img.logo.dev/se.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Schneider"/>
+        <span>Schneider</span>
+      </div>
+      <div class="brand-box">
+        <img src="https://img.logo.dev/timken.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Timken"/>
+        <span>Timken</span>
+      </div>
+      <div class="brand-box">
+        <img src="https://img.logo.dev/caterpillar.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Caterpillar"/>
+        <span>Caterpillar</span>
+      </div>
+      <div class="brand-box">
+        <img src="https://img.logo.dev/endress.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Endress"/>
+        <span>Endress+H</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- INDUSTRIES -->
+  <div class="ind-sec">
+    <h3>Industries We Serve</h3>
+    <div class="ind-tags">
+      <span class="ind-tag hl">Port Handling</span>
+      <span class="ind-tag">Oil &amp; Gas</span>
+      <span class="ind-tag hl">Mining</span>
+      <span class="ind-tag">Cement</span>
+      <span class="ind-tag">Water &amp; Wastewater</span>
+      <span class="ind-tag hl">Power Generation</span>
+      <span class="ind-tag">Refrigeration</span>
+      <span class="ind-tag">Filtration</span>
+      <span class="ind-tag hl">Automation</span>
+      <span class="ind-tag">Mechanical</span>
+      <span class="ind-tag">Electrical</span>
+      <span class="ind-tag hl">Construction</span>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ████  PAGE 4 — BACK COVER  ████ -->
+<div class="page pg4">
+  <div class="pg4-vline"></div>
+
+  <!-- HERO IMAGE -->
+  <div class="pg4-hero">
+    <img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=900&q=85&auto=format" alt="Industrial"/>
+    <div class="pg4-hero-overlay"></div>
+    <div class="pg4-hero-tag">
+      <div class="lbl" style="margin-bottom:5px">Why Choose Us</div>
+      <div class="sec-title">THE <span>IPATECHS</span> ADVANTAGE</div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="pg4-body">
+
+    <!-- WHY US -->
+    <div class="why-hdr">
+      <h3>Six Reasons to Choose IPATECHS</h3>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-n">01</div>
+        <div class="why-txt">
+          <h5>Comprehensive Offerings</h5>
+          <p>Complete engineering solutions — from spare parts to heavy construction machinery — for every sector.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-n">02</div>
+        <div class="why-txt">
+          <h5>Global Brand Expertise</h5>
+          <p>Partnerships with ABB, Siemens, SKF, Cummins, and 25+ world-leading brands guarantee premium quality.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-n">03</div>
+        <div class="why-txt">
+          <h5>Timely Delivery</h5>
+          <p>Strategic sourcing and logistics networks minimize delays, keeping your operations running continuously.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-n">04</div>
+        <div class="why-txt">
+          <h5>Customised Solutions</h5>
+          <p>Tailored products and services to meet specific industry requirements across all sectors.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-n">05</div>
+        <div class="why-txt">
+          <h5>Local Presence</h5>
+          <p>Based in Dar es Salaam with deep knowledge of East African industry needs and regulatory environments.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-n">06</div>
+        <div class="why-txt">
+          <h5>Sustainability Commitment</h5>
+          <p>Promoting energy-efficient and eco-friendly technologies — from solar systems to smart energy management.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT BLOCK -->
+    <div class="contact-blk">
+      <div class="contact-blk-hdr">
+        <h3>GET IN <span>TOUCH</span></h3>
+        <span class="orange-pill">Ready to Partner</span>
+      </div>
+      <div class="ci-grid">
+        <div class="ci-row">
+          <div class="ci-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="ci-txt">
+            <div class="ci-lbl">Address</div>
+            <div class="ci-val">Makongo Road, Postal Code 14129<br><strong>Dar es Salaam, Tanzania</strong></div>
+          </div>
+        </div>
+        <div class="ci-row">
+          <div class="ci-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.4 19.79 19.79 0 0 1 1.62 4.84a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div class="ci-txt">
+            <div class="ci-lbl">Phone</div>
+            <div class="ci-val"><strong>+255 750 304 097</strong></div>
+          </div>
+        </div>
+        <div class="ci-row">
+          <div class="ci-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div class="ci-txt">
+            <div class="ci-lbl">Email</div>
+            <div class="ci-val"><strong>info@ipatechs.com</strong></div>
+          </div>
+        </div>
+        <div class="ci-row">
+          <div class="ci-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <div class="ci-txt">
+            <div class="ci-lbl">Website</div>
+            <div class="ci-val"><strong>www.ipatechs.com</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ORANGE FOOTER -->
+  <div class="pg4-footer">
+    <div class="pg4-footer-logo">IPATECHS CO LTD</div>
+    <div class="pg4-footer-mid">Industrial Parts · Engineering Excellence · Construction Equipment</div>
+    <div class="pg4-footer-yr">© 2025</div>
+  </div>
+</div>
+
+</body>
+</html>
