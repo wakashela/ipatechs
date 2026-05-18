@@ -5,3 +5,4 @@ __pycache__/
 *.pyc
 css/*.min.css
 js/*.min.js
+.vercel
