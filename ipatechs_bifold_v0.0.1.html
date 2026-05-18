@@ -1,0 +1,2775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>IPATECHS Company Profile 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800;900&family=Barlow:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --orange: #FF6600;
+  --dark:  #080808;
+  --dark2: #101010;
+  --dark3: #181818;
+  --dark4: #222222;
+  --muted: #999999;
+  --light: #F0F0F0;
+  --white: #FFFFFF;
+  --border: rgba(255,255,255,0.09);
+}
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: #222;
+  margin: 0;
+  padding: 0;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+  margin: 0 auto 28px;
+  display: flex;
+  flex-direction: column;
+  background: var(--dark);
+}
+
+/* ─── SHARED UTILITIES ─── */
+.lbl {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: var(--orange);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.lbl::before {
+  content: '';
+  width: 22px;
+  height: 2px;
+  background: var(--orange);
+  display: block;
+  flex-shrink: 0;
+}
+
+.sec-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 38px;
+  line-height: 0.94;
+  letter-spacing: 0.03em;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.sec-title span { color: var(--orange); }
+
+.body-text {
+  font-size: 11px;
+  font-weight: 300;
+  line-height: 1.82;
+  color: rgba(240,240,240,0.72);
+}
+
+.orange-rule {
+  height: 3px;
+  background: var(--orange);
+  width: 44px;
+  margin-bottom: 10px;
+}
+
+/* ─── PAGE HEADER STRIPE ─── */
+.page-header-stripe {
+  background: var(--dark2);
+  border-bottom: 2px solid var(--orange);
+  padding: 12px 18mm;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.phs-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  color: var(--white);
+}
+.phs-logo span { color: var(--orange); }
+.phs-page {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ─── PAGE CONTENT AREA ─── */
+.pc {
+  flex: 1;
+  padding: 12mm 18mm 12mm;
+  display: flex;
+  flex-direction: column;
+  gap: 10mm;
+}
+
+/* ─── PAGE FOOTER ─── */
+.page-footer {
+  background: var(--dark2);
+  border-top: 1px solid var(--border);
+  padding: 7px 18mm;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.page-footer span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+}
+.pf-dot {
+  display: inline-block;
+  width: 4px; height: 4px;
+  background: var(--orange);
+  border-radius: 50%;
+}
+
+/* ═══════════════════════
+   P1 — COVER PAGE
+═══════════════════════ */
+.p-cover {
+  background: var(--dark);
+}
+
+.cover-bg {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  width: 65%;
+  height: 48%;
+  object-fit: contain;
+  transform: translateX(-50%);
+  opacity: 1;
+  filter: saturate(1) contrast(1.1) brightness(1.2) drop-shadow(0 0 100px rgba(255,102,0,0.65)) drop-shadow(0 0 200px rgba(255,102,0,0.35));
+  z-index: 1;
+}
+
+.cover-glow {
+  position: absolute;
+  width: 550px;
+  height: 550px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,102,0,0.25) 0%, rgba(255,102,0,0.10) 45%, transparent 65%);
+  top: 32%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+.cover-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0, rgba(255,255,255,0.025) 1px, transparent 0, transparent 55px),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0, rgba(255,255,255,0.025) 1px, transparent 0, transparent 55px);
+}
+
+.cover-slab {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 46%;
+  background: var(--orange);
+  clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 100%);
+  z-index: 1;
+}
+
+.cover-dark-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(8,8,8,0.55) 0%,
+    rgba(8,8,8,0.02) 42%,
+    rgba(8,8,8,0.00) 58%,
+    rgba(8,8,8,0.70) 100%
+  );
+  z-index: 2;
+}
+
+.cover-inner {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  height: 297mm;
+  padding: 13mm 15mm 11mm;
+}
+
+.cover-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: auto;
+}
+
+.cover-logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.cover-logo-hex {
+  width: 48px; height: 48px;
+}
+.cover-logo-hex img { width: 100%; height: 100%; object-fit: contain; }
+
+.cover-logo-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 30px;
+  letter-spacing: 0.07em;
+  color: var(--white);
+  line-height: 1;
+}
+.cover-logo-text span { color: var(--white); }
+
+.cover-badge-pill {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 6px 14px;
+}
+
+.cover-main {
+  padding-bottom: 22mm;
+}
+
+.cover-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--orange);
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 14px;
+}
+.cover-eyebrow::before { content: ''; width: 32px; height: 2px; background: var(--orange); display: block; }
+
+.cover-h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 78px;
+  line-height: 0.88;
+  letter-spacing: 0.025em;
+  color: var(--white);
+  margin-bottom: 18px;
+}
+.cover-h1 .wt-outline {
+  -webkit-text-stroke: 2px rgba(255,255,255,0.6);
+  color: transparent;
+}
+.cover-h1 .wt-accent { color: var(--orange); }
+
+.cover-tagline {
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.80;
+  color: rgba(255,255,255,0.65);
+  max-width: 138mm;
+  margin-bottom: 22px;
+}
+
+.cover-stats {
+  display: flex;
+  gap: 30px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255,255,255,0.14);
+}
+.cstat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  line-height: 1;
+  color: var(--white);
+}
+.cstat-num span { color: var(--orange); }
+.cstat-lbl {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-top: 4px;
+}
+
+.cover-bottom-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 11mm;
+  background: rgba(0,0,0,0.6);
+  border-top: 2px solid var(--orange);
+  display: flex;
+  align-items: center;
+  padding: 0 15mm;
+  z-index: 11;
+  gap: 0;
+}
+.cover-bottom-bar span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+}
+.cbb-sep {
+  display: inline-block;
+  width: 5px; height: 5px;
+  background: var(--orange);
+  border-radius: 50%;
+  margin: 0 12px;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════
+   P2 — TABLE OF CONTENTS
+═══════════════════════ */
+.toc-page { background: var(--dark2); }
+
+.toc-hero {
+  height: 55mm;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.toc-hero img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  filter: brightness(0.3) saturate(0.3);
+}
+.toc-hero-overlay {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(135deg, rgba(255,102,0,0.22) 0%, transparent 55%),
+    linear-gradient(to top, var(--dark2) 0%, transparent 45%);
+}
+.toc-hero-text {
+  position: absolute;
+  bottom: 0; left: 0;
+  padding: 0 18mm 12mm;
+}
+
+.toc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.toc-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--dark3);
+  border-left: 3px solid transparent;
+}
+.toc-item.accent { border-left-color: var(--orange); }
+
+.toc-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  line-height: 1;
+  color: rgba(255,102,0,0.35);
+  flex-shrink: 0;
+  width: 28px;
+  text-align: right;
+}
+
+.toc-content h5 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--white);
+  line-height: 1.3;
+}
+.toc-content p {
+  font-size: 9px;
+  color: var(--muted);
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
+/* ═══════════════════════
+   P3 — ABOUT US
+═══════════════════════ */
+.about-hero {
+  height: 68mm;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.about-hero img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  filter: brightness(0.40) saturate(0.45);
+}
+.about-hero-overlay {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(120deg, rgba(255,102,0,0.20) 0%, transparent 60%),
+    linear-gradient(to top, var(--dark) 0%, transparent 45%);
+}
+.about-hero-text {
+  position: absolute;
+  bottom: 0; left: 0;
+  padding: 0 18mm 12mm;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 14mm;
+}
+
+.about-text p + p { margin-top: 10px; }
+
+.about-quick-facts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fact-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--dark3);
+  border-left: 3px solid var(--orange);
+}
+.fact-icon {
+  width: 32px; height: 32px;
+  flex-shrink: 0;
+  background: rgba(255,102,0,0.12);
+  border: 1px solid rgba(255,102,0,0.3);
+  display: flex; align-items: center; justify-content: center;
+  clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 20% 100%, 0 80%);
+  color: var(--orange);
+}
+.fact-icon svg { width: 16px; height: 16px; }
+.fact-info h5 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+.fact-info p {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  line-height: 1.3;
+}
+
+/* ═══════════════════════
+   P4 — VISION & MISSION
+═══════════════════════ */
+.vm-page { background: var(--dark); }
+
+.vm-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10mm;
+}
+
+.vm-card {
+  padding: 16px 18px;
+  background: var(--dark2);
+  clip-path: polygon(0 0, 94% 0, 100% 6%, 100% 100%, 6% 100%, 0 94%);
+  position: relative;
+  overflow: hidden;
+}
+.vm-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--orange);
+}
+
+.vm-card-icon {
+  width: 44px; height: 44px;
+  background: rgba(255,102,0,0.10);
+  border: 1px solid rgba(255,102,0,0.3);
+  display: flex; align-items: center; justify-content: center;
+  clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 20% 100%, 0 80%);
+  color: var(--orange);
+  margin-bottom: 12px;
+}
+.vm-card-icon svg { width: 22px; height: 22px; }
+
+.vm-card h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  margin-bottom: 10px;
+}
+
+.vm-card p { font-size: 11px; line-height: 1.82; color: rgba(240,240,240,0.70); }
+
+.vm-statement-block {
+  padding: 14px 18px;
+  background: var(--orange);
+  clip-path: polygon(0 0, 96% 0, 100% 8%, 100% 100%, 4% 100%, 0 92%);
+  margin-top: 10mm;
+}
+.vm-statement-block p {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.55;
+  color: #000;
+  font-style: italic;
+}
+
+.vm-pillars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-top: 10mm;
+}
+
+.pillar {
+  text-align: center;
+  padding: 12px 8px;
+  background: var(--dark2);
+  border-top: 2px solid var(--orange);
+}
+.pillar-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--orange);
+  margin-bottom: 4px;
+}
+.pillar h5 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.pillar p {
+  font-size: 8.5px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ═══════════════════════
+   P5 — CORE VALUES
+═══════════════════════ */
+.vals-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.val-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--dark2);
+  border-bottom: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+.val-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--orange);
+  transform: scaleX(0);
+}
+.val-card::before { transform: scaleX(1); }
+
+.val-ghost-num {
+  position: absolute;
+  right: 10px; top: 6px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  color: rgba(255,255,255,0.04);
+  line-height: 1;
+}
+
+.val-icon-box {
+  width: 44px; height: 44px;
+  flex-shrink: 0;
+  background: rgba(255,102,0,0.10);
+  border: 1px solid rgba(255,102,0,0.30);
+  display: flex; align-items: center; justify-content: center;
+  clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 20% 100%, 0 80%);
+  color: var(--orange);
+}
+.val-icon-box svg { width: 20px; height: 20px; }
+
+.val-body h4 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 5px;
+}
+.val-body p { font-size: 10px; color: rgba(240,240,240,0.60); line-height: 1.65; }
+
+/* ═══════════════════════
+   P6 — SERVICES
+═══════════════════════ */
+.svc-page { background: var(--dark); }
+
+.svc-grid-9 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 7px;
+}
+
+.svc-card {
+  background: var(--dark2);
+  padding: 14px 12px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 2px solid var(--orange);
+}
+
+.svc-ghost {
+  position: absolute;
+  right: 8px; top: 5px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  color: rgba(255,255,255,0.04);
+  line-height: 1;
+}
+
+.svc-icon-box {
+  width: 34px; height: 34px;
+  background: rgba(255,102,0,0.10);
+  border: 1px solid rgba(255,102,0,0.28);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--orange);
+  clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 20% 100%, 0 80%);
+  margin-bottom: 9px;
+}
+.svc-icon-box svg { width: 16px; height: 16px; }
+
+.svc-card h4 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 5px;
+  line-height: 1.25;
+}
+.svc-card p { font-size: 9px; color: var(--muted); line-height: 1.60; }
+
+.svc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 7px;
+}
+.svc-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 7.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  background: rgba(255,102,0,0.10);
+  border: 1px solid rgba(255,102,0,0.22);
+  color: var(--orange);
+}
+
+/* ═══════════════════════
+   P7 — INDUSTRIES
+═══════════════════════ */
+.ind-page { background: var(--dark2); }
+
+.ind-intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12mm;
+  align-items: start;
+}
+
+.ind-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+
+.ind-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--dark3);
+}
+
+.ind-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  color: rgba(255,102,0,0.30);
+  flex-shrink: 0;
+  width: 26px;
+  text-align: right;
+  line-height: 1;
+}
+.ind-info h5 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 2px;
+}
+.ind-info p { font-size: 8.5px; color: var(--muted); line-height: 1.4; }
+
+.ind-banner {
+  background: var(--orange);
+  padding: 14px 18px;
+  clip-path: polygon(0 0, 97% 0, 100% 10%, 100% 100%, 3% 100%, 0 90%);
+  text-align: center;
+  margin-top: 10mm;
+}
+.ind-banner p {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  color: #000;
+}
+.ind-banner span {
+  font-family: 'Barlow', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(0,0,0,0.65);
+  display: block;
+  margin-top: 4px;
+}
+
+/* ═══════════════════════
+   P8 — HOW WE WORK
+═══════════════════════ */
+.proc-page { background: var(--dark); }
+
+.proc-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+}
+
+.proc-steps::before {
+  content: '';
+  position: absolute;
+  left: 26px;
+  top: 24px;
+  bottom: 24px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--orange), rgba(255,102,0,0.1));
+  z-index: 0;
+}
+
+.proc-step {
+  display: flex;
+  gap: 16px;
+  padding: 14px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.proc-num-box {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  background: var(--orange);
+  clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 20% 100%, 0 80%);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  color: #000;
+  line-height: 1;
+}
+
+.proc-content {
+  flex: 1;
+  padding-top: 4px;
+}
+.proc-content h4 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 5px;
+}
+.proc-content p { font-size: 10.5px; color: rgba(240,240,240,0.65); line-height: 1.72; }
+
+.proc-divider {
+  height: 1px;
+  background: var(--border);
+  margin-left: 68px;
+}
+
+.proc-cta {
+  background: var(--dark2);
+  border: 1px solid rgba(255,102,0,0.3);
+  padding: 14px 18px;
+  clip-path: polygon(0 0, 98% 0, 100% 8%, 100% 100%, 2% 100%, 0 92%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.proc-cta-icon {
+  width: 42px; height: 42px;
+  flex-shrink: 0;
+  background: var(--orange);
+  clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 20% 100%, 0 80%);
+  display: flex; align-items: center; justify-content: center;
+}
+.proc-cta-icon svg { width: 20px; height: 20px; color: #000; }
+.proc-cta-text h5 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 3px;
+}
+.proc-cta-text p { font-size: 10px; color: var(--muted); }
+
+/* ═══════════════════════
+   P9 — LEADERSHIP / TEAM
+═══════════════════════ */
+.team-page { background: var(--dark2); }
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8mm;
+}
+
+.team-card {
+  background: var(--dark3);
+  clip-path: polygon(0 0, 90% 0, 100% 10%, 100% 100%, 10% 100%, 0 90%);
+  overflow: hidden;
+  text-align: center;
+}
+
+.team-photo {
+  width: 100%;
+  height: 44mm;
+  object-fit: cover;
+  object-position: center top;
+  filter: brightness(0.55) saturate(0.4);
+  display: block;
+}
+
+.team-photo-placeholder {
+  width: 100%;
+  height: 44mm;
+  background: var(--dark4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  color: var(--orange);
+  border-bottom: 2px solid var(--orange);
+}
+
+.team-info {
+  padding: 12px 14px 14px;
+}
+
+.team-dept {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 4px;
+}
+.team-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+.team-role {
+  font-size: 9.5px;
+  color: var(--muted);
+  line-height: 1.45;
+  margin-bottom: 8px;
+}
+.team-bio {
+  font-size: 9px;
+  color: rgba(240,240,240,0.55);
+  line-height: 1.60;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+  text-align: left;
+}
+
+.team-intro p {
+  font-size: 11px;
+  font-weight: 300;
+  line-height: 1.80;
+  color: rgba(240,240,240,0.68);
+}
+
+/* ═══════════════════════
+   P10 — WHY CHOOSE US
+═══════════════════════ */
+.why-page { background: var(--dark); }
+
+.why-banner-image {
+  height: 52mm;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.why-banner-image img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  filter: brightness(0.30) saturate(0.35);
+}
+.why-banner-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 25%, var(--dark) 100%);
+}
+.why-banner-text {
+  position: absolute;
+  bottom: 0; left: 0;
+  padding: 0 18mm 12mm;
+}
+
+.why-grid-6 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+
+.why-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--dark2);
+  border-left: 3px solid transparent;
+}
+.why-card:nth-child(-n+2) { border-left-color: var(--orange); }
+
+.why-n {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  line-height: 1;
+  color: rgba(255,102,0,0.22);
+  flex-shrink: 0;
+  width: 24px;
+  text-align: right;
+}
+
+.why-text h5 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 5px;
+}
+.why-text p { font-size: 10px; color: var(--muted); line-height: 1.65; }
+
+.why-promise-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  background: var(--dark3);
+  margin-top: 10mm;
+  border: 1px solid var(--border);
+}
+.why-promise-item {
+  text-align: center;
+  padding: 12px 10px;
+  border-right: 1px solid var(--border);
+}
+.why-promise-item:last-child { border-right: none; }
+.wpi-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  color: var(--orange);
+  line-height: 1;
+  margin-bottom: 3px;
+}
+.wpi-lbl {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 3px;
+}
+.wpi-sub { font-size: 8.5px; color: var(--muted); line-height: 1.4; }
+
+/* ═══════════════════════
+   P11 — PORTFOLIO
+═══════════════════════ */
+.port-page { background: var(--dark2); }
+
+.port-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.port-item {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  clip-path: polygon(0 0, 95% 0, 100% 5%, 100% 100%, 5% 100%, 0 95%);
+}
+
+.port-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.45) saturate(0.4);
+}
+
+.port-item-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.80) 0%, transparent 55%);
+}
+
+.port-item-info {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 12px 14px;
+}
+
+.port-cat {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 3px;
+}
+
+.port-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--white);
+  line-height: 1.3;
+}
+
+.port-feat {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 10mm;
+}
+
+.port-feat-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--dark3);
+}
+.port-feat-icon {
+  width: 32px; height: 32px;
+  flex-shrink: 0;
+  background: rgba(255,102,0,0.10);
+  border: 1px solid rgba(255,102,0,0.28);
+  display: flex; align-items: center; justify-content: center;
+  clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 20% 100%, 0 80%);
+  color: var(--orange);
+}
+.port-feat-icon svg { width: 15px; height: 15px; }
+.port-feat-text h6 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 2px;
+}
+.port-feat-text p { font-size: 9px; color: var(--muted); }
+
+/* ═══════════════════════
+   P12 — BRAND PARTNERS
+═══════════════════════ */
+.partners-page { background: var(--dark); }
+
+.partners-grid-5x4 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.partner-card {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 12px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  position: relative;
+  overflow: hidden;
+}
+.partner-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--orange);
+  transform: scaleX(0);
+}
+.partner-card:nth-child(3n+1)::after { transform: scaleX(1); }
+
+.partner-card img {
+  height: 28px;
+  width: 100%;
+  object-fit: contain;
+}
+.partner-card span {
+  font-family: 'Barlow', sans-serif;
+  font-size: 7.5px;
+  font-weight: 600;
+  color: #444;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+.partner-statement {
+  background: var(--dark2);
+  border-left: 4px solid var(--orange);
+  padding: 14px 18px;
+  margin-top: 10mm;
+}
+.partner-statement p {
+  font-size: 11px;
+  font-weight: 300;
+  line-height: 1.82;
+  color: rgba(240,240,240,0.70);
+}
+.partner-statement strong { color: var(--white); font-weight: 600; }
+
+/* ═══════════════════════
+   P13 — CERTIFICATIONS & CSR
+═══════════════════════ */
+.cert-page { background: var(--dark2); }
+
+.cert-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10mm;
+}
+
+.cert-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.cert-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--dark3);
+  border-left: 3px solid var(--orange);
+}
+.cert-badge {
+  width: 38px; height: 38px;
+  flex-shrink: 0;
+  background: rgba(255,102,0,0.12);
+  border: 1px solid rgba(255,102,0,0.30);
+  display: flex; align-items: center; justify-content: center;
+  clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 20% 100%, 0 80%);
+  color: var(--orange);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  text-align: center;
+}
+.cert-info h5 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 3px;
+}
+.cert-info p { font-size: 9.5px; color: var(--muted); line-height: 1.55; }
+
+.csr-items {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.csr-item {
+  padding: 12px 14px;
+  background: var(--dark3);
+  border-top: 2px solid var(--orange);
+}
+.csr-item h5 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 5px;
+}
+.csr-item p { font-size: 10px; color: rgba(240,240,240,0.60); line-height: 1.65; }
+
+/* ═══════════════════════
+   P14 — TESTIMONIALS
+═══════════════════════ */
+.test-page { background: var(--dark); }
+
+.test-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.test-card {
+  background: var(--dark2);
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  clip-path: polygon(0 0, 95% 0, 100% 5%, 100% 100%, 5% 100%, 0 95%);
+  position: relative;
+}
+
+.test-quote-mark {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 48px;
+  color: rgba(255,102,0,0.45);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.test-text {
+  font-size: 10px;
+  font-style: italic;
+  line-height: 1.78;
+  color: rgba(240,240,240,0.68);
+  margin-bottom: 12px;
+}
+
+.test-author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.test-avatar {
+  width: 36px; height: 36px;
+  flex-shrink: 0;
+  background: rgba(255,102,0,0.12);
+  border: 1px solid rgba(255,102,0,0.30);
+  display: flex; align-items: center; justify-content: center;
+  clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 20% 100%, 0 80%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 14px;
+  color: var(--orange);
+}
+
+.test-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--white);
+}
+.test-role { font-size: 8.5px; color: var(--muted); margin-top: 1px; }
+
+/* ═══════════════════════
+   P15 — CONTACT
+═══════════════════════ */
+.contact-page { background: var(--dark2); }
+
+.contact-hero-strip {
+  height: 55mm;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.contact-hero-strip img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  filter: brightness(0.30) saturate(0.30);
+}
+.chero-overlay {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(120deg, rgba(255,102,0,0.20) 0%, transparent 60%),
+    linear-gradient(to top, var(--dark2) 0%, transparent 45%);
+}
+.chero-text {
+  position: absolute;
+  bottom: 0; left: 0;
+  padding: 0 18mm 12mm;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10mm;
+}
+
+.contact-block {
+  background: var(--orange);
+  clip-path: polygon(0 0, 97% 0, 100% 5%, 100% 100%, 3% 100%, 0 95%);
+  padding: 16px 20px;
+}
+
+.contact-block h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  letter-spacing: 0.04em;
+  color: #000;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+.ci-big {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.ci-big-icon {
+  width: 36px; height: 36px;
+  flex-shrink: 0;
+  background: rgba(0,0,0,0.18);
+  display: flex; align-items: center; justify-content: center;
+  clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 20% 100%, 0 80%);
+}
+.ci-big-icon svg { width: 17px; height: 17px; color: #000; }
+.ci-big-text .ci-l {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.55);
+  margin-bottom: 2px;
+}
+.ci-big-text .ci-v {
+  font-size: 11px;
+  font-weight: 600;
+  color: #000;
+  line-height: 1.45;
+}
+
+.contact-social {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+}
+
+.social-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--dark3);
+}
+.social-ico {
+  width: 32px; height: 32px;
+  flex-shrink: 0;
+  background: rgba(255,102,0,0.10);
+  border: 1px solid rgba(255,102,0,0.28);
+  display: flex; align-items: center; justify-content: center;
+  clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 20% 100%, 0 80%);
+  color: var(--orange);
+}
+.social-ico svg { width: 15px; height: 15px; }
+.social-text h6 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 2px;
+}
+.social-text p { font-size: 9.5px; color: var(--muted); }
+
+.contact-hours {
+  background: var(--dark3);
+  border-top: 2px solid var(--orange);
+  padding: 12px 14px;
+  margin-top: 10mm;
+}
+.contact-hours h5 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 6px;
+}
+.contact-hours p { font-size: 10.5px; color: rgba(240,240,240,0.65); line-height: 1.65; }
+
+/* ═══════════════════════
+   P16 — BACK COVER
+═══════════════════════ */
+.back-cover-page {
+  background: var(--dark);
+}
+
+.bc-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.16;
+  filter: saturate(0.25);
+}
+
+.bc-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.022) 0, rgba(255,255,255,0.022) 1px, transparent 0, transparent 55px),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.022) 0, rgba(255,255,255,0.022) 1px, transparent 0, transparent 55px);
+}
+
+.bc-orange-bar {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 7mm;
+  background: var(--orange);
+  z-index: 3;
+}
+
+.bc-inner {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  height: 297mm;
+  padding: 14mm 15mm 12mm 22mm;
+}
+
+.bc-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 14px;
+}
+
+.bc-logo-big {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+.bc-logo-hex {
+  width: 62px; height: 62px;
+}
+.bc-logo-hex img { width: 100%; height: 100%; object-fit: contain; }
+.bc-logo-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 40px;
+  letter-spacing: 0.08em;
+  color: var(--white);
+  line-height: 1;
+}
+.bc-logo-name span { color: var(--white); }
+
+.bc-tagline {
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.72;
+  color: rgba(240,240,240,0.60);
+  max-width: 130mm;
+}
+
+.bc-divider {
+  height: 2px;
+  width: 60mm;
+  background: linear-gradient(to right, transparent, var(--orange), transparent);
+  margin: 4px auto;
+}
+
+.bc-cta-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  letter-spacing: 0.04em;
+  color: var(--orange);
+}
+
+.bc-contact-pills {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.bc-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--dark2);
+  border: 1px solid var(--border);
+}
+.bc-pill svg { width: 14px; height: 14px; color: var(--orange); flex-shrink: 0; }
+.bc-pill span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--white);
+}
+
+.bc-bottom-bar {
+  background: var(--orange);
+  padding: 12px 15mm;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.bc-bottom-bar span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: #000;
+}
+
+@media print {
+  body { background: none; }
+  .page { margin: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+  PAGE 1 — COVER
+══════════════════════════════════════════ -->
+<div class="page p-cover">
+  <div class="cover-glow"></div>
+  <img class="cover-bg" src="assets/images/cummins.png" alt=""/>
+  <div class="cover-grid"></div>
+  <div class="cover-slab"></div>
+  <div class="cover-dark-overlay"></div>
+
+  <div class="cover-inner">
+    <div class="cover-nav">
+      <div class="cover-logo-wrap">
+        <div class="cover-logo-hex">
+          <img src="assets/images/logo.png" alt="IPATECHS Logo"/>
+        </div>
+        <div class="cover-logo-text">IPA<span>TECHS</span> CO LTD</div>
+      </div>
+      <div class="cover-badge-pill">Company Profile</div>
+    </div>
+
+    <div class="cover-main">
+      <div class="cover-eyebrow">Est. 2019 · Dar es Salaam, Tanzania</div>
+      <h1 class="cover-h1">
+        YOUR GLOBAL<br>
+        <span class="wt-outline">PARTNER IN</span><br>
+        <span class="wt-accent">ENGINEERING</span>
+      </h1>
+      <p class="cover-tagline">
+        East Africa's trusted supplier of industrial spare parts, precision
+        engineering solutions, and heavy construction equipment — connecting
+        global brands to local industries since 2019.
+      </p>
+      <div class="cover-stats">
+        <div><div class="cstat-num">6<span>+</span></div><div class="cstat-lbl">Years Experience</div></div>
+        <div><div class="cstat-num">150<span>+</span></div><div class="cstat-lbl">Clients Served</div></div>
+        <div><div class="cstat-num">29<span>+</span></div><div class="cstat-lbl">Global Brands</div></div>
+        <div><div class="cstat-num">12</div><div class="cstat-lbl">Industries</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-bottom-bar">
+    <span>Industrial Parts</span><span class="cbb-sep"></span>
+    <span>Mechanical Engineering</span><span class="cbb-sep"></span>
+    <span>Electrical Engineering</span><span class="cbb-sep"></span>
+    <span>Mining Solutions</span><span class="cbb-sep"></span>
+    <span>Power &amp; Energy</span><span class="cbb-sep"></span>
+    <span>Petroleum &amp; Gas</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+  PAGE 2 — TABLE OF CONTENTS
+══════════════════════════════════════════ -->
+<div class="page toc-page">
+  <div class="toc-hero">
+    <img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=900&q=85" alt=""/>
+    <div class="toc-hero-overlay"></div>
+    <div class="toc-hero-text">
+      <div class="lbl">Navigation Guide</div>
+      <div class="sec-title">TABLE OF <span>CONTENTS</span></div>
+    </div>
+  </div>
+
+  <div class="pc">
+    <div class="toc-grid">
+      <div class="toc-item accent">
+        <div class="toc-num">01</div>
+        <div class="toc-content"><h5>About Us</h5><p>Company overview, history &amp; key facts</p></div>
+      </div>
+      <div class="toc-item accent">
+        <div class="toc-num">02</div>
+        <div class="toc-content"><h5>Vision Statement</h5><p>Where we are headed as a company</p></div>
+      </div>
+      <div class="toc-item accent">
+        <div class="toc-num">03</div>
+        <div class="toc-content"><h5>Mission Statement</h5><p>Our purpose and daily commitment</p></div>
+      </div>
+      <div class="toc-item accent">
+        <div class="toc-num">04</div>
+        <div class="toc-content"><h5>Core Values</h5><p>Principles guiding our operations</p></div>
+      </div>
+      <div class="toc-item accent">
+        <div class="toc-num">05</div>
+        <div class="toc-content"><h5>Our Services</h5><p>Full breakdown of our service offerings</p></div>
+      </div>
+      <div class="toc-item accent">
+        <div class="toc-num">06</div>
+        <div class="toc-content"><h5>Industries We Serve</h5><p>The sectors and markets we operate in</p></div>
+      </div>
+      <div class="toc-item accent">
+        <div class="toc-num">07</div>
+        <div class="toc-content"><h5>Our Process</h5><p>How we deliver results step by step</p></div>
+      </div>
+      <div class="toc-item accent">
+        <div class="toc-num">08</div>
+        <div class="toc-content"><h5>Our Team</h5><p>Key leadership &amp; personnel</p></div>
+      </div>
+      <div class="toc-item accent">
+        <div class="toc-num">09</div>
+        <div class="toc-content"><h5>Why Choose Us</h5><p>Our unique competitive advantages</p></div>
+      </div>
+      <div class="toc-item accent">
+        <div class="toc-num">10</div>
+        <div class="toc-content"><h5>Portfolio &amp; Projects</h5><p>Past work, achievements &amp; case studies</p></div>
+      </div>
+      <div class="toc-item accent">
+        <div class="toc-num">11</div>
+        <div class="toc-content"><h5>Brand Partners</h5><p>Our global manufacturer partnerships</p></div>
+      </div>
+      <div class="toc-item accent">
+        <div class="toc-num">12</div>
+        <div class="toc-content"><h5>Certifications &amp; CSR</h5><p>Accreditations &amp; community responsibility</p></div>
+      </div>
+      <div class="toc-item accent">
+        <div class="toc-num">13</div>
+        <div class="toc-content"><h5>Testimonials</h5><p>What our clients say about us</p></div>
+      </div>
+      <div class="toc-item accent">
+        <div class="toc-num">14</div>
+        <div class="toc-content"><h5>Contact Information</h5><p>How to reach us across East Africa</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>IPATECHS Company Limited</span>
+    <span class="pf-dot"></span>
+    <span>Company Profile 2025</span>
+    <span class="pf-dot"></span>
+    <span>www.ipatechs.com</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+  PAGE 3 — ABOUT US
+══════════════════════════════════════════ -->
+<div class="page">
+  <div class="about-hero">
+    <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=900&q=85" alt="Engineering"/>
+    <div class="about-hero-overlay"></div>
+    <div class="about-hero-text">
+      <div class="lbl">Company Overview</div>
+      <div class="sec-title">ABOUT <span>IPATECHS</span></div>
+    </div>
+  </div>
+
+  <div class="pc">
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="orange-rule"></div>
+        <p class="body-text">
+          IPATECHS COMPANY LIMITED is a globally recognized leader in the supply
+          and distribution of industrial spare parts, engineering solutions, and
+          construction machinery. Founded in 2019 in Dar es Salaam, Tanzania, we
+          have rapidly grown into East Africa's most trusted engineering solutions
+          partner.
+        </p>
+        <p class="body-text" style="margin-top:10px;">
+          With a commitment to quality and innovation, we specialize in providing
+          products and services across diverse industries in Tanzania and the wider
+          East African region. As a trusted partner to both multinational corporations
+          and local enterprises, we bridge the gap between world-class manufacturers
+          and the industries that depend on their products.
+        </p>
+        <p class="body-text" style="margin-top:10px;">
+          Our deep technical expertise, combined with robust logistics capabilities
+          and a team of passionate engineers, ensures our clients receive exactly
+          what they need — on time, on specification, and at competitive pricing.
+          We don't just supply parts; we deliver uptime and peace of mind.
+        </p>
+      </div>
+
+      <div class="about-quick-facts">
+        <div class="fact-row">
+          <div class="fact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div class="fact-info"><h5>Headquarters</h5><p>Makongo Road, Sinza<br>Dar es Salaam, Tanzania</p></div>
+        </div>
+        <div class="fact-row">
+          <div class="fact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div class="fact-info"><h5>Founded</h5><p>2019 — 6+ Years in Operation</p></div>
+        </div>
+        <div class="fact-row">
+          <div class="fact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <div class="fact-info"><h5>Coverage Area</h5><p>Tanzania · Kenya · Uganda<br>Rwanda · Zambia · Mozambique</p></div>
+        </div>
+        <div class="fact-row">
+          <div class="fact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="fact-info"><h5>Clients Served</h5><p>150+ Active Clients Across 12 Industries</p></div>
+        </div>
+        <div class="fact-row">
+          <div class="fact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+          <div class="fact-info"><h5>Brand Partners</h5><p>29+ Global Premium Manufacturers</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>IPATECHS Company Limited</span><span class="pf-dot"></span>
+    <span>About Us</span><span class="pf-dot"></span>
+    <span>www.ipatechs.com</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+  PAGE 4 — VISION & MISSION
+══════════════════════════════════════════ -->
+<div class="page vm-page">
+  <div class="page-header-stripe">
+    <div class="phs-logo">IPA<span>TECHS</span></div>
+    <div class="phs-page">Vision &amp; Mission</div>
+  </div>
+
+  <div class="pc">
+    <div class="lbl">Strategic Direction</div>
+    <div class="sec-title">VISION &amp; <span>MISSION</span></div>
+
+    <div class="vm-split">
+      <div class="vm-card">
+        <div class="vm-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <h3>Our Vision</h3>
+        <p>
+          To be a global leader in providing advanced engineering solutions,
+          industrial spare parts, and construction equipment — empowering
+          businesses across industries with innovative and sustainable solutions
+          that drive East Africa's industrial transformation.
+        </p>
+      </div>
+      <div class="vm-card">
+        <div class="vm-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <h3>Our Mission</h3>
+        <p>
+          To supply world-class products tailored to client needs, ensure timely
+          delivery that reduces operational downtime, and foster long-term
+          partnerships with clients and leading global brands — creating
+          lasting value for industries and communities across East Africa.
+        </p>
+      </div>
+    </div>
+
+    <div class="vm-statement-block">
+      <p>"We connect the world's finest engineering brands with East Africa's most critical industries — delivering not just products, but the reliability and expertise that keeps operations running."</p>
+    </div>
+
+    <div class="vm-pillars">
+      <div class="pillar">
+        <div class="pillar-num">01</div>
+        <h5>Supply Excellence</h5>
+        <p>World-class products tailored to every client need</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">02</div>
+        <h5>Timely Delivery</h5>
+        <p>Minimising downtime through strategic logistics</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">03</div>
+        <h5>Long-term Value</h5>
+        <p>Building partnerships that last beyond the transaction</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">04</div>
+        <h5>Innovation</h5>
+        <p>Connecting clients with state-of-the-art technologies</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>IPATECHS Company Limited</span><span class="pf-dot"></span>
+    <span>Vision &amp; Mission</span><span class="pf-dot"></span>
+    <span>www.ipatechs.com</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+  PAGE 5 — CORE VALUES
+══════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header-stripe">
+    <div class="phs-logo">IPA<span>TECHS</span></div>
+    <div class="phs-page">Core Values</div>
+  </div>
+
+  <div class="pc">
+    <div class="lbl">What Guides Us</div>
+    <div class="sec-title">OUR CORE <span>VALUES</span></div>
+
+    <div class="vals-grid">
+      <div class="val-card">
+        <div class="val-ghost-num">01</div>
+        <div class="val-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="val-body">
+          <h4>Quality First</h4>
+          <p>We supply only certified, genuine products from vetted global manufacturers. Every component we deliver is traceable and meets international standards. No compromises on quality — ever.</p>
+        </div>
+      </div>
+
+      <div class="val-card">
+        <div class="val-ghost-num">02</div>
+        <div class="val-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="val-body">
+          <h4>Timely Delivery</h4>
+          <p>We understand that downtime costs money. Our efficient logistics networks, strategic warehousing in Dar es Salaam, and same-day quote capability ensure you get parts when you need them most.</p>
+        </div>
+      </div>
+
+      <div class="val-card">
+        <div class="val-ghost-num">03</div>
+        <div class="val-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="val-body">
+          <h4>Client Partnership</h4>
+          <p>We invest in long-term relationships built on trust, transparency, and deep technical expertise. We work as your engineering partner, not just a supplier — solving problems before they arise.</p>
+        </div>
+      </div>
+
+      <div class="val-card">
+        <div class="val-ghost-num">04</div>
+        <div class="val-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <div class="val-body">
+          <h4>Innovation</h4>
+          <p>We constantly evolve our offerings to match technological advances in engineering. From automation to renewable energy, we connect our clients with the latest solutions for modern industry.</p>
+        </div>
+      </div>
+
+      <div class="val-card">
+        <div class="val-ghost-num">05</div>
+        <div class="val-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M7.5 12.5l3 3 6-6"/></svg>
+        </div>
+        <div class="val-body">
+          <h4>Integrity</h4>
+          <p>Honesty and transparency in all our business dealings. We give accurate technical advice, honour quoted prices, and stand behind every product we supply — even when it's not the easy path.</p>
+        </div>
+      </div>
+
+      <div class="val-card">
+        <div class="val-ghost-num">06</div>
+        <div class="val-icon-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="val-body">
+          <h4>Sustainability</h4>
+          <p>We actively promote energy-efficient and eco-friendly technologies — from solar systems to smart energy management. We believe industrial progress and environmental responsibility can coexist.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>IPATECHS Company Limited</span><span class="pf-dot"></span>
+    <span>Core Values</span><span class="pf-dot"></span>
+    <span>www.ipatechs.com</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+  PAGE 6 — SERVICES
+══════════════════════════════════════════ -->
+<div class="page svc-page">
+  <div class="page-header-stripe">
+    <div class="phs-logo">IPA<span>TECHS</span></div>
+    <div class="phs-page">Our Services</div>
+  </div>
+
+  <div class="pc">
+    <div class="lbl">Key Services &amp; Specializations</div>
+    <div class="sec-title">WHAT WE <span>DELIVER</span></div>
+
+    <div class="svc-grid-9">
+      <div class="svc-card hl">
+        <div class="svc-ghost">01</div>
+        <div class="svc-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div>
+        <h4>Industrial Spare Parts</h4>
+        <p>Bearings, belts, hydraulics, seals, pumps &amp; filtration systems for all sectors.</p>
+        <div class="svc-tags"><span class="svc-tag">SKF · FAG · Timken</span><span class="svc-tag">Parker · Gates</span></div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-ghost">02</div>
+        <div class="svc-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <h4>Mechanical Engineering</h4>
+        <p>Motors, gearboxes, valves, precision tools &amp; maintenance support.</p>
+        <div class="svc-tags"><span class="svc-tag">Siemens · SEW</span><span class="svc-tag">Grundfos</span></div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-ghost">03</div>
+        <div class="svc-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <h4>Electrical Engineering</h4>
+        <p>Switchgears, VFDs, motors, drives, cables &amp; power distribution.</p>
+        <div class="svc-tags"><span class="svc-tag">ABB · Siemens</span><span class="svc-tag">Schneider</span></div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-ghost">04</div>
+        <div class="svc-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3z"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg></div>
+        <h4>Material Engineering</h4>
+        <p>Corrosion-resistant alloys, heat-resistant steels &amp; composites.</p>
+        <div class="svc-tags"><span class="svc-tag">Stainless Steel</span><span class="svc-tag">Alloys</span></div>
+      </div>
+      <div class="svc-card hl">
+        <div class="svc-ghost">05</div>
+        <div class="svc-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M12 2a10 10 0 0 1 0 20M12 2a10 10 0 0 0 0 20"/></svg></div>
+        <h4>Petroleum &amp; Gas</h4>
+        <p>Pipelines, valves, flow control &amp; safety systems for O&amp;G operations.</p>
+        <div class="svc-tags"><span class="svc-tag">Rotork · Honeywell</span></div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-ghost">06</div>
+        <div class="svc-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+        <h4>Power &amp; Energy</h4>
+        <p>Generators, turbines, solar panels &amp; energy storage solutions.</p>
+        <div class="svc-tags"><span class="svc-tag">Cummins · CAT</span><span class="svc-tag">Mecc Alte</span></div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-ghost">07</div>
+        <div class="svc-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <h4>Mining Solutions</h4>
+        <p>Crushers, conveyors, excavation machinery &amp; wear parts.</p>
+        <div class="svc-tags"><span class="svc-tag">CAT · Komatsu</span><span class="svc-tag">Metso</span></div>
+      </div>
+      <div class="svc-card hl">
+        <div class="svc-ghost">08</div>
+        <div class="svc-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <h4>Automation Engineering</h4>
+        <p>PLCs, SCADA, IoT sensors, robotics &amp; smart control panels.</p>
+        <div class="svc-tags"><span class="svc-tag">Siemens SIMATIC</span><span class="svc-tag">Rockwell</span></div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-ghost">09</div>
+        <div class="svc-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 7h6M9 12h6M9 17h4"/></svg></div>
+        <h4>Construction Sector</h4>
+        <p>CAT, Komatsu, Terex machinery, cranes &amp; construction spares.</p>
+        <div class="svc-tags"><span class="svc-tag">CAT · Terex</span><span class="svc-tag">Konecranes</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>IPATECHS Company Limited</span><span class="pf-dot"></span>
+    <span>Our Services</span><span class="pf-dot"></span>
+    <span>www.ipatechs.com</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+  PAGE 7 — INDUSTRIES WE SERVE
+══════════════════════════════════════════ -->
+<div class="page ind-page">
+  <div class="page-header-stripe">
+    <div class="phs-logo">IPA<span>TECHS</span></div>
+    <div class="phs-page">Industries We Serve</div>
+  </div>
+
+  <div class="pc">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12mm;align-items:start;">
+      <div>
+        <div class="lbl">Sectors We Power</div>
+        <div class="sec-title">INDUSTRIES <span>WE SERVE</span></div>
+        <p class="body-text" style="margin-top:10px;">
+          Our products and services reach the most demanding industries across
+          East Africa. From deep-water port operations to underground gold mining,
+          from gas processing plants to smart automated factories — IPATECHS has
+          the expertise and supply chain to deliver in any environment.
+        </p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div class="fact-row">
+          <div class="fact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div class="fact-info"><h5>Mines Served</h5><p>Geita, Bulyanhulu, North Mara,<br>Buzwagi &amp; more</p></div>
+        </div>
+        <div class="fact-row">
+          <div class="fact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/></svg></div>
+          <div class="fact-info"><h5>Countries</h5><p>Tanzania · Kenya · Uganda<br>Rwanda · Zambia</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ind-list">
+      <div class="ind-item"><div class="ind-num">01</div><div class="ind-info"><h5>Port Handling Equipment</h5><p>Ship-to-shore cranes, RTGs &amp; container terminals</p></div></div>
+      <div class="ind-item"><div class="ind-num">02</div><div class="ind-info"><h5>Oil &amp; Gas Industry</h5><p>Upstream, midstream &amp; downstream operations</p></div></div>
+      <div class="ind-item"><div class="ind-num">03</div><div class="ind-info"><h5>Automation &amp; Control</h5><p>PLC, DCS, SCADA &amp; industrial robotics</p></div></div>
+      <div class="ind-item"><div class="ind-num">04</div><div class="ind-info"><h5>Electrical Solutions</h5><p>VFDs, switchgear &amp; power distribution</p></div></div>
+      <div class="ind-item"><div class="ind-num">05</div><div class="ind-info"><h5>Mining Solutions</h5><p>Excavation, crushing &amp; mineral processing</p></div></div>
+      <div class="ind-item"><div class="ind-num">06</div><div class="ind-info"><h5>Cement Industries</h5><p>Kiln parts, instrumentation &amp; filtration</p></div></div>
+      <div class="ind-item"><div class="ind-num">07</div><div class="ind-info"><h5>Water &amp; Wastewater</h5><p>Industrial valves, pumps &amp; treatment systems</p></div></div>
+      <div class="ind-item"><div class="ind-num">08</div><div class="ind-info"><h5>Power Generation</h5><p>Hydro, wind, gas &amp; solar energy plants</p></div></div>
+      <div class="ind-item"><div class="ind-num">09</div><div class="ind-info"><h5>Filtration Industries</h5><p>Oil, gas, fuel &amp; carbon filtration systems</p></div></div>
+      <div class="ind-item"><div class="ind-num">10</div><div class="ind-info"><h5>Agricultural Engineering</h5><p>Sugar mills, sisal &amp; food processing</p></div></div>
+      <div class="ind-item"><div class="ind-num">11</div><div class="ind-info"><h5>General Manufacturing</h5><p>Starters, pumps, motors &amp; machinery</p></div></div>
+      <div class="ind-item"><div class="ind-num">12</div><div class="ind-info"><h5>Construction Sector</h5><p>Earthmoving, infrastructure &amp; port projects</p></div></div>
+    </div>
+
+    <div class="ind-banner">
+      <p>12 INDUSTRIES · 6 COUNTRIES · 150+ CLIENTS</p>
+      <span>Serving East Africa's most critical operations since 2019</span>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>IPATECHS Company Limited</span><span class="pf-dot"></span>
+    <span>Industries We Serve</span><span class="pf-dot"></span>
+    <span>www.ipatechs.com</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+  PAGE 8 — HOW WE WORK
+══════════════════════════════════════════ -->
+<div class="page proc-page">
+  <div class="page-header-stripe">
+    <div class="phs-logo">IPA<span>TECHS</span></div>
+    <div class="phs-page">Our Process</div>
+  </div>
+
+  <div class="pc">
+    <div class="lbl">How We Deliver Results</div>
+    <div class="sec-title">OUR <span>PROCESS</span></div>
+
+    <div class="proc-steps">
+      <div class="proc-step">
+        <div class="proc-num-box">01</div>
+        <div class="proc-content">
+          <h4>Enquiry &amp; Requirement Analysis</h4>
+          <p>Clients contact us via WhatsApp, email, or phone with part numbers, specifications, or equipment descriptions. Our engineers analyse requirements and confirm the correct product, grade, and quantity — preventing costly ordering errors before they happen.</p>
+        </div>
+      </div>
+      <div class="proc-divider"></div>
+      <div class="proc-step">
+        <div class="proc-num-box">02</div>
+        <div class="proc-content">
+          <h4>Same-Day Technical Quotation</h4>
+          <p>We respond with a detailed written quotation within 2 hours on business days. Our quotes include product specifications, brand certification, lead time, delivery terms, and pricing — fully transparent, no hidden charges, valid for 30 days.</p>
+        </div>
+      </div>
+      <div class="proc-divider"></div>
+      <div class="proc-step">
+        <div class="proc-num-box">03</div>
+        <div class="proc-content">
+          <h4>Sourcing &amp; Quality Verification</h4>
+          <p>Orders are placed through authorised manufacturer channels. On receipt at our Dar es Salaam warehouse, every shipment is inspected for packaging integrity, hologram verification, batch numbering, and dimensional accuracy before client dispatch.</p>
+        </div>
+      </div>
+      <div class="proc-divider"></div>
+      <div class="proc-step">
+        <div class="proc-num-box">04</div>
+        <div class="proc-content">
+          <h4>Delivery &amp; Logistics</h4>
+          <p>Within Dar es Salaam, same-day or next-morning delivery is standard. Upcountry deliveries to Mwanza, Arusha, Mbeya, and Dodoma reach clients within 24–72 hours. International orders to Kenya, Uganda, Rwanda, and Zambia are coordinated with proven freight partners.</p>
+        </div>
+      </div>
+      <div class="proc-divider"></div>
+      <div class="proc-step">
+        <div class="proc-num-box">05</div>
+        <div class="proc-content">
+          <h4>After-Sales Support &amp; Partnership</h4>
+          <p>Our relationship continues after delivery. We provide installation guidance, failure analysis, warranty processing, and preventive maintenance programme recommendations — building the long-term partnerships that define the IPATECHS difference.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-cta">
+      <div class="proc-cta-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.4 19.79 19.79 0 0 1 1.62 4.84a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+      <div class="proc-cta-text">
+        <h5>Ready to Start? Get a Quote in Under 2 Hours</h5>
+        <p>Contact us on +255 750 304 097 · info@ipatechs.com · wa.me/255750304097</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>IPATECHS Company Limited</span><span class="pf-dot"></span>
+    <span>Our Process</span><span class="pf-dot"></span>
+    <span>www.ipatechs.com</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+  PAGE 9 — OUR TEAM
+══════════════════════════════════════════ -->
+<div class="page team-page">
+  <div class="page-header-stripe">
+    <div class="phs-logo">IPA<span>TECHS</span></div>
+    <div class="phs-page">Our Team</div>
+  </div>
+
+  <div class="pc">
+    <div class="lbl">The People Behind IPATECHS</div>
+    <div class="sec-title">OUR <span>LEADERSHIP</span></div>
+
+    <p class="body-text">
+      Our success is built on the expertise, dedication, and passion of our
+      team. From qualified mechanical and electrical engineers to experienced
+      procurement specialists and logistics coordinators — every IPATECHS team
+      member brings deep industry knowledge and a genuine commitment to client success.
+    </p>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-photo-placeholder">TD</div>
+        <div class="team-info">
+          <div class="team-dept">Founder &amp; Leadership</div>
+          <div class="team-name">Thomas Daudi</div>
+          <div class="team-role">Founder &amp; Managing Director</div>
+          <div class="team-bio">Visionary entrepreneur with extensive experience in industrial procurement across East Africa. Thomas founded IPATECHS with the mission of raising the standard of engineering supply in Tanzania.</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-photo-placeholder">EM</div>
+        <div class="team-info">
+          <div class="team-dept">Operations</div>
+          <div class="team-name">Elizabeth Mrema</div>
+          <div class="team-role">Operations &amp; Supply Chain Manager</div>
+          <div class="team-bio">Logistics and supply chain specialist who ensures every order reaches its destination on time. Elizabeth manages our Dar es Salaam warehouse and all logistics partnerships.</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-photo-placeholder">GK</div>
+        <div class="team-info">
+          <div class="team-dept">Engineering</div>
+          <div class="team-name">George Kessy</div>
+          <div class="team-role">Senior Technical Engineer</div>
+          <div class="team-bio">Mechanical engineer specialising in rotating equipment and automation systems. George leads our technical sales team, providing application engineering support to clients across Tanzania.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--dark3);border-top:2px solid var(--orange);padding:14px 18px;margin-top:10mm;">
+      <p class="body-text">
+        Our team of <strong style="color:var(--white);">qualified engineers and procurement specialists</strong> brings together expertise across mechanical, electrical, automation, and materials engineering disciplines — ensuring every client receives technically sound recommendations backed by genuine product knowledge.
+      </p>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>IPATECHS Company Limited</span><span class="pf-dot"></span>
+    <span>Our Team</span><span class="pf-dot"></span>
+    <span>www.ipatechs.com</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+  PAGE 10 — WHY CHOOSE US
+══════════════════════════════════════════ -->
+<div class="page why-page">
+  <div class="why-banner-image">
+    <img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=900&q=85" alt=""/>
+    <div class="why-banner-overlay"></div>
+    <div class="why-banner-text">
+      <div class="lbl">Our Competitive Edge</div>
+      <div class="sec-title">WHY CHOOSE <span>IPATECHS</span></div>
+    </div>
+  </div>
+
+  <div class="pc">
+    <div class="why-grid-6">
+      <div class="why-card">
+        <div class="why-n">01</div>
+        <div class="why-text">
+          <h5>Comprehensive Offerings</h5>
+          <p>Complete end-to-end engineering solutions — from routine spare parts to full heavy construction machinery — covering every industrial need under one roof.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-n">02</div>
+        <div class="why-text">
+          <h5>Genuine OEM Guarantee</h5>
+          <p>100% traceable products from authorised manufacturer channels. Every bearing, motor, and drive comes with batch certificates and manufacturer warranty — zero counterfeits.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-n">03</div>
+        <div class="why-text">
+          <h5>Technical Expertise</h5>
+          <p>We are engineers, not just order-takers. Our team cross-references part numbers, recommends correct specifications, and provides failure analysis — adding real technical value.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-n">04</div>
+        <div class="why-text">
+          <h5>Speed &amp; Reliability</h5>
+          <p>Same-day quotations, next-day local delivery, and 24–72 hour nationwide dispatch. Our Dar es Salaam warehouse ensures common items are always in stock and ready to ship.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-n">05</div>
+        <div class="why-text">
+          <h5>Local Presence, Global Reach</h5>
+          <p>Deeply embedded in the Tanzanian market with export capability across 6 East African countries. We understand local logistics, regulations, and industry requirements.</p>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-n">06</div>
+        <div class="why-text">
+          <h5>Sustainability Commitment</h5>
+          <p>Actively promoting energy-efficient technologies — solar systems, smart energy management, and eco-friendly engineering solutions that benefit both our clients and the environment.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="why-promise-strip">
+      <div class="why-promise-item">
+        <div class="wpi-num">2hrs</div>
+        <div class="wpi-lbl">Quote Response</div>
+        <div class="wpi-sub">Same-day written quotations on all enquiries Mon–Fri</div>
+      </div>
+      <div class="why-promise-item">
+        <div class="wpi-num">24–72h</div>
+        <div class="wpi-lbl">Nationwide Delivery</div>
+        <div class="wpi-sub">From Dar es Salaam to all regions of Tanzania</div>
+      </div>
+      <div class="why-promise-item">
+        <div class="wpi-num">100%</div>
+        <div class="wpi-lbl">OEM Genuine</div>
+        <div class="wpi-sub">Every product fully traceable to manufacturer</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>IPATECHS Company Limited</span><span class="pf-dot"></span>
+    <span>Why Choose Us</span><span class="pf-dot"></span>
+    <span>www.ipatechs.com</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+  PAGE 11 — PORTFOLIO
+══════════════════════════════════════════ -->
+<div class="page port-page">
+  <div class="page-header-stripe">
+    <div class="phs-logo">IPA<span>TECHS</span></div>
+    <div class="phs-page">Portfolio &amp; Projects</div>
+  </div>
+
+  <div class="pc">
+    <div class="lbl">Our Work in Action</div>
+    <div class="sec-title">RECENTLY COMPLETED <span>PROJECTS</span></div>
+
+    <div class="port-grid">
+      <div class="port-item">
+        <img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=85" alt="Cummins"/>
+        <div class="port-item-overlay"></div>
+        <div class="port-item-info"><div class="port-cat">Power Systems</div><div class="port-title">Cummins QSK Engine Installation<br>&amp; Commissioning</div></div>
+      </div>
+      <div class="port-item">
+        <img src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=600&q=85" alt="Mining"/>
+        <div class="port-item-overlay"></div>
+        <div class="port-item-info"><div class="port-cat">Mining Solutions</div><div class="port-title">Mining Equipment Parts Supply<br>Geita Gold Mine</div></div>
+      </div>
+      <div class="port-item">
+        <img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=600&q=85" alt="Bearings"/>
+        <div class="port-item-overlay"></div>
+        <div class="port-item-info"><div class="port-cat">Mechanical Parts</div><div class="port-title">SKF Bearings Supply for<br>Cement Plant Tanzania</div></div>
+      </div>
+      <div class="port-item">
+        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=85" alt="Automation"/>
+        <div class="port-item-overlay"></div>
+        <div class="port-item-info"><div class="port-cat">Automation</div><div class="port-title">Siemens PLC/SCADA System<br>Integration &amp; Commissioning</div></div>
+      </div>
+    </div>
+
+    <div class="port-feat">
+      <div class="port-feat-item">
+        <div class="port-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <div class="port-feat-text"><h6>5 Gold Mines Served</h6><p>Critical parts supply to Tanzania's leading mining operations</p></div>
+      </div>
+      <div class="port-feat-item">
+        <div class="port-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+        <div class="port-feat-text"><h6>3 Cement Plants</h6><p>Ongoing parts and maintenance support for Tanzanian cement industry</p></div>
+      </div>
+      <div class="port-feat-item">
+        <div class="port-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/></svg></div>
+        <div class="port-feat-text"><h6>SGR Railway Project</h6><p>Construction equipment parts for Tanzania's Standard Gauge Railway</p></div>
+      </div>
+      <div class="port-feat-item">
+        <div class="port-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M12 2a10 10 0 0 1 0 20M12 2a10 10 0 0 0 0 20"/></svg></div>
+        <div class="port-feat-text"><h6>Gas Pipeline Infrastructure</h6><p>Valves, actuators &amp; instruments for Mtwara–DSM gas pipeline</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>IPATECHS Company Limited</span><span class="pf-dot"></span>
+    <span>Portfolio</span><span class="pf-dot"></span>
+    <span>www.ipatechs.com</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+  PAGE 12 — BRAND PARTNERS
+══════════════════════════════════════════ -->
+<div class="page partners-page">
+  <div class="page-header-stripe">
+    <div class="phs-logo">IPA<span>TECHS</span></div>
+    <div class="phs-page">Brand Partners</div>
+  </div>
+
+  <div class="pc">
+    <div class="lbl">Our Global Manufacturer Network</div>
+    <div class="sec-title">TRUSTED <span>PARTNERS</span></div>
+
+    <div class="partners-grid-5x4">
+      <div class="partner-card"><img src="https://img.logo.dev/abb.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="ABB"/><span>ABB</span></div>
+      <div class="partner-card"><img src="https://img.logo.dev/siemens.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Siemens"/><span>Siemens</span></div>
+      <div class="partner-card"><img src="https://img.logo.dev/skf.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="SKF"/><span>SKF</span></div>
+      <div class="partner-card"><img src="https://img.logo.dev/cummins.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Cummins"/><span>Cummins</span></div>
+      <div class="partner-card"><img src="https://img.logo.dev/grundfos.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Grundfos"/><span>Grundfos</span></div>
+      <div class="partner-card"><img src="https://img.logo.dev/honeywell.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Honeywell"/><span>Honeywell</span></div>
+      <div class="partner-card"><img src="https://img.logo.dev/se.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Schneider"/><span>Schneider</span></div>
+      <div class="partner-card"><img src="https://img.logo.dev/timken.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Timken"/><span>Timken</span></div>
+      <div class="partner-card"><img src="https://img.logo.dev/caterpillar.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="CAT"/><span>Caterpillar</span></div>
+      <div class="partner-card"><img src="https://img.logo.dev/endress.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="E+H"/><span>Endress+H</span></div>
+      <div class="partner-card"><img src="https://img.logo.dev/rockwellautomation.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Rockwell"/><span>Rockwell</span></div>
+      <div class="partner-card"><img src="https://img.logo.dev/rotork.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Rotork"/><span>Rotork</span></div>
+      <div class="partner-card"><img src="https://img.logo.dev/wika.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="WIKA"/><span>WIKA</span></div>
+      <div class="partner-card"><img src="https://img.logo.dev/emerson.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Emerson"/><span>Emerson</span></div>
+      <div class="partner-card"><img src="https://img.logo.dev/volvo.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Volvo"/><span>Volvo CE</span></div>
+      <div class="partner-card"><img src="https://img.logo.dev/donaldson.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Donaldson"/><span>Donaldson</span></div>
+      <div class="partner-card"><img src="https://img.logo.dev/konecranes.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Konecranes"/><span>Konecranes</span></div>
+      <div class="partner-card"><img src="https://img.logo.dev/xylem.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Xylem"/><span>Xylem</span></div>
+      <div class="partner-card"><img src="https://img.logo.dev/terex.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Terex"/><span>Terex</span></div>
+      <div class="partner-card"><img src="https://img.logo.dev/meccalte.com?token=pk_cx59tS09RMK0nxV1x3-vag" alt="Mecc Alte"/><span>Mecc Alte</span></div>
+    </div>
+
+    <div class="partner-statement">
+      <p>
+        <strong>29+ global brand partnerships</strong> mean we offer unmatched product breadth and genuine manufacturer support. Every brand we represent has been carefully selected for their engineering excellence, product reliability, and global service capability. Our partnerships give us access to factory technical resources, priority stock allocation, and competitive pricing — benefits we pass directly to our clients.
+      </p>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>IPATECHS Company Limited</span><span class="pf-dot"></span>
+    <span>Brand Partners</span><span class="pf-dot"></span>
+    <span>www.ipatechs.com</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+  PAGE 13 — CERTIFICATIONS & CSR
+══════════════════════════════════════════ -->
+<div class="page cert-page">
+  <div class="page-header-stripe">
+    <div class="phs-logo">IPA<span>TECHS</span></div>
+    <div class="phs-page">Certifications &amp; CSR</div>
+  </div>
+
+  <div class="pc">
+    <div class="cert-grid">
+      <div>
+        <div class="lbl">Credentials &amp; Accreditations</div>
+        <div class="sec-title" style="font-size:30px;margin-bottom:12px;">CERTIFICATIONS</div>
+        <div class="cert-cards">
+          <div class="cert-card">
+            <div class="cert-badge">ISO<br>9001</div>
+            <div class="cert-info"><h5>Quality Management System</h5><p>Operating to ISO 9001:2015 quality management standards for consistent service delivery and product traceability across all operations.</p></div>
+          </div>
+          <div class="cert-card">
+            <div class="cert-badge">TBS<br>REG</div>
+            <div class="cert-info"><h5>Tanzania Bureau of Standards</h5><p>Registered and compliant with Tanzania Bureau of Standards requirements for the supply of industrial and engineering products in Tanzania.</p></div>
+          </div>
+          <div class="cert-card">
+            <div class="cert-badge">OEM<br>AUTH</div>
+            <div class="cert-info"><h5>Authorised Distributor Channels</h5><p>Products sourced exclusively through authorised manufacturer distribution networks — ABB, Siemens, SKF, Cummins &amp; 25+ additional global brands.</p></div>
+          </div>
+          <div class="cert-card">
+            <div class="cert-badge">BRELA<br>REG</div>
+            <div class="cert-info"><h5>Business Registration</h5><p>Duly registered company with the Business Registrations and Licensing Agency (BRELA) of Tanzania and fully tax-compliant with TRA.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="lbl">Corporate Social Responsibility</div>
+        <div class="sec-title" style="font-size:30px;margin-bottom:12px;">OUR CSR</div>
+        <div class="csr-items">
+          <div class="csr-item">
+            <h5>Local Employment &amp; Skills Development</h5>
+            <p>IPATECHS is committed to employing and developing Tanzanian engineering talent. We invest in team training, manufacturer-certified programmes, and ongoing professional development to build local technical capacity.</p>
+          </div>
+          <div class="csr-item">
+            <h5>Sustainability &amp; Clean Energy Advocacy</h5>
+            <p>We actively promote solar energy, energy-efficient drives, and eco-friendly industrial technologies across East Africa — helping our clients reduce their carbon footprint while improving operational efficiency.</p>
+          </div>
+          <div class="csr-item">
+            <h5>Supporting Tanzanian Infrastructure</h5>
+            <p>By ensuring reliable parts supply to water treatment plants, hospitals, and power stations, IPATECHS contributes to the public infrastructure that sustains Tanzanian communities.</p>
+          </div>
+          <div class="csr-item">
+            <h5>Ethical Business Practices</h5>
+            <p>We operate with full transparency — no counterfeit products, no inflated pricing, and no unethical procurement practices. Our business is built on trust and long-term relationships.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>IPATECHS Company Limited</span><span class="pf-dot"></span>
+    <span>Certifications &amp; CSR</span><span class="pf-dot"></span>
+    <span>www.ipatechs.com</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+  PAGE 14 — TESTIMONIALS
+══════════════════════════════════════════ -->
+<div class="page test-page">
+  <div class="page-header-stripe">
+    <div class="phs-logo">IPA<span>TECHS</span></div>
+    <div class="phs-page">Client Testimonials</div>
+  </div>
+
+  <div class="pc">
+    <div class="lbl">What Our Clients Say</div>
+    <div class="sec-title">CLIENT <span>TESTIMONIALS</span></div>
+
+    <div class="test-grid">
+      <div class="test-card">
+        <div class="test-quote-mark">&#8220;</div>
+        <p class="test-text">IPATECHS has been our go-to supplier for industrial spare parts for over three years. Their response time is exceptional — we typically receive quotes within two hours and deliveries to our Mwanza site within 48 hours. The quality of SKF bearings and Siemens motors they supply has consistently met our specifications.</p>
+        <div class="test-author">
+          <div class="test-avatar">JM</div>
+          <div><div class="test-name">James Mushi</div><div class="test-role">Procurement Manager · Geita Gold Mining</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-quote-mark">&#8220;</div>
+        <p class="test-text">We needed a critical Cummins engine part for our generator set. IPATECHS sourced and delivered it within five days — faster than any other supplier we contacted. Their technical team understood exactly what we needed and cross-referenced the part number correctly the first time.</p>
+        <div class="test-author">
+          <div class="test-avatar">AK</div>
+          <div><div class="test-name">Andrew Kilango</div><div class="test-role">Maintenance Engineer · Songas Limited</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-quote-mark">&#8220;</div>
+        <p class="test-text">As a construction company handling the SGR project, equipment downtime is not an option. IPATECHS keeps us supplied with CAT and Terex parts — hydraulic components, filters, undercarriage parts. Their Dar es Salaam warehouse means we get parts the same day when we need them most.</p>
+        <div class="test-author">
+          <div class="test-avatar">RM</div>
+          <div><div class="test-name">Rashid Mbwana</div><div class="test-role">Equipment Manager · Tanzania Railways Contractor</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-quote-mark">&#8220;</div>
+        <p class="test-text">The automation engineering support from IPATECHS helped us upgrade our production line controls from relay-based to PLC SCADA. They supplied Siemens SIMATIC S7-1200 PLCs, HMI panels, and all associated switchgear. The technical guidance during installation was invaluable for our in-house team.</p>
+        <div class="test-author">
+          <div class="test-avatar">DS</div>
+          <div><div class="test-name">David Semboja</div><div class="test-role">Plant Manager · Dar es Salaam Beverage Company</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-quote-mark">&#8220;</div>
+        <p class="test-text">We switched to IPATECHS for our bearing and power transmission needs two years ago and haven't looked back. Their pricing is competitive and they always have stock of the common SKF and Timken sizes we use in our sugar processing equipment. The WhatsApp ordering system is incredibly convenient.</p>
+        <div class="test-author">
+          <div class="test-avatar">FN</div>
+          <div><div class="test-name">Fatima Njau</div><div class="test-role">Procurement Officer · Kilombero Sugar Company</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-quote-mark">&#8220;</div>
+        <p class="test-text">Finding genuine OEM parts for older Komatsu mining equipment in Tanzania used to be a challenge. IPATECHS sources directly from authorised distributors and delivers to our North Mara site reliably. Their knowledge of mining equipment specifications saves us from ordering incorrect parts.</p>
+        <div class="test-author">
+          <div class="test-avatar">PO</div>
+          <div><div class="test-name">Peter Ochieng</div><div class="test-role">Senior Buyer · North Mara Gold Mine</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>IPATECHS Company Limited</span><span class="pf-dot"></span>
+    <span>Testimonials</span><span class="pf-dot"></span>
+    <span>www.ipatechs.com</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+  PAGE 15 — CONTACT INFORMATION
+══════════════════════════════════════════ -->
+<div class="page contact-page">
+  <div class="contact-hero-strip">
+    <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=900&q=85" alt=""/>
+    <div class="chero-overlay"></div>
+    <div class="chero-text">
+      <div class="lbl">Reach Out To Us</div>
+      <div class="sec-title">CONTACT <span>INFORMATION</span></div>
+    </div>
+  </div>
+
+  <div class="pc">
+    <div class="contact-grid">
+      <div class="contact-block">
+        <h3>GET IN TOUCH</h3>
+        <div class="ci-big">
+          <div class="ci-big-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div class="ci-big-text"><div class="ci-l">Address</div><div class="ci-v">Makongo Road, Postal Code 14129<br>Dar es Salaam, Tanzania</div></div>
+        </div>
+        <div class="ci-big">
+          <div class="ci-big-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.4 19.79 19.79 0 0 1 1.62 4.84a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <div class="ci-big-text"><div class="ci-l">Phone &amp; WhatsApp</div><div class="ci-v">+255 750 304 097</div></div>
+        </div>
+        <div class="ci-big">
+          <div class="ci-big-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div class="ci-big-text"><div class="ci-l">Email</div><div class="ci-v">info@ipatechs.com</div></div>
+        </div>
+        <div class="ci-big">
+          <div class="ci-big-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <div class="ci-big-text"><div class="ci-l">Website</div><div class="ci-v">www.ipatechs.com</div></div>
+        </div>
+      </div>
+
+      <div class="contact-social">
+        <div style="margin-bottom:4px;">
+          <div class="lbl" style="margin-bottom:8px;">Follow Us Online</div>
+        </div>
+        <div class="social-row">
+          <div class="social-ico"><svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></div>
+          <div class="social-text"><h6>LinkedIn</h6><p>linkedin.com/company/ipatechs</p></div>
+        </div>
+        <div class="social-row">
+          <div class="social-ico"><svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></div>
+          <div class="social-text"><h6>Facebook</h6><p>facebook.com/ipatechs</p></div>
+        </div>
+        <div class="social-row">
+          <div class="social-ico"><svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.554 4.118 1.525 5.845L.057 23.617a.5.5 0 0 0 .609.61l5.88-1.459A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.369l-.36-.213-3.49.867.878-3.405-.234-.372A9.818 9.818 0 1 1 12 21.818z"/></svg></div>
+          <div class="social-text"><h6>WhatsApp</h6><p>wa.me/255750304097</p></div>
+        </div>
+        <div class="social-row">
+          <div class="social-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <div class="social-text"><h6>Website</h6><p>www.ipatechs.com</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-hours">
+      <h5>Business Hours &amp; Coverage Area</h5>
+      <p>
+        <strong style="color:var(--white);">Office Hours:</strong> Monday – Friday, 08:00 – 17:00 EAT &nbsp;·&nbsp;
+        <strong style="color:var(--white);">WhatsApp:</strong> Monday – Saturday &nbsp;·&nbsp;
+        <strong style="color:var(--white);">Emergency Parts:</strong> 24/7 for critical breakdowns
+        <br><br>
+        <strong style="color:var(--white);">Delivery Coverage:</strong> All Tanzania (same-day Dar es Salaam · 24–72hr nationwide) · Kenya · Uganda · Rwanda · Zambia · Mozambique
+      </p>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>IPATECHS Company Limited</span><span class="pf-dot"></span>
+    <span>Contact Information</span><span class="pf-dot"></span>
+    <span>www.ipatechs.com</span>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+  PAGE 16 — BACK COVER
+══════════════════════════════════════════ -->
+<div class="page back-cover-page">
+  <img class="bc-bg-img" src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=900&q=90" alt=""/>
+  <div class="bc-grid-overlay"></div>
+  <div class="bc-orange-bar"></div>
+
+  <div class="bc-inner">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:0 10mm;">
+
+      <div class="bc-logo-big">
+        <div class="bc-logo-hex">
+          <img src="assets/images/logo.png" alt="IPATECHS Logo"/>
+        </div>
+        <div class="bc-logo-name">IPATECHS CO LTD</div>
+      </div>
+
+      <p class="bc-tagline">
+        East Africa's most trusted supplier of industrial spare parts,
+        precision engineering solutions, and construction equipment.
+        Connecting global brands to local industries — since 2019.
+      </p>
+
+      <div class="bc-divider"></div>
+
+      <div class="bc-cta-text">LET'S WORK TOGETHER</div>
+
+      <div class="bc-contact-pills">
+        <div class="bc-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.4 19.79 19.79 0 0 1 1.62 4.84a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>+255 750 304 097</span>
+        </div>
+        <div class="bc-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span>info@ipatechs.com</span>
+        </div>
+        <div class="bc-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span>www.ipatechs.com</span>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:8px;">
+        <div class="bc-pill" style="font-size:9px;padding:6px 12px;">
+          <span style="font-size:9px;letter-spacing:0.14em;color:var(--muted);">INDUSTRIAL PARTS</span>
+        </div>
+        <div class="bc-pill" style="padding:6px 12px;">
+          <span style="font-size:9px;letter-spacing:0.14em;color:var(--muted);">ENGINEERING EXCELLENCE</span>
+        </div>
+        <div class="bc-pill" style="padding:6px 12px;">
+          <span style="font-size:9px;letter-spacing:0.14em;color:var(--muted);">CONSTRUCTION EQUIPMENT</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bc-bottom-bar">
+      <span>© 2025 IPATECHS COMPANY LIMITED</span>
+      <span>Makongo Road, Sinza · Dar es Salaam, Tanzania</span>
+      <span>All Rights Reserved</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

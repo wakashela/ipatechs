@@ -3,8 +3,8 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const htmlPath = path.join(__dirname, 'ipatechs_bifold_light.html');
-const pdfPath = path.join(__dirname, 'docs', 'ipatechs_bifold_light.pdf');
+const htmlPath = path.join(__dirname, 'ipatechs_bifold_v0.0.1.html');
+const pdfPath = path.join(__dirname, 'docs', 'ipatechs_bifold_v0.0.1.pdf');
 
 async function exportPdf() {
   const browser = await chromium.launch({ headless: true });
