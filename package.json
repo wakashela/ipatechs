@@ -10,7 +10,7 @@
     "dev": "live-server --port=3000 --no-browser",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:css": "cleancss -o css/style.min.css css/style.css",
-    "build:js": "uglifyjs js/industries.js js/products.js js/main.js js/articles.js -o js/bundle.min.js -c -m",
+    "build:js": "uglifyjs js/components.js js/industries.js js/products.js js/articles.js js/search.js js/main.js -o js/bundle.min.js -c -m",
     "build": "npm run build:css && npm run build:js"
   },
   "repository": {

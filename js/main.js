@@ -17,7 +17,7 @@ function animateCount(el, target, duration = 1800) {
     requestAnimationFrame(step);
 }
 const statsObs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { animateCount(document.getElementById('stat-years'), 6); animateCount(document.getElementById('stat-clients'), 150); animateCount(document.getElementById('stat-products'), 50); animateCount(document.getElementById('stat-industries'), 10); statsObs.disconnect(); } });
+        entries.forEach(e => { if (e.isIntersecting) { animateCount(document.getElementById('stat-years'), 6); animateCount(document.getElementById('stat-clients'), 200); animateCount(document.getElementById('stat-products'), 50); animateCount(document.getElementById('stat-industries'), 12); statsObs.disconnect(); } });
 }, { threshold: 0.3 });
 const heroStats = document.querySelector('.hero-stats');
 if (heroStats) statsObs.observe(heroStats);
@@ -42,13 +42,36 @@ function closeModal() { document.getElementById('modalOverlay').classList.remove
 function closeModalOutside(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
 function submitEnquiry() {
     const name = document.getElementById('enquiryName').value.trim();
-    const email = document.getElementById('enquiryEmail').value.trim();
+    const phone = document.getElementById('enquiryPhone').value.trim();
     const msg = document.getElementById('enquiryMessage').value.trim();
-    if (!name || !email || !msg) { alert('Please fill in all required fields.'); return; }
-    alert('Thank you for your enquiry! Our team will contact you shortly.\n\nYou can also reach us at:\nPhone: +255 750 304 097\nEmail: info@ipatechs.com');
+    if (!name || !phone || !msg) {
+        alert('Please fill in your name, WhatsApp number, and what you need.');
+        return;
+    }
+    const product = document.getElementById('modalProductName').textContent;
+    // GTM dataLayer event
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: 'enquiry_submitted', product: product });
+    const text = encodeURIComponent(
+        `Hello IPATECHS,\n\nName: ${name}\nProduct: ${product}\n\n${msg}\n\nContact me on: ${phone}`
+    );
+    window.open(`https://wa.me/255750304097?text=${text}`, '_blank');
     closeModal();
-    ['enquiryName', 'enquiryEmail', 'enquiryPhone', 'enquiryCompany', 'enquiryMessage'].forEach(id => document.getElementById(id).value = '');
 }
+
+// GTM TRACKING — WhatsApp & Phone clicks
+document.querySelectorAll('.whatsapp-float').forEach(function (el) {
+    el.addEventListener('click', function () {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: 'whatsapp_click', source: 'float_button' });
+    });
+});
+document.querySelectorAll('a[href^="tel:"]').forEach(function (el) {
+    el.addEventListener('click', function () {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: 'phone_click' });
+    });
+});
 
 // ACTIVE NAV
 const sections = document.querySelectorAll('section[id]');
