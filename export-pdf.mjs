@@ -14,7 +14,8 @@ async function exportPdf() {
   });
   const page = await context.newPage();
 
-  await page.goto(`file://${htmlPath}`, { waitUntil: 'networkidle', timeout: 30000 });
+  await page.goto(`file://${htmlPath}`, { waitUntil: 'domcontentloaded', timeout: 60000 });
+  await page.waitForTimeout(5000);
 
   await page.addStyleTag({
     content: `@page { size: 210mm 297mm; margin: 0; }`,
