@@ -17,6 +17,7 @@
     { "source": "/tanzania/", "destination": "/tanzania/index.html" },
     { "source": "/dar-es-salaam/", "destination": "/dar-es-salaam/index.html" },
     { "source": "/blog/", "destination": "/blog/index.html" },
-    { "source": "/blog/:slug/", "destination": "/blog/:slug/index.html" }
+    { "source": "/blog/:slug/", "destination": "/blog/:slug/index.html" },
+    { "source": "/image-preview/", "destination": "/image-preview/index.html" }
   ]
 }
