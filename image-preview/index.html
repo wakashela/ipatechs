@@ -544,7 +544,410 @@
     <script defer src="/js/main.js"></script>
     <script defer src="/js/articles.js"></script>
     <script>
-    // JS will be added in Task 3
+(function () {
+    var state = {
+        currentDir: 'assets/images/nano-banana/',
+        images: [],
+        viewMode: 'gallery',
+        lightboxIndex: 0,
+        compareMode: false,
+        selectedForCompare: [],
+        comparisonSliderPos: 0.5,
+        imageMeta: {}
+    };
+
+    var DOM = {
+        galleryGrid: document.getElementById('galleryGrid'),
+        gallerySection: document.getElementById('gallerySection'),
+        emptyState: document.getElementById('emptyState'),
+        loadingState: document.getElementById('loadingState'),
+        imageCount: document.getElementById('imageCount'),
+        btnCompare: document.getElementById('btnCompare'),
+        dirInput: document.getElementById('dirInput'),
+        currentDirDisplay: document.getElementById('currentDirDisplay'),
+        lightboxOverlay: document.getElementById('lightboxOverlay'),
+        lightboxImage: document.getElementById('lightboxImage'),
+        lightboxFilename: document.getElementById('lightboxFilename'),
+        lightboxMeta: document.getElementById('lightboxMeta'),
+        lightboxCounter: document.getElementById('lightboxCounter'),
+        comparisonView: document.getElementById('comparisonView'),
+        comparisonCanvas: document.getElementById('comparisonCanvas'),
+        compareImgLeft: document.getElementById('compareImgLeft'),
+        compareImgRight: document.getElementById('compareImgRight'),
+        compareLabelA: document.getElementById('compareLabelA'),
+        compareLabelB: document.getElementById('compareLabelB'),
+        compareHandle: document.getElementById('compareHandle'),
+        compareKnob: document.getElementById('compareKnob')
+    };
+
+    var IMAGE_EXTS = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.avif', '.bmp'];
+
+    function init() {
+        var queryDir = getQueryParam('dir');
+        if (queryDir) {
+            state.currentDir = queryDir;
+            DOM.dirInput.value = queryDir;
+        }
+        DOM.dirInput.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                loadDirectory(DOM.dirInput.value);
+            }
+        });
+        DOM.dirInput.addEventListener('blur', function () {
+            if (DOM.dirInput.value !== state.currentDir) {
+                loadDirectory(DOM.dirInput.value);
+            }
+        });
+        DOM.btnCompare.addEventListener('click', toggleCompareMode);
+        DOM.lightboxOverlay.addEventListener('click', function (e) {
+            if (e.target === DOM.lightboxOverlay) closeLightbox();
+        });
+        document.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+        document.querySelector('.lightbox-prev').addEventListener('click', function () { navigateLightbox(-1); });
+        document.querySelector('.lightbox-next').addEventListener('click', function () { navigateLightbox(1); });
+        document.getElementById('compareReset').addEventListener('click', resetComparisonSlider);
+        document.getElementById('compareSwap').addEventListener('click', swapComparison);
+        document.getElementById('compareBack').addEventListener('click', closeComparison);
+        loadDirectory(state.currentDir);
+    }
+
+    function getQueryParam(name) {
+        var match = window.location.search.match(new RegExp('[?&]' + name + '=([^&]*)'));
+        return match ? decodeURIComponent(match[1]) : null;
+    }
+
+    function loadDirectory(dir) {
+        dir = dir.replace(/\/$/, '') + '/';
+        state.currentDir = dir;
+        DOM.dirInput.value = dir;
+        DOM.currentDirDisplay.textContent = dir;
+        state.images = [];
+        state.imageMeta = {};
+        DOM.galleryGrid.innerHTML = '';
+        DOM.loadingState.style.display = 'block';
+        DOM.emptyState.style.display = 'none';
+        DOM.imageCount.textContent = 'Loading...';
+        state.viewMode = 'gallery';
+        DOM.comparisonView.classList.remove('active');
+        DOM.gallerySection.style.display = 'block';
+        state.compareMode = false;
+        state.selectedForCompare = [];
+        DOM.btnCompare.classList.remove('active');
+        DOM.btnCompare.textContent = 'Compare Mode';
+
+        fetch(dir)
+            .then(function (res) {
+                if (!res.ok) throw new Error('Cannot read directory');
+                return res.text();
+            })
+            .then(function (html) {
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(html, 'text/html');
+                var links = doc.querySelectorAll('a');
+                var seen = {};
+
+                links.forEach(function (link) {
+                    var href = link.getAttribute('href');
+                    if (!href || href === '../' || href === './') return;
+                    var name = href.replace(/\?.*$/, '').split('/').pop();
+                    var ext = name.substring(name.lastIndexOf('.')).toLowerCase();
+                    if (IMAGE_EXTS.indexOf(ext) !== -1 && !seen[name]) {
+                        seen[name] = true;
+                        state.images.push({
+                            url: dir + name,
+                            name: name,
+                            ext: ext
+                        });
+                    }
+                });
+
+                if (state.images.length === 0) {
+                    showEmpty('No images found in this directory');
+                } else {
+                    DOM.imageCount.innerHTML = '<strong>' + state.images.length + '</strong> images';
+                    renderGallery();
+                }
+                DOM.loadingState.style.display = 'none';
+            })
+            .catch(function () {
+                DOM.loadingState.style.display = 'none';
+                showEmpty('Cannot read directory. Check the path.');
+            });
+    }
+
+    function showEmpty(message) {
+        DOM.emptyState.style.display = 'block';
+        DOM.emptyState.className = 'preview-empty';
+        DOM.emptyState.innerHTML =
+            '<div class="preview-empty-icon">&#128247;</div>' +
+            '<div class="preview-empty-title">Nothing to Show</div>' +
+            '<div class="preview-empty-text">' + message + '</div>';
+        DOM.imageCount.textContent = '0 images';
+    }
+
+    function renderGallery() {
+        DOM.galleryGrid.innerHTML = '';
+        DOM.emptyState.style.display = 'none';
+        state.images.forEach(function (img, i) {
+            var item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.setAttribute('data-index', i);
+            item.innerHTML =
+                '<img src="' + img.url + '" alt="' + img.name + '" loading="lazy" ' +
+                'onerror="this.parentElement.style.display=\'none\'" />' +
+                '<div class="gallery-caption">' + img.name + '</div>';
+            item.addEventListener('click', function () {
+                if (state.compareMode) {
+                    selectForCompare(i, item);
+                } else {
+                    openLightbox(i);
+                }
+            });
+            DOM.galleryGrid.appendChild(item);
+        });
+    }
+
+    function openLightbox(index) {
+        state.viewMode = 'lightbox';
+        state.lightboxIndex = index;
+        showLightboxImage();
+        DOM.lightboxOverlay.classList.add('open');
+    }
+
+    function closeLightbox() {
+        DOM.lightboxOverlay.classList.remove('open');
+        state.viewMode = 'gallery';
+    }
+
+    function showLightboxImage() {
+        var img = state.images[state.lightboxIndex];
+        DOM.lightboxImage.src = img.url;
+        DOM.lightboxFilename.textContent = img.name;
+        DOM.lightboxCounter.textContent = 'Image ' + (state.lightboxIndex + 1) + ' of ' + state.images.length;
+        loadImageMeta(img, function () {
+            DOM.lightboxMeta.textContent = formatMeta(state.imageMeta[img.url]);
+        });
+    }
+
+    function navigateLightbox(delta) {
+        state.lightboxIndex = (state.lightboxIndex + delta + state.images.length) % state.images.length;
+        showLightboxImage();
+    }
+
+    function loadImageMeta(img, cb) {
+        if (state.imageMeta[img.url]) { cb(); return; }
+        var testImg = new Image();
+        testImg.onload = function () {
+            state.imageMeta[img.url] = { width: testImg.naturalWidth, height: testImg.naturalHeight, size: null };
+            cb();
+        };
+        testImg.onerror = function () {
+            state.imageMeta[img.url] = { width: null, height: null, size: null };
+            cb();
+        };
+        testImg.src = img.url;
+    }
+
+    function formatMeta(meta) {
+        if (!meta) return '';
+        var parts = [];
+        if (meta.width && meta.height) parts.push(meta.width + ' \u00d7 ' + meta.height);
+        if (meta.size) parts.push(formatSize(meta.size));
+        return parts.join(' \u00b7 ');
+    }
+
+    function formatSize(bytes) {
+        if (!bytes) return '';
+        if (bytes < 1024) return bytes + ' B';
+        if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+        return (bytes / 1048576).toFixed(1) + ' MB';
+    }
+
+    var addToCompareBtn = document.querySelector('.lightbox-actions .btn-outline');
+    if (addToCompareBtn) addToCompareBtn.addEventListener('click', addToCompare);
+
+    function addToCompare() {
+        var idx = state.lightboxIndex;
+        if (state.selectedForCompare.indexOf(idx) === -1) {
+            state.selectedForCompare.push(idx);
+        }
+        closeLightbox();
+        if (state.selectedForCompare.length >= 2) {
+            openComparison();
+        } else {
+            state.compareMode = true;
+            DOM.btnCompare.classList.add('active');
+            DOM.btnCompare.textContent = 'Compare Mode (1/2)';
+            highlightSelectedItems();
+        }
+    }
+
+    function toggleCompareMode() {
+        state.compareMode = !state.compareMode;
+        state.selectedForCompare = [];
+        if (state.compareMode) {
+            DOM.btnCompare.classList.add('active');
+            DOM.btnCompare.textContent = 'Compare Mode';
+        } else {
+            DOM.btnCompare.classList.remove('active');
+            DOM.btnCompare.textContent = 'Compare Mode';
+            clearSelection();
+        }
+    }
+
+    function selectForCompare(index, el) {
+        var pos = state.selectedForCompare.indexOf(index);
+        if (pos !== -1) {
+            state.selectedForCompare.splice(pos, 1);
+            el.classList.remove('selected');
+        } else {
+            if (state.selectedForCompare.length >= 2) {
+                var removedIdx = state.selectedForCompare.shift();
+                var oldEl = DOM.galleryGrid.querySelector('[data-index="' + removedIdx + '"]');
+                if (oldEl) oldEl.classList.remove('selected');
+            }
+            state.selectedForCompare.push(index);
+            el.classList.add('selected');
+        }
+        DOM.btnCompare.textContent = 'Compare Mode (' + state.selectedForCompare.length + '/2)';
+        if (state.selectedForCompare.length >= 2) {
+            openComparison();
+        }
+    }
+
+    function highlightSelectedItems() {
+        clearSelection();
+        state.selectedForCompare.forEach(function (idx) {
+            var el = DOM.galleryGrid.querySelector('[data-index="' + idx + '"]');
+            if (el) el.classList.add('selected');
+        });
+    }
+
+    function clearSelection() {
+        var selected = DOM.galleryGrid.querySelectorAll('.gallery-item.selected');
+        selected.forEach(function (el) { el.classList.remove('selected'); });
+    }
+
+    function openComparison() {
+        if (state.selectedForCompare.length < 2) return;
+        state.viewMode = 'comparison';
+        DOM.gallerySection.style.display = 'none';
+        DOM.comparisonView.classList.add('active');
+        DOM.lightboxOverlay.classList.remove('open');
+
+        var imgA = state.images[state.selectedForCompare[0]];
+        var imgB = state.images[state.selectedForCompare[1]];
+
+        DOM.compareImgLeft.src = imgA.url;
+        DOM.compareImgRight.src = imgB.url;
+        DOM.compareLabelA.textContent = imgA.name;
+        DOM.compareLabelB.textContent = imgB.name;
+
+        state.comparisonSliderPos = 0.5;
+        updateComparisonSlider();
+
+        DOM.comparisonCanvas.addEventListener('mousedown', onSliderMouseDown);
+        DOM.comparisonCanvas.addEventListener('touchstart', onSliderTouchStart, { passive: false });
+    }
+
+    function closeComparison() {
+        state.viewMode = 'gallery';
+        DOM.comparisonView.classList.remove('active');
+        DOM.gallerySection.style.display = 'block';
+        state.compareMode = false;
+        state.selectedForCompare = [];
+        DOM.btnCompare.classList.remove('active');
+        DOM.btnCompare.textContent = 'Compare Mode';
+        clearSelection();
+        DOM.comparisonCanvas.removeEventListener('mousedown', onSliderMouseDown);
+        DOM.comparisonCanvas.removeEventListener('touchstart', onSliderTouchStart);
+    }
+
+    function updateComparisonSlider() {
+        var pct = state.comparisonSliderPos * 100;
+        DOM.compareImgLeft.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
+        DOM.compareHandle.style.left = pct + '%';
+        DOM.compareKnob.style.left = pct + '%';
+    }
+
+    function onSliderMouseDown(e) {
+        e.preventDefault();
+        document.addEventListener('mousemove', onSliderMouseMove);
+        document.addEventListener('mouseup', onSliderMouseUp);
+    }
+
+    function onSliderMouseMove(e) {
+        moveSliderToClientX(e.clientX);
+    }
+
+    function onSliderMouseUp() {
+        document.removeEventListener('mousemove', onSliderMouseMove);
+        document.removeEventListener('mouseup', onSliderMouseUp);
+    }
+
+    function onSliderTouchStart(e) {
+        e.preventDefault();
+        document.addEventListener('touchmove', onSliderTouchMove, { passive: false });
+        document.addEventListener('touchend', onSliderTouchEnd);
+    }
+
+    function onSliderTouchMove(e) {
+        e.preventDefault();
+        moveSliderToClientX(e.touches[0].clientX);
+    }
+
+    function onSliderTouchEnd() {
+        document.removeEventListener('touchmove', onSliderTouchMove);
+        document.removeEventListener('touchend', onSliderTouchEnd);
+    }
+
+    function moveSliderToClientX(clientX) {
+        var rect = DOM.comparisonCanvas.getBoundingClientRect();
+        var pos = (clientX - rect.left) / rect.width;
+        state.comparisonSliderPos = Math.max(0.02, Math.min(0.98, pos));
+        updateComparisonSlider();
+    }
+
+    function resetComparisonSlider() {
+        state.comparisonSliderPos = 0.5;
+        updateComparisonSlider();
+    }
+
+    function swapComparison() {
+        var tmpIdx = state.selectedForCompare[0];
+        state.selectedForCompare[0] = state.selectedForCompare[1];
+        state.selectedForCompare[1] = tmpIdx;
+
+        var tmpSrc = DOM.compareImgLeft.src;
+        DOM.compareImgLeft.src = DOM.compareImgRight.src;
+        DOM.compareImgRight.src = tmpSrc;
+
+        var tmpLabel = DOM.compareLabelA.textContent;
+        DOM.compareLabelA.textContent = DOM.compareLabelB.textContent;
+        DOM.compareLabelB.textContent = tmpLabel;
+    }
+
+    document.addEventListener('keydown', function (e) {
+        if (state.viewMode === 'lightbox') {
+            if (e.key === 'Escape') { closeLightbox(); }
+            if (e.key === 'ArrowLeft') { navigateLightbox(-1); }
+            if (e.key === 'ArrowRight') { navigateLightbox(1); }
+        }
+        if (state.viewMode === 'comparison') {
+            if (e.key === 'Escape') { closeComparison(); }
+            if (e.key === 'ArrowLeft') {
+                state.comparisonSliderPos = Math.max(0.02, state.comparisonSliderPos - 0.02);
+                updateComparisonSlider();
+            }
+            if (e.key === 'ArrowRight') {
+                state.comparisonSliderPos = Math.min(0.98, state.comparisonSliderPos + 0.02);
+                updateComparisonSlider();
+            }
+        }
+    });
+
+    init();
+})();
     </script>
 </body>
 </html>
