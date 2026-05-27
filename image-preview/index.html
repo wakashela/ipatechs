@@ -608,6 +608,8 @@
         document.getElementById('compareReset').addEventListener('click', resetComparisonSlider);
         document.getElementById('compareSwap').addEventListener('click', swapComparison);
         document.getElementById('compareBack').addEventListener('click', closeComparison);
+        var addToCompareBtn = document.querySelector('.lightbox-actions .btn-outline');
+        if (addToCompareBtn) addToCompareBtn.addEventListener('click', addToCompare);
         loadDirectory(state.currentDir);
     }
 
@@ -692,13 +694,23 @@
             var item = document.createElement('div');
             item.className = 'gallery-item';
             item.setAttribute('data-index', i);
-            item.innerHTML =
-                '<img src="' + img.url + '" alt="' + img.name + '" loading="lazy" ' +
-                'onerror="this.parentElement.style.display=\'none\'" />' +
-                '<div class="gallery-caption">' + img.name + '</div>';
+            var imgEl = document.createElement('img');
+            imgEl.src = img.url;
+            imgEl.alt = img.name;
+            imgEl.loading = 'lazy';
+            imgEl.onerror = function () {
+                item.style.display = 'none';
+            };
+            item.appendChild(imgEl);
+
+            var caption = document.createElement('div');
+            caption.className = 'gallery-caption';
+            caption.textContent = img.name;
+            item.appendChild(caption);
             item.addEventListener('click', function () {
                 if (state.compareMode) {
-                    selectForCompare(i, item);
+                    var el = DOM.galleryGrid.querySelector('[data-index="' + i + '"]');
+                    if (el) selectForCompare(i, el);
                 } else {
                     openLightbox(i);
                 }
@@ -762,9 +774,6 @@
         if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
         return (bytes / 1048576).toFixed(1) + ' MB';
     }
-
-    var addToCompareBtn = document.querySelector('.lightbox-actions .btn-outline');
-    if (addToCompareBtn) addToCompareBtn.addEventListener('click', addToCompare);
 
     function addToCompare() {
         var idx = state.lightboxIndex;
@@ -861,6 +870,10 @@
         clearSelection();
         DOM.comparisonCanvas.removeEventListener('mousedown', onSliderMouseDown);
         DOM.comparisonCanvas.removeEventListener('touchstart', onSliderTouchStart);
+        document.removeEventListener('mousemove', onSliderMouseMove);
+        document.removeEventListener('mouseup', onSliderMouseUp);
+        document.removeEventListener('touchmove', onSliderTouchMove);
+        document.removeEventListener('touchend', onSliderTouchEnd);
     }
 
     function updateComparisonSlider() {
@@ -928,6 +941,7 @@
     }
 
     document.addEventListener('keydown', function (e) {
+        if (document.activeElement === DOM.dirInput) return;
         if (state.viewMode === 'lightbox') {
             if (e.key === 'Escape') { closeLightbox(); }
             if (e.key === 'ArrowLeft') { navigateLightbox(-1); }
