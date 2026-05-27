@@ -463,7 +463,7 @@
             <div class="label reveal" style="justify-content:center;">Development Tool</div>
             <h1 class="preview-title">Image Preview</h1>
             <p class="preview-subtitle">Preview and compare nano-banana generated images for the ipatechs website</p>
-            <div class="preview-dir" id="currentDirDisplay">assets/images/nano-banana/</div>
+            <div class="preview-dir" id="currentDirDisplay">/assets/images/nano-banana/</div>
         </div>
     </section>
 
@@ -471,7 +471,7 @@
     <div class="preview-toolbar" id="toolbar">
         <div class="container">
             <div class="toolbar-left">
-                <input type="text" class="dir-input" id="dirInput" value="assets/images/nano-banana/" placeholder="Directory path..." />
+                <input type="text" class="dir-input" id="dirInput" value="/assets/images/nano-banana/" placeholder="Directory path..." />
                 <span class="toolbar-count" id="imageCount">Loading...</span>
             </div>
             <button class="btn-compare" id="btnCompare">Compare Mode</button>
@@ -546,7 +546,7 @@
     <script>
 (function () {
     var state = {
-        currentDir: 'assets/images/nano-banana/',
+        currentDir: '/assets/images/nano-banana/',
         images: [],
         viewMode: 'gallery',
         lightboxIndex: 0,
