@@ -11,18 +11,541 @@
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet" />
     <link rel="preload" href="/css/style.css" as="style" />
     <link rel="stylesheet" href="/css/style.css" />
+    <style>
+        .preview-hero {
+            min-height: 30vh;
+            padding: 8rem 0 4rem;
+            display: block;
+            background: var(--dark);
+        }
+        .preview-hero .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .preview-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            line-height: 1;
+            color: var(--white);
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+        .preview-subtitle {
+            font-family: 'Barlow', sans-serif;
+            font-size: 1rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+        .preview-dir {
+            display: inline-block;
+            margin-top: 1rem;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--orange);
+            background: var(--dark3);
+            padding: 0.4rem 1rem;
+            clip-path: polygon(0 0, 95% 0, 100% 20%, 100% 100%, 5% 100%, 0 80%);
+        }
+
+        /* Toolbar */
+        .preview-toolbar {
+            position: sticky;
+            top: 72px;
+            z-index: 100;
+            background: var(--dark2);
+            border-bottom: 1px solid var(--border);
+            padding: 0.75rem 0;
+        }
+        .preview-toolbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .toolbar-count {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.8rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+        }
+        .toolbar-count strong {
+            color: var(--white);
+        }
+        .btn-compare {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 0.5rem 1.2rem;
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+            clip-path: polygon(0 0, 95% 0, 100% 20%, 100% 100%, 5% 100%, 0 80%);
+        }
+        .btn-compare:hover {
+            border-color: var(--orange);
+            color: var(--orange);
+        }
+        .btn-compare.active {
+            background: var(--orange);
+            color: var(--dark);
+            border-color: var(--orange);
+        }
+
+        /* Gallery */
+        .preview-gallery {
+            padding: 2rem 0 6rem;
+            min-height: 50vh;
+        }
+        .gallery-grid {
+            column-count: 3;
+            column-gap: 1rem;
+        }
+        @media (max-width: 768px) {
+            .gallery-grid { column-count: 2; }
+        }
+        @media (max-width: 600px) {
+            .gallery-grid { column-count: 1; }
+        }
+        .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 1rem;
+            position: relative;
+            cursor: pointer;
+            clip-path: polygon(0 0, 97% 0, 100% 3%, 100% 100%, 3% 100%, 0 97%);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        .gallery-item img {
+            width: 100%;
+            display: block;
+            filter: brightness(0.5) saturate(0.4);
+            transition: filter 0.35s ease, transform 0.5s ease;
+        }
+        .gallery-item:hover img {
+            filter: brightness(0.85) saturate(0.8);
+            transform: scale(1.03);
+        }
+        .gallery-item.selected {
+            box-shadow: 0 0 0 3px var(--orange);
+        }
+        .gallery-item.selected img {
+            filter: brightness(0.85) saturate(0.8);
+        }
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 0.6rem 0.8rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.85));
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            color: var(--light);
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+
+        /* Lightbox */
+        .lightbox-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.92);
+            backdrop-filter: blur(8px);
+            z-index: 9000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+        .lightbox-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .lightbox-panel {
+            width: 100%;
+            max-width: 90vw;
+            max-height: 88vh;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(30px) scale(0.97);
+            transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+        }
+        .lightbox-overlay.open .lightbox-panel {
+            transform: translateY(0) scale(1);
+        }
+        .lightbox-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+        .lightbox-filename {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            color: var(--orange);
+            letter-spacing: 0.03em;
+        }
+        .lightbox-meta {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.7rem;
+            color: var(--muted);
+            letter-spacing: 0.08em;
+        }
+        .lightbox-close {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid var(--border);
+            color: var(--white);
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, border-color 0.2s;
+            flex-shrink: 0;
+        }
+        .lightbox-close:hover {
+            background: var(--orange);
+            border-color: var(--orange);
+        }
+        .lightbox-image-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 0;
+            position: relative;
+        }
+        .lightbox-image-wrap img {
+            max-width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            clip-path: polygon(0 0, 97% 0, 100% 3%, 100% 100%, 3% 100%, 0 97%);
+        }
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--border);
+            color: var(--white);
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            clip-path: polygon(0 0, 85% 0, 100% 15%, 100% 100%, 15% 100%, 0 85%);
+        }
+        .lightbox-nav:hover {
+            background: var(--orange);
+            border-color: var(--orange);
+            color: var(--dark);
+        }
+        .lightbox-prev { left: 0; }
+        .lightbox-next { right: 0; }
+        .lightbox-bottombar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            flex-shrink: 0;
+        }
+        .lightbox-counter {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.75rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+        }
+        .lightbox-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        /* Button outline variant for lightbox actions */
+        .btn-outline {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 0.5rem 1.2rem;
+            background: transparent;
+            color: var(--light);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+            clip-path: polygon(0 0, 95% 0, 100% 20%, 100% 100%, 5% 100%, 0 80%);
+        }
+        .btn-outline:hover {
+            border-color: var(--orange);
+            color: var(--orange);
+        }
+
+        /* Comparison View */
+        .comparison-view {
+            display: none;
+            padding: 2rem 0 6rem;
+        }
+        .comparison-view.active {
+            display: block;
+        }
+        .comparison-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        .comparison-labels {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .comparison-label-a,
+        .comparison-label-b {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.03em;
+        }
+        .comparison-label-a { color: var(--light); }
+        .comparison-label-b { color: var(--orange); }
+        .comparison-vs {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.7rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+        }
+        .comparison-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .comparison-canvas {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: var(--dark);
+            overflow: hidden;
+            clip-path: polygon(0 0, 97% 0, 100% 3%, 100% 100%, 3% 100%, 0 97%);
+            cursor: col-resize;
+            user-select: none;
+        }
+        .comparison-canvas img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .comparison-img-left {
+            clip-path: inset(0 50% 0 0);
+            z-index: 1;
+        }
+        .comparison-img-right {
+            z-index: 0;
+        }
+        .comparison-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--orange);
+            z-index: 2;
+            left: 50%;
+            pointer-events: none;
+        }
+        .comparison-handle-knob {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 28px;
+            height: 28px;
+            background: var(--orange);
+            z-index: 3;
+            clip-path: polygon(20% 0, 100% 0, 100% 80%, 80% 100%, 0 100%, 0 20%);
+            pointer-events: none;
+        }
+
+        /* Empty / error states */
+        .preview-empty {
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+        .preview-empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+        .preview-empty-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+        .preview-empty-text {
+            font-family: 'Barlow', sans-serif;
+            font-size: 0.95rem;
+            color: var(--muted);
+        }
+
+        /* Directory input */
+        .dir-input {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            color: var(--orange);
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            padding: 0.35rem 0.75rem;
+            clip-path: polygon(0 0, 95% 0, 100% 20%, 100% 100%, 5% 100%, 0 80%);
+            width: 220px;
+            transition: border-color 0.3s;
+        }
+        .dir-input:focus {
+            outline: none;
+            border-color: var(--orange);
+        }
+        .dir-input::placeholder {
+            color: var(--muted);
+            opacity: 0.5;
+        }
+
+        /* Loading state */
+        .loading-indicator {
+            text-align: center;
+            padding: 4rem;
+            color: var(--muted);
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+        }
+    </style>
 </head>
 <body>
     <div id="cursor"></div>
     <div id="cursor-ring"></div>
     <div id="nav-root"></div>
-    <p style="color:var(--orange);text-align:center;padding:10rem 0;font-family:'Bebas Neue',sans-serif;font-size:2rem;">Image Preview — coming soon</p>
+
+    <!-- HERO -->
+    <section class="preview-hero">
+        <div class="container">
+            <div class="label reveal" style="justify-content:center;">Development Tool</div>
+            <h1 class="preview-title">Image Preview</h1>
+            <p class="preview-subtitle">Preview and compare nano-banana generated images for the ipatechs website</p>
+            <div class="preview-dir" id="currentDirDisplay">assets/images/nano-banana/</div>
+        </div>
+    </section>
+
+    <!-- TOOLBAR -->
+    <div class="preview-toolbar" id="toolbar">
+        <div class="container">
+            <div class="toolbar-left">
+                <input type="text" class="dir-input" id="dirInput" value="assets/images/nano-banana/" placeholder="Directory path..." />
+                <span class="toolbar-count" id="imageCount">Loading...</span>
+            </div>
+            <button class="btn-compare" id="btnCompare">Compare Mode</button>
+        </div>
+    </div>
+
+    <!-- GALLERY -->
+    <section class="preview-gallery" id="gallerySection">
+        <div class="container">
+            <div class="gallery-grid" id="galleryGrid"></div>
+            <div id="emptyState" style="display:none;"></div>
+            <div id="loadingState" class="loading-indicator">Loading images...</div>
+        </div>
+    </section>
+
+    <!-- COMPARISON VIEW -->
+    <section class="comparison-view" id="comparisonView">
+        <div class="container">
+            <div class="comparison-topbar">
+                <div class="comparison-labels">
+                    <span class="comparison-label-a" id="compareLabelA">—</span>
+                    <span class="comparison-vs">vs</span>
+                    <span class="comparison-label-b" id="compareLabelB">—</span>
+                </div>
+                <div class="comparison-actions">
+                    <button class="btn-outline">Reset</button>
+                    <button class="btn-outline">Swap</button>
+                    <button class="btn-outline">Back to Gallery</button>
+                </div>
+            </div>
+            <div class="comparison-canvas" id="comparisonCanvas">
+                <img class="comparison-img-right" id="compareImgRight" src="" alt="" />
+                <img class="comparison-img-left" id="compareImgLeft" src="" alt="" />
+                <div class="comparison-handle" id="compareHandle"></div>
+                <div class="comparison-handle-knob" id="compareKnob"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox-overlay" id="lightboxOverlay">
+        <div class="lightbox-panel">
+            <div class="lightbox-topbar">
+                <div>
+                    <div class="lightbox-filename" id="lightboxFilename">—</div>
+                    <div class="lightbox-meta" id="lightboxMeta">—</div>
+                </div>
+                <button class="lightbox-close">&times;</button>
+            </div>
+            <div class="lightbox-image-wrap">
+                <button class="lightbox-nav lightbox-prev">&#10094;</button>
+                <img id="lightboxImage" src="" alt="" />
+                <button class="lightbox-nav lightbox-next">&#10095;</button>
+            </div>
+            <div class="lightbox-bottombar">
+                <span class="lightbox-counter" id="lightboxCounter">—</span>
+                <div class="lightbox-actions">
+                    <button class="btn-outline">Add to Compare</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="footer-root"></div>
     <div id="modals-root"></div>
+
     <script defer src="/js/industries.js"></script>
     <script defer src="/js/products.js"></script>
     <script defer src="/js/components.js"></script>
     <script defer src="/js/main.js"></script>
     <script defer src="/js/articles.js"></script>
+    <script>
+    // JS will be added in Task 3
+    </script>
 </body>
 </html>
