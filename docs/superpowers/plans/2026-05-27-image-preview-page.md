@@ -1,0 +1,1194 @@
+# Image Preview Page — Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** Build a local dev helper page at `/image-preview/` for previewing and comparing nano-banana generated images, matching the ipatechs dark industrial design system.
+
+**Architecture:** Single static HTML file (`image-preview/index.html`) with inline CSS and JS. Follows the existing subpage pattern (nav/footer injected via `js/components.js`). Images discovered by fetching the live-server directory index at the configured directory (default: `assets/images/nano-banana/`). Three view modes: gallery grid, lightbox, and side-by-side comparison slider.
+
+**Tech Stack:** Vanilla HTML + CSS + JS. No frameworks, no build step. Live-server for development.
+
+---
+
+## File Structure
+
+| File | Action | Purpose |
+|------|--------|---------|
+| `image-preview/index.html` | Create | Main page: HTML structure, inline CSS (~80 lines), inline JS (~200 lines) |
+| `vercel.json` | Modify | Add rewrite for `/image-preview` route |
+| `assets/images/nano-banana/` | Create dir | Default target directory for nano-banana outputs |
+
+---
+
+### Task 1: Create directory structure and configure routing
+
+**Files:**
+- Create: `image-preview/index.html` (placeholder)
+- Create: `assets/images/nano-banana/` (directory)
+- Modify: `vercel.json`
+
+- [ ] **Step 1: Create the directories**
+
+```bash
+mkdir -p /home/wakashela/Clients/ipatechs/image-preview
+mkdir -p /home/wakashela/Clients/ipatechs/assets/images/nano-banana
+```
+
+- [ ] **Step 2: Create placeholder index.html to verify routing**
+
+Create `image-preview/index.html` with minimal content:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Preview | IPATECHS</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/x-icon" href="/assets/images/logo.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet" />
+    <link rel="preload" href="/css/style.css" as="style" />
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+    <div id="cursor"></div>
+    <div id="cursor-ring"></div>
+    <div id="nav-root"></div>
+    <p style="color:var(--orange);text-align:center;padding:10rem 0;font-family:'Bebas Neue',sans-serif;font-size:2rem;">Image Preview — coming soon</p>
+    <div id="footer-root"></div>
+    <div id="modals-root"></div>
+    <script defer src="/js/industries.js"></script>
+    <script defer src="/js/products.js"></script>
+    <script defer src="/js/components.js"></script>
+    <script defer src="/js/main.js"></script>
+    <script defer src="/js/articles.js"></script>
+</body>
+</html>
+```
+
+- [ ] **Step 3: Add Vercel rewrite rule**
+
+Edit `vercel.json` — add after the existing blog rewrites:
+
+```json
+{ "source": "/image-preview/", "destination": "/image-preview/index.html" }
+```
+
+The full rewrites array should end with:
+```json
+    { "source": "/blog/", "destination": "/blog/index.html" },
+    { "source": "/blog/:slug/", "destination": "/blog/:slug/index.html" },
+    { "source": "/image-preview/", "destination": "/image-preview/index.html" }
+```
+
+- [ ] **Step 4: Verify the page loads**
+
+```bash
+# Start dev server in background, then curl the page
+cd /home/wakashela/Clients/ipatechs && timeout 5 npx live-server --port=3099 --no-browser &
+sleep 2 && curl -s http://localhost:3099/image-preview/ | head -5
+```
+
+Expected: HTML output with `<title>Image Preview | IPATECHS</title>`.
+
+- [ ] **Step 5: Commit**
+
+```bash
+cd /home/wakashela/Clients/ipatechs
+git add image-preview/index.html vercel.json assets/images/nano-banana/.gitkeep
+git commit -m "feat: scaffold image-preview page with routing"
+```
+
+---
+
+### Task 2: Write the full HTML structure with inline CSS
+
+**Files:**
+- Modify: `image-preview/index.html`
+
+- [ ] **Step 1: Replace the placeholder with the complete HTML + CSS**
+
+Rewrite `image-preview/index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Preview | IPATECHS</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/x-icon" href="/assets/images/logo.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet" />
+    <link rel="preload" href="/css/style.css" as="style" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+        .preview-hero {
+            min-height: 30vh;
+            padding: 8rem 0 4rem;
+            display: block;
+            background: var(--dark);
+        }
+        .preview-hero .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .preview-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            line-height: 1;
+            color: var(--white);
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+        .preview-subtitle {
+            font-family: 'Barlow', sans-serif;
+            font-size: 1rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+        .preview-dir {
+            display: inline-block;
+            margin-top: 1rem;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--orange);
+            background: var(--dark3);
+            padding: 0.4rem 1rem;
+            clip-path: polygon(0 0, 95% 0, 100% 20%, 100% 100%, 5% 100%, 0 80%);
+        }
+
+        /* Toolbar */
+        .preview-toolbar {
+            position: sticky;
+            top: 72px;
+            z-index: 100;
+            background: var(--dark2);
+            border-bottom: 1px solid var(--border);
+            padding: 0.75rem 0;
+        }
+        .preview-toolbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .toolbar-count {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.8rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+        }
+        .toolbar-count strong {
+            color: var(--white);
+        }
+        .btn-compare {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 0.5rem 1.2rem;
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+            clip-path: polygon(0 0, 95% 0, 100% 20%, 100% 100%, 5% 100%, 0 80%);
+        }
+        .btn-compare:hover {
+            border-color: var(--orange);
+            color: var(--orange);
+        }
+        .btn-compare.active {
+            background: var(--orange);
+            color: var(--dark);
+            border-color: var(--orange);
+        }
+
+        /* Gallery */
+        .preview-gallery {
+            padding: 2rem 0 6rem;
+            min-height: 50vh;
+        }
+        .gallery-grid {
+            column-count: 3;
+            column-gap: 1rem;
+        }
+        @media (max-width: 768px) {
+            .gallery-grid { column-count: 2; }
+        }
+        @media (max-width: 600px) {
+            .gallery-grid { column-count: 1; }
+        }
+        .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 1rem;
+            position: relative;
+            cursor: pointer;
+            clip-path: polygon(0 0, 97% 0, 100% 3%, 100% 100%, 3% 100%, 0 97%);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        .gallery-item img {
+            width: 100%;
+            display: block;
+            filter: brightness(0.5) saturate(0.4);
+            transition: filter 0.35s ease, transform 0.5s ease;
+        }
+        .gallery-item:hover img {
+            filter: brightness(0.85) saturate(0.8);
+            transform: scale(1.03);
+        }
+        .gallery-item.selected {
+            box-shadow: 0 0 0 3px var(--orange);
+        }
+        .gallery-item.selected img {
+            filter: brightness(0.85) saturate(0.8);
+        }
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 0.6rem 0.8rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.85));
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            color: var(--light);
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+
+        /* Lightbox */
+        .lightbox-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.92);
+            backdrop-filter: blur(8px);
+            z-index: 9000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+        .lightbox-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .lightbox-panel {
+            width: 100%;
+            max-width: 90vw;
+            max-height: 88vh;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(30px) scale(0.97);
+            transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+        }
+        .lightbox-overlay.open .lightbox-panel {
+            transform: translateY(0) scale(1);
+        }
+        .lightbox-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+        .lightbox-filename {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            color: var(--orange);
+            letter-spacing: 0.03em;
+        }
+        .lightbox-meta {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.7rem;
+            color: var(--muted);
+            letter-spacing: 0.08em;
+        }
+        .lightbox-close {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid var(--border);
+            color: var(--white);
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, border-color 0.2s;
+            flex-shrink: 0;
+        }
+        .lightbox-close:hover {
+            background: var(--orange);
+            border-color: var(--orange);
+        }
+        .lightbox-image-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 0;
+            position: relative;
+        }
+        .lightbox-image-wrap img {
+            max-width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            clip-path: polygon(0 0, 97% 0, 100% 3%, 100% 100%, 3% 100%, 0 97%);
+        }
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--border);
+            color: var(--white);
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            clip-path: polygon(0 0, 85% 0, 100% 15%, 100% 100%, 15% 100%, 0 85%);
+        }
+        .lightbox-nav:hover {
+            background: var(--orange);
+            border-color: var(--orange);
+            color: var(--dark);
+        }
+        .lightbox-prev { left: 0; }
+        .lightbox-next { right: 0; }
+        .lightbox-bottombar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            flex-shrink: 0;
+        }
+        .lightbox-counter {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.75rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+        }
+        .lightbox-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        /* Button outline variant for lightbox actions */
+        .btn-outline {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 0.5rem 1.2rem;
+            background: transparent;
+            color: var(--light);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+            clip-path: polygon(0 0, 95% 0, 100% 20%, 100% 100%, 5% 100%, 0 80%);
+        }
+        .btn-outline:hover {
+            border-color: var(--orange);
+            color: var(--orange);
+        }
+
+        /* Comparison View */
+        .comparison-view {
+            display: none;
+            padding: 2rem 0 6rem;
+        }
+        .comparison-view.active {
+            display: block;
+        }
+        .comparison-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        .comparison-labels {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .comparison-label-a,
+        .comparison-label-b {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.03em;
+        }
+        .comparison-label-a { color: var(--light); }
+        .comparison-label-b { color: var(--orange); }
+        .comparison-vs {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.7rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+        }
+        .comparison-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .comparison-canvas {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: var(--dark);
+            overflow: hidden;
+            clip-path: polygon(0 0, 97% 0, 100% 3%, 100% 100%, 3% 100%, 0 97%);
+            cursor: col-resize;
+            user-select: none;
+        }
+        .comparison-canvas img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .comparison-img-left {
+            clip-path: inset(0 50% 0 0);
+            z-index: 1;
+        }
+        .comparison-img-right {
+            z-index: 0;
+        }
+        .comparison-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--orange);
+            z-index: 2;
+            left: 50%;
+            pointer-events: none;
+        }
+        .comparison-handle-knob {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 28px;
+            height: 28px;
+            background: var(--orange);
+            z-index: 3;
+            clip-path: polygon(20% 0, 100% 0, 100% 80%, 80% 100%, 0 100%, 0 20%);
+            pointer-events: none;
+        }
+
+        /* Empty / error states */
+        .preview-empty {
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+        .preview-empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+        .preview-empty-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+        .preview-empty-text {
+            font-family: 'Barlow', sans-serif;
+            font-size: 0.95rem;
+            color: var(--muted);
+        }
+
+        /* Directory input */
+        .dir-input {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            color: var(--orange);
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            padding: 0.35rem 0.75rem;
+            clip-path: polygon(0 0, 95% 0, 100% 20%, 100% 100%, 5% 100%, 0 80%);
+            width: 220px;
+            transition: border-color 0.3s;
+        }
+        .dir-input:focus {
+            outline: none;
+            border-color: var(--orange);
+        }
+        .dir-input::placeholder {
+            color: var(--muted);
+            opacity: 0.5;
+        }
+
+        /* Loading state */
+        .loading-indicator {
+            text-align: center;
+            padding: 4rem;
+            color: var(--muted);
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+        }
+    </style>
+</head>
+<body>
+    <div id="cursor"></div>
+    <div id="cursor-ring"></div>
+    <div id="nav-root"></div>
+
+    <!-- HERO -->
+    <section class="preview-hero">
+        <div class="container">
+            <div class="label reveal" style="justify-content:center;">Development Tool</div>
+            <h1 class="preview-title">Image Preview</h1>
+            <p class="preview-subtitle">Preview and compare nano-banana generated images for the ipatechs website</p>
+            <div class="preview-dir" id="currentDirDisplay">assets/images/nano-banana/</div>
+        </div>
+    </section>
+
+    <!-- TOOLBAR -->
+    <div class="preview-toolbar" id="toolbar">
+        <div class="container">
+            <div class="toolbar-left">
+                <input type="text" class="dir-input" id="dirInput" value="assets/images/nano-banana/" placeholder="Directory path..." />
+                <span class="toolbar-count" id="imageCount">Loading...</span>
+            </div>
+            <button class="btn-compare" id="btnCompare" onclick="toggleCompareMode()">Compare Mode</button>
+        </div>
+    </div>
+
+    <!-- GALLERY -->
+    <section class="preview-gallery" id="gallerySection">
+        <div class="container">
+            <div class="gallery-grid" id="galleryGrid"></div>
+            <div id="emptyState" style="display:none;"></div>
+            <div id="loadingState" class="loading-indicator">Loading images...</div>
+        </div>
+    </section>
+
+    <!-- COMPARISON VIEW -->
+    <section class="comparison-view" id="comparisonView">
+        <div class="container">
+            <div class="comparison-topbar">
+                <div class="comparison-labels">
+                    <span class="comparison-label-a" id="compareLabelA">—</span>
+                    <span class="comparison-vs">vs</span>
+                    <span class="comparison-label-b" id="compareLabelB">—</span>
+                </div>
+                <div class="comparison-actions">
+                    <button class="btn-outline" onclick="resetComparisonSlider()">Reset</button>
+                    <button class="btn-outline" onclick="swapComparison()">Swap</button>
+                    <button class="btn-outline" onclick="closeComparison()">Back to Gallery</button>
+                </div>
+            </div>
+            <div class="comparison-canvas" id="comparisonCanvas">
+                <img class="comparison-img-right" id="compareImgRight" src="" alt="" />
+                <img class="comparison-img-left" id="compareImgLeft" src="" alt="" />
+                <div class="comparison-handle" id="compareHandle"></div>
+                <div class="comparison-handle-knob" id="compareKnob"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox(event)">
+        <div class="lightbox-panel" onclick="event.stopPropagation()">
+            <div class="lightbox-topbar">
+                <div>
+                    <div class="lightbox-filename" id="lightboxFilename">—</div>
+                    <div class="lightbox-meta" id="lightboxMeta">—</div>
+                </div>
+                <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+            </div>
+            <div class="lightbox-image-wrap">
+                <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">&#10094;</button>
+                <img id="lightboxImage" src="" alt="" />
+                <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">&#10095;</button>
+            </div>
+            <div class="lightbox-bottombar">
+                <span class="lightbox-counter" id="lightboxCounter">—</span>
+                <div class="lightbox-actions">
+                    <button class="btn-outline" onclick="addToCompare()">Add to Compare</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-root"></div>
+    <div id="modals-root"></div>
+
+    <script defer src="/js/industries.js"></script>
+    <script defer src="/js/products.js"></script>
+    <script defer src="/js/components.js"></script>
+    <script defer src="/js/main.js"></script>
+    <script defer src="/js/articles.js"></script>
+    <script>
+    // JS will be added in Task 3
+    </script>
+</body>
+</html>
+```
+
+- [ ] **Step 2: Verify the page renders correctly**
+
+```bash
+cd /home/wakashela/Clients/ipatechs && timeout 5 npx live-server --port=3098 --no-browser &
+sleep 2 && curl -s http://localhost:3098/image-preview/ | grep -c "preview-title"
+```
+
+Expected: Output contains `1` (the title div is present).
+
+- [ ] **Step 3: Commit**
+
+```bash
+cd /home/wakashela/Clients/ipatechs
+git add image-preview/index.html
+git commit -m "feat: add image preview page HTML structure and CSS"
+```
+
+---
+
+### Task 3: Add JavaScript for image discovery and gallery rendering
+
+**Files:**
+- Modify: `image-preview/index.html` (replace the empty `<script>` block)
+
+- [ ] **Step 1: Replace the empty script block with the full JS implementation**
+
+Replace the `<script>` block at the bottom of `image-preview/index.html` (the empty one just before `</body>`) with:
+
+```javascript
+(function () {
+    var state = {
+        currentDir: 'assets/images/nano-banana/',
+        images: [],
+        viewMode: 'gallery', // 'gallery' | 'lightbox' | 'comparison'
+        lightboxIndex: 0,
+        compareMode: false,
+        selectedForCompare: [],
+        comparisonSliderPos: 0.5,
+        imageMeta: {} // { url: { width, height, size } }
+    };
+
+    var DOM = {
+        galleryGrid: document.getElementById('galleryGrid'),
+        gallerySection: document.getElementById('gallerySection'),
+        emptyState: document.getElementById('emptyState'),
+        loadingState: document.getElementById('loadingState'),
+        imageCount: document.getElementById('imageCount'),
+        btnCompare: document.getElementById('btnCompare'),
+        dirInput: document.getElementById('dirInput'),
+        currentDirDisplay: document.getElementById('currentDirDisplay'),
+        lightboxOverlay: document.getElementById('lightboxOverlay'),
+        lightboxImage: document.getElementById('lightboxImage'),
+        lightboxFilename: document.getElementById('lightboxFilename'),
+        lightboxMeta: document.getElementById('lightboxMeta'),
+        lightboxCounter: document.getElementById('lightboxCounter'),
+        comparisonView: document.getElementById('comparisonView'),
+        comparisonCanvas: document.getElementById('comparisonCanvas'),
+        compareImgLeft: document.getElementById('compareImgLeft'),
+        compareImgRight: document.getElementById('compareImgRight'),
+        compareLabelA: document.getElementById('compareLabelA'),
+        compareLabelB: document.getElementById('compareLabelB'),
+        compareHandle: document.getElementById('compareHandle'),
+        compareKnob: document.getElementById('compareKnob')
+    };
+
+    var IMAGE_EXTS = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.avif', '.bmp'];
+
+    function init() {
+        var queryDir = getQueryParam('dir');
+        if (queryDir) {
+            state.currentDir = queryDir;
+            DOM.dirInput.value = queryDir;
+        }
+        DOM.dirInput.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                loadDirectory(DOM.dirInput.value);
+            }
+        });
+        DOM.dirInput.addEventListener('blur', function () {
+            if (DOM.dirInput.value !== state.currentDir) {
+                loadDirectory(DOM.dirInput.value);
+            }
+        });
+        loadDirectory(state.currentDir);
+    }
+
+    function getQueryParam(name) {
+        var match = window.location.search.match(new RegExp('[?&]' + name + '=([^&]*)'));
+        return match ? decodeURIComponent(match[1]) : null;
+    }
+
+    function loadDirectory(dir) {
+        dir = dir.replace(/\/$/, '') + '/';
+        state.currentDir = dir;
+        DOM.dirInput.value = dir;
+        DOM.currentDirDisplay.textContent = dir;
+        state.images = [];
+        state.imageMeta = {};
+        DOM.galleryGrid.innerHTML = '';
+        DOM.loadingState.style.display = 'block';
+        DOM.emptyState.style.display = 'none';
+        DOM.imageCount.textContent = 'Loading...';
+        state.viewMode = 'gallery';
+        DOM.comparisonView.classList.remove('active');
+        DOM.gallerySection.style.display = 'block';
+        state.compareMode = false;
+        state.selectedForCompare = [];
+        DOM.btnCompare.classList.remove('active');
+        DOM.btnCompare.textContent = 'Compare Mode';
+
+        fetch(dir)
+            .then(function (res) {
+                if (!res.ok) throw new Error('Cannot read directory');
+                return res.text();
+            })
+            .then(function (html) {
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(html, 'text/html');
+                var links = doc.querySelectorAll('a');
+                var seen = {};
+
+                links.forEach(function (link) {
+                    var href = link.getAttribute('href');
+                    if (!href || href === '../' || href === './') return;
+                    var name = href.replace(/\?.*$/, '').split('/').pop();
+                    var ext = name.substring(name.lastIndexOf('.')).toLowerCase();
+                    if (IMAGE_EXTS.indexOf(ext) !== -1 && !seen[name]) {
+                        seen[name] = true;
+                        state.images.push({
+                            url: dir + name,
+                            name: name,
+                            ext: ext
+                        });
+                    }
+                });
+
+                if (state.images.length === 0) {
+                    showEmpty('No images found in this directory');
+                } else {
+                    DOM.imageCount.innerHTML = '<strong>' + state.images.length + '</strong> images';
+                    renderGallery();
+                }
+                DOM.loadingState.style.display = 'none';
+            })
+            .catch(function (err) {
+                DOM.loadingState.style.display = 'none';
+                showEmpty('Cannot read directory. Check the path.');
+            });
+    }
+
+    function showEmpty(message) {
+        DOM.emptyState.style.display = 'block';
+        DOM.emptyState.className = 'preview-empty';
+        DOM.emptyState.innerHTML =
+            '<div class="preview-empty-icon">&#128247;</div>' +
+            '<div class="preview-empty-title">Nothing to Show</div>' +
+            '<div class="preview-empty-text">' + message + '</div>';
+        DOM.imageCount.textContent = '0 images';
+    }
+
+    function renderGallery() {
+        DOM.galleryGrid.innerHTML = '';
+        DOM.emptyState.style.display = 'none';
+        state.images.forEach(function (img, i) {
+            var item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.setAttribute('data-index', i);
+            item.innerHTML =
+                '<img src="' + img.url + '" alt="' + img.name + '" loading="lazy" ' +
+                'onerror="this.parentElement.style.display=\'none\'" />' +
+                '<div class="gallery-caption">' + img.name + '</div>';
+            item.addEventListener('click', function () {
+                if (state.compareMode) {
+                    selectForCompare(i, item);
+                } else {
+                    openLightbox(i);
+                }
+            });
+            DOM.galleryGrid.appendChild(item);
+        });
+    }
+
+    function openLightbox(index) {
+        state.viewMode = 'lightbox';
+        state.lightboxIndex = index;
+        showLightboxImage();
+        DOM.lightboxOverlay.classList.add('open');
+    }
+
+    function closeLightbox(event) {
+        if (event && event.target !== DOM.lightboxOverlay) return;
+        DOM.lightboxOverlay.classList.remove('open');
+        state.viewMode = 'gallery';
+    }
+
+    function showLightboxImage() {
+        var img = state.images[state.lightboxIndex];
+        DOM.lightboxImage.src = img.url;
+        DOM.lightboxFilename.textContent = img.name;
+        DOM.lightboxCounter.textContent = 'Image ' + (state.lightboxIndex + 1) + ' of ' + state.images.length;
+        loadImageMeta(img, function () {
+            DOM.lightboxMeta.textContent = formatMeta(state.imageMeta[img.url]);
+        });
+    }
+
+    function navigateLightbox(delta) {
+        state.lightboxIndex = (state.lightboxIndex + delta + state.images.length) % state.images.length;
+        showLightboxImage();
+    }
+
+    function loadImageMeta(img, cb) {
+        if (state.imageMeta[img.url]) { cb(); return; }
+        var testImg = new Image();
+        testImg.onload = function () {
+            state.imageMeta[img.url] = { width: testImg.naturalWidth, height: testImg.naturalHeight, size: null };
+            cb();
+        };
+        testImg.onerror = function () {
+            state.imageMeta[img.url] = { width: null, height: null, size: null };
+            cb();
+        };
+        testImg.src = img.url;
+    }
+
+    function formatMeta(meta) {
+        if (!meta) return '';
+        var parts = [];
+        if (meta.width && meta.height) parts.push(meta.width + ' \u00d7 ' + meta.height);
+        if (meta.size) parts.push(formatSize(meta.size));
+        return parts.join(' \u00b7 ');
+    }
+
+    function formatSize(bytes) {
+        if (!bytes) return '';
+        if (bytes < 1024) return bytes + ' B';
+        if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+        return (bytes / 1048576).toFixed(1) + ' MB';
+    }
+
+    function addToCompare() {
+        var idx = state.lightboxIndex;
+        if (state.selectedForCompare.indexOf(idx) === -1) {
+            state.selectedForCompare.push(idx);
+        }
+        closeLightbox();
+        if (state.selectedForCompare.length >= 2) {
+            openComparison();
+        } else {
+            state.compareMode = true;
+            DOM.btnCompare.classList.add('active');
+            DOM.btnCompare.textContent = 'Compare Mode (1/2)';
+            highlightSelectedItems();
+        }
+    }
+
+    function toggleCompareMode() {
+        state.compareMode = !state.compareMode;
+        state.selectedForCompare = [];
+        if (state.compareMode) {
+            DOM.btnCompare.classList.add('active');
+            DOM.btnCompare.textContent = 'Compare Mode';
+        } else {
+            DOM.btnCompare.classList.remove('active');
+            DOM.btnCompare.textContent = 'Compare Mode';
+            clearSelection();
+        }
+    }
+
+    function selectForCompare(index, el) {
+        var pos = state.selectedForCompare.indexOf(index);
+        if (pos !== -1) {
+            state.selectedForCompare.splice(pos, 1);
+            el.classList.remove('selected');
+        } else {
+            if (state.selectedForCompare.length >= 2) {
+                state.selectedForCompare.shift();
+                var oldEl = DOM.galleryGrid.querySelector('[data-index="' + state.selectedForCompare[0] + '"]');
+                if (oldEl) oldEl.classList.remove('selected');
+            }
+            state.selectedForCompare.push(index);
+            el.classList.add('selected');
+        }
+        DOM.btnCompare.textContent = 'Compare Mode (' + state.selectedForCompare.length + '/2)';
+        if (state.selectedForCompare.length >= 2) {
+            openComparison();
+        }
+    }
+
+    function highlightSelectedItems() {
+        clearSelection();
+        state.selectedForCompare.forEach(function (idx) {
+            var el = DOM.galleryGrid.querySelector('[data-index="' + idx + '"]');
+            if (el) el.classList.add('selected');
+        });
+    }
+
+    function clearSelection() {
+        var selected = DOM.galleryGrid.querySelectorAll('.gallery-item.selected');
+        selected.forEach(function (el) { el.classList.remove('selected'); });
+    }
+
+    function openComparison() {
+        if (state.selectedForCompare.length < 2) return;
+        state.viewMode = 'comparison';
+        DOM.gallerySection.style.display = 'none';
+        DOM.comparisonView.classList.add('active');
+        DOM.lightboxOverlay.classList.remove('open');
+
+        var imgA = state.images[state.selectedForCompare[0]];
+        var imgB = state.images[state.selectedForCompare[1]];
+
+        DOM.compareImgLeft.src = imgA.url;
+        DOM.compareImgRight.src = imgB.url;
+        DOM.compareLabelA.textContent = imgA.name;
+        DOM.compareLabelB.textContent = imgB.name;
+
+        state.comparisonSliderPos = 0.5;
+        updateComparisonSlider();
+
+        DOM.comparisonCanvas.addEventListener('mousedown', onSliderMouseDown);
+        DOM.comparisonCanvas.addEventListener('touchstart', onSliderTouchStart, { passive: false });
+    }
+
+    function closeComparison() {
+        state.viewMode = 'gallery';
+        DOM.comparisonView.classList.remove('active');
+        DOM.gallerySection.style.display = 'block';
+        state.compareMode = false;
+        state.selectedForCompare = [];
+        DOM.btnCompare.classList.remove('active');
+        DOM.btnCompare.textContent = 'Compare Mode';
+        clearSelection();
+        DOM.comparisonCanvas.removeEventListener('mousedown', onSliderMouseDown);
+        DOM.comparisonCanvas.removeEventListener('touchstart', onSliderTouchStart);
+    }
+
+    function updateComparisonSlider() {
+        var pct = state.comparisonSliderPos * 100;
+        DOM.compareImgLeft.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
+        DOM.compareHandle.style.left = pct + '%';
+        DOM.compareKnob.style.left = pct + '%';
+    }
+
+    function onSliderMouseDown(e) {
+        e.preventDefault();
+        document.addEventListener('mousemove', onSliderMouseMove);
+        document.addEventListener('mouseup', onSliderMouseUp);
+    }
+
+    function onSliderMouseMove(e) {
+        moveSliderToClientX(e.clientX);
+    }
+
+    function onSliderMouseUp() {
+        document.removeEventListener('mousemove', onSliderMouseMove);
+        document.removeEventListener('mouseup', onSliderMouseUp);
+    }
+
+    function onSliderTouchStart(e) {
+        e.preventDefault();
+        document.addEventListener('touchmove', onSliderTouchMove, { passive: false });
+        document.addEventListener('touchend', onSliderTouchEnd);
+    }
+
+    function onSliderTouchMove(e) {
+        e.preventDefault();
+        moveSliderToClientX(e.touches[0].clientX);
+    }
+
+    function onSliderTouchEnd() {
+        document.removeEventListener('touchmove', onSliderTouchMove);
+        document.removeEventListener('touchend', onSliderTouchEnd);
+    }
+
+    function moveSliderToClientX(clientX) {
+        var rect = DOM.comparisonCanvas.getBoundingClientRect();
+        var pos = (clientX - rect.left) / rect.width;
+        state.comparisonSliderPos = Math.max(0.02, Math.min(0.98, pos));
+        updateComparisonSlider();
+    }
+
+    function resetComparisonSlider() {
+        state.comparisonSliderPos = 0.5;
+        updateComparisonSlider();
+    }
+
+    function swapComparison() {
+        var tmpIdx = state.selectedForCompare[0];
+        state.selectedForCompare[0] = state.selectedForCompare[1];
+        state.selectedForCompare[1] = tmpIdx;
+
+        var tmpSrc = DOM.compareImgLeft.src;
+        DOM.compareImgLeft.src = DOM.compareImgRight.src;
+        DOM.compareImgRight.src = tmpSrc;
+
+        var tmpLabel = DOM.compareLabelA.textContent;
+        DOM.compareLabelA.textContent = DOM.compareLabelB.textContent;
+        DOM.compareLabelB.textContent = tmpLabel;
+    }
+
+    document.addEventListener('keydown', function (e) {
+        if (state.viewMode === 'lightbox') {
+            if (e.key === 'Escape') { closeLightbox(); }
+            if (e.key === 'ArrowLeft') { navigateLightbox(-1); }
+            if (e.key === 'ArrowRight') { navigateLightbox(1); }
+        }
+        if (state.viewMode === 'comparison') {
+            if (e.key === 'Escape') { closeComparison(); }
+            if (e.key === 'ArrowLeft') {
+                state.comparisonSliderPos = Math.max(0.02, state.comparisonSliderPos - 0.02);
+                updateComparisonSlider();
+            }
+            if (e.key === 'ArrowRight') {
+                state.comparisonSliderPos = Math.min(0.98, state.comparisonSliderPos + 0.02);
+                updateComparisonSlider();
+            }
+        }
+    });
+
+    init();
+})();
+```
+
+- [ ] **Step 2: Verify JS loads without errors**
+
+```bash
+cd /home/wakashela/Clients/ipatechs && timeout 5 npx live-server --port=3097 --no-browser &
+sleep 2 && curl -s http://localhost:3097/image-preview/ | grep -c "init()"
+```
+
+Expected: `1` (the init call is present).
+
+- [ ] **Step 3: Commit**
+
+```bash
+cd /home/wakashela/Clients/ipatechs
+git add image-preview/index.html
+git commit -m "feat: add JS for gallery, lightbox, and comparison modes"
+```
+
+---
+
+### Task 4: Manual verification with npm run dev
+
+**Files:**
+- None (verification only)
+
+- [ ] **Step 1: Start the dev server**
+
+```bash
+cd /home/wakashela/Clients/ipatechs && npm run dev
+```
+
+Leave it running. Open `http://localhost:3000/image-preview/` in the browser.
+
+- [ ] **Step 2: Verify gallery**
+
+Check that the gallery grid shows images from `assets/images/nano-banana/`. If the directory is empty, create a few test images:
+
+```bash
+cd /home/wakashela/Clients/ipatechs/assets/images/nano-banana
+# Copy a few existing images for testing
+cp ../cumins.png ./test-a.png 2>/dev/null || true
+cp ../logo.png ./test-b.png 2>/dev/null || true
+cp ../logo.ico ./ 2>/dev/null || true
+```
+
+Refresh the page. Verify:
+- Gallery shows images in a 3-column masonry layout
+- Hover: image brightens, caption appears with filename
+- Image count in toolbar is accurate
+
+- [ ] **Step 3: Verify lightbox**
+
+Click an image. Verify:
+- Lightbox opens with backdrop blur, orange filename at top
+- Image metadata shows width × height
+- Prev/Next arrows navigate through images
+- Close button, Escape key, and backdrop click all close the lightbox
+- "Add to Compare" button in the lightbox bottom bar
+
+- [ ] **Step 4: Verify comparison mode**
+
+Option A — from gallery:
+- Click "Compare Mode" in toolbar (turns orange)
+- Click two images (they get orange selection border)
+- Comparison view opens automatically with draggable slider
+
+Option B — from lightbox:
+- Open a lightbox on any image
+- Click "Add to Compare"
+- Navigate to another image, click "Add to Compare" again
+- Comparison view opens
+
+In comparison view verify:
+- Left label is white, right label is orange
+- Dragging the handle adjusts the clip
+- Swap button flips the images
+- Reset centers the slider
+- Back to Gallery returns to grid
+- Keyboard left/right arrows nudge the slider
+
+- [ ] **Step 5: Verify error handling**
+
+Change the directory to a non-existent path:
+- Type `assets/images/nope/` in the directory input, press Enter
+- Verify: "Cannot read directory. Check the path." message appears
+
+Change to an empty directory:
+- Verify: "No images found in this directory" message appears
+
+- [ ] **Step 6: Verify responsive layout**
+
+Resize browser to various widths:
+- 768px: gallery switches to 2 columns
+- 600px: gallery switches to 1 column
+
+- [ ] **Step 7: Final commit if any fixes were made**
+
+```bash
+cd /home/wakashela/Clients/ipatechs
+git status
+git add -A
+git commit -m "chore: final verification of image preview page"
+```
