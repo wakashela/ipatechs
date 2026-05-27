@@ -57,6 +57,12 @@
             background: var(--dark2);
             border-bottom: 1px solid var(--border);
             padding: 0.75rem 0;
+            transition: transform 0.35s ease, opacity 0.35s ease;
+        }
+        .preview-toolbar.toolbar-hidden {
+            transform: translateY(calc(-100% - 80px));
+            opacity: 0;
+            pointer-events: none;
         }
         .preview-toolbar .container {
             display: flex;
@@ -610,6 +616,20 @@
         document.getElementById('compareBack').addEventListener('click', closeComparison);
         var addToCompareBtn = document.querySelector('.lightbox-actions .btn-outline');
         if (addToCompareBtn) addToCompareBtn.addEventListener('click', addToCompare);
+
+        var toolbar = document.getElementById('toolbar');
+        var lastScrollY = window.scrollY;
+        var scrollThreshold = 100;
+        window.addEventListener('scroll', function () {
+            var currentScrollY = window.scrollY;
+            if (currentScrollY > lastScrollY && currentScrollY > scrollThreshold) {
+                toolbar.classList.add('toolbar-hidden');
+            } else if (currentScrollY < lastScrollY) {
+                toolbar.classList.remove('toolbar-hidden');
+            }
+            lastScrollY = currentScrollY;
+        }, { passive: true });
+
         loadDirectory(state.currentDir);
     }
 
