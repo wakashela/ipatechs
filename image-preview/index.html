@@ -15,7 +15,6 @@
         .preview-hero {
             min-height: 30vh;
             padding: 8rem 0 4rem;
-            display: block;
             background: var(--dark);
         }
         .preview-hero .container {
@@ -53,7 +52,7 @@
         /* Toolbar */
         .preview-toolbar {
             position: sticky;
-            top: 72px;
+            top: 80px;
             z-index: 100;
             background: var(--dark2);
             border-bottom: 1px solid var(--border);
@@ -126,7 +125,7 @@
             cursor: pointer;
             clip-path: polygon(0 0, 97% 0, 100% 3%, 100% 100%, 3% 100%, 0 97%);
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform var(--transition), box-shadow var(--transition);
         }
         .gallery-item:hover {
             transform: translateY(-4px);
@@ -171,7 +170,7 @@
             position: fixed;
             inset: 0;
             background: rgba(0,0,0,0.92);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(6px);
             z-index: 9000;
             display: flex;
             align-items: center;
@@ -264,7 +263,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.2s;
+            transition: background var(--transition);
             clip-path: polygon(0 0, 85% 0, 100% 15%, 100% 100%, 15% 100%, 0 85%);
         }
         .lightbox-nav:hover {
@@ -498,9 +497,9 @@
                     <span class="comparison-label-b" id="compareLabelB">—</span>
                 </div>
                 <div class="comparison-actions">
-                    <button class="btn-outline">Reset</button>
-                    <button class="btn-outline">Swap</button>
-                    <button class="btn-outline">Back to Gallery</button>
+                    <button class="btn-outline" id="compareReset">Reset</button>
+                    <button class="btn-outline" id="compareSwap">Swap</button>
+                    <button class="btn-outline" id="compareBack">Back to Gallery</button>
                 </div>
             </div>
             <div class="comparison-canvas" id="comparisonCanvas">
@@ -520,7 +519,7 @@
                     <div class="lightbox-filename" id="lightboxFilename">—</div>
                     <div class="lightbox-meta" id="lightboxMeta">—</div>
                 </div>
-                <button class="lightbox-close">&times;</button>
+                <button class="lightbox-close" aria-label="Close lightbox">&times;</button>
             </div>
             <div class="lightbox-image-wrap">
                 <button class="lightbox-nav lightbox-prev">&#10094;</button>
