@@ -18,6 +18,14 @@
     { "source": "/dar-es-salaam/", "destination": "/dar-es-salaam/index.html" },
     { "source": "/blog/", "destination": "/blog/index.html" },
     { "source": "/blog/:slug/", "destination": "/blog/:slug/index.html" },
-    { "source": "/image-preview/", "destination": "/image-preview/index.html" }
+    { "source": "/image-preview/", "destination": "/image-preview/index.html" },
+    { "source": "/about/", "destination": "/about/index.html" },
+    { "source": "/services/", "destination": "/services/index.html" },
+    { "source": "/products/", "destination": "/products/index.html" },
+    { "source": "/portfolio/", "destination": "/portfolio/index.html" },
+    { "source": "/contact/", "destination": "/contact/index.html" },
+    { "source": "/industrial-instrumentation/", "destination": "/industrial-instrumentation/index.html" },
+    { "source": "/water-wastewater-treatment/", "destination": "/water-wastewater-treatment/index.html" },
+    { "source": "/filtration-separation/", "destination": "/filtration-separation/index.html" }
   ]
 }
