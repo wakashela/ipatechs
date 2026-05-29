@@ -26,6 +26,7 @@
     { "source": "/contact/", "destination": "/contact/index.html" },
     { "source": "/industrial-instrumentation/", "destination": "/industrial-instrumentation/index.html" },
     { "source": "/water-wastewater-treatment/", "destination": "/water-wastewater-treatment/index.html" },
-    { "source": "/filtration-separation/", "destination": "/filtration-separation/index.html" }
+    { "source": "/filtration-separation/", "destination": "/filtration-separation/index.html" },
+    { "source": "/products/:slug/", "destination": "/products/:slug/index.html" }
   ]
 }
