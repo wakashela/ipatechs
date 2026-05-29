@@ -3031,3 +3031,37 @@ footer {
   transition: color 0.2s, border-color 0.2s;
 }
 .brand-strip-item:hover { color: var(--orange); border-color: rgba(255,102,0,0.3); }
+
+/* BRAND LOGO WALL (homepage) */
+.brand-wall {
+  background: var(--dark2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 2rem 0;
+}
+.brand-wall-track {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem 2.5rem;
+}
+.brand-wall-track img {
+  opacity: 0.45;
+  filter: grayscale(1) brightness(0) invert(0.55);
+  transition: opacity 0.25s, filter 0.25s;
+}
+.brand-wall-track img:hover {
+  opacity: 0.8;
+  filter: grayscale(0) brightness(0) invert(0.55);
+}
+.brand-wall-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(136,136,136,0.5);
+  transition: color 0.25s;
+}
+.brand-wall-text:hover { color: var(--orange); }
