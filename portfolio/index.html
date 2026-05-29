@@ -22,6 +22,123 @@
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet" />
     <link rel="preload" href="/css/style.css" as="style" />
     <link rel="stylesheet" href="/css/style.css" />
+    <style>
+        .stats-section {
+            padding: 6rem 0;
+            background: var(--dark2);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .stat-card {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            background: var(--dark3);
+            border: 1px solid var(--border);
+            transition: border-color 0.35s;
+        }
+        .stat-card:hover {
+            border-color: rgba(255, 102, 0, 0.3);
+        }
+        .stat-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 5vw, 4.5rem);
+            line-height: 1;
+            color: var(--orange);
+        }
+        .stat-label {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 0.5rem;
+        }
+        .portfolio-section {
+            padding: 8rem 0;
+        }
+        .section-intro {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-intro .label {
+            justify-content: center;
+        }
+        .section-intro .label::before {
+            display: none;
+        }
+        .section-intro .label::after {
+            content: '';
+            display: block;
+            width: 2rem;
+            height: 2px;
+            background: var(--orange);
+        }
+        .portfolio-grid-asymmetric {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+        .portfolio-grid-asymmetric .portfolio-item:nth-child(1) {
+            grid-column: 1 / 6;
+            grid-row: 1;
+            aspect-ratio: 4 / 3;
+        }
+        .portfolio-grid-asymmetric .portfolio-item:nth-child(2) {
+            grid-column: 6 / 13;
+            grid-row: 1;
+            aspect-ratio: 4 / 3;
+        }
+        .portfolio-grid-asymmetric .portfolio-item:nth-child(3) {
+            grid-column: 1 / 8;
+            grid-row: 2;
+            aspect-ratio: 16 / 7;
+        }
+        .portfolio-grid-asymmetric .portfolio-item:nth-child(4) {
+            grid-column: 8 / 13;
+            grid-row: 2 / 3;
+            aspect-ratio: 3 / 4;
+        }
+        .portfolio-grid-asymmetric .portfolio-item:nth-child(5) {
+            grid-column: 1 / 13;
+            grid-row: 3;
+            aspect-ratio: 21 / 7;
+        }
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+            }
+            .portfolio-grid-asymmetric .portfolio-item:nth-child(n) {
+                grid-column: 1 / 13;
+            }
+            .portfolio-grid-asymmetric .portfolio-item:nth-child(1),
+            .portfolio-grid-asymmetric .portfolio-item:nth-child(2),
+            .portfolio-grid-asymmetric .portfolio-item:nth-child(3) {
+                aspect-ratio: 4 / 3;
+            }
+            .portfolio-grid-asymmetric .portfolio-item:nth-child(4) {
+                aspect-ratio: 4 / 3;
+            }
+            .portfolio-grid-asymmetric .portfolio-item:nth-child(5) {
+                aspect-ratio: 4 / 3;
+            }
+        }
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <div id="cursor"></div>
@@ -35,25 +152,97 @@
             <div class="hero-content" style="max-width:800px;margin:0 auto;">
                 <div class="hero-eyebrow" style="margin-bottom:1.5rem;">Dar es Salaam, Tanzania</div>
                 <h1 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,5rem);line-height:1;color:#fff;text-transform:uppercase;margin-bottom:1.5rem;">Our Portfolio</h1>
-                <p style="font-size:1.1rem;color:rgba(240,240,240,0.82);line-height:1.7;max-width:650px;margin:0 auto 2.5rem;">Recently completed engineering projects across Tanzania — from bearings supply to full automation installations.</p>
-            </div>
-        </div>
-    </section>
-
-    <section style="padding:6rem 0;">
-        <div class="container">
-            <div style="max-width:900px;margin:0 auto;">
-                <div class="label reveal" style="text-align:center;">Our Work</div>
-                <div class="portfolio-grid">
-                    <div class="portfolio-item reveal"><img loading="lazy" src="/assets/images/nano-banana/bearings-power-transmission.png" alt="Bearings" onerror="this.src='assets/images/1558618047-f4e70de53ec2.jpg'" /><div class="portfolio-item-info"><div class="portfolio-cat">Mechanical Parts</div><h4>Bearings Supply for All Applications</h4></div></div>
-                    <div class="portfolio-item reveal" style="transition-delay:0.1s"><img loading="lazy" src="/assets/images/nano-banana/industry-diesel.png" alt="Cummins" onerror="this.src='assets/images/1486262715619-67b85e0b08d3.jpg'" /><div class="portfolio-item-info"><div class="portfolio-cat">Power Systems</div><h4>Cummins Engine Installation</h4></div></div>
-                    <div class="portfolio-item reveal" style="transition-delay:0.2s"><img loading="lazy" src="/assets/images/nano-banana/portfolio-electric-motors.png" alt="Electric Motors" onerror="this.src='assets/images/1581091226825-a6a2a5aee158.jpg'" /><div class="portfolio-item-info"><div class="portfolio-cat">Electrical</div><h4>Electric Motors Supply and Commissioning</h4></div></div>
-                    <div class="portfolio-item reveal" style="transition-delay:0.3s"><img loading="lazy" src="/assets/images/nano-banana/portfolio-conveyor-systems.png" alt="Conveyors" onerror="this.src='assets/images/1565043589221-1a6fd9ae45c7.jpg'" /><div class="portfolio-item-info"><div class="portfolio-cat">Mining and Industry</div><h4>Factory Conveyor Systems</h4></div></div>
-                    <div class="portfolio-item reveal" style="transition-delay:0.4s"><img loading="lazy" src="/assets/images/nano-banana/portfolio-sensors.png" alt="Sensors" onerror="this.src='assets/images/1518770660439-4636190af475.jpg'" /><div class="portfolio-item-info"><div class="portfolio-cat">Automation</div><h4>Intelligent Sensors for Real-time Monitoring</h4></div></div>
+                <p style="font-size:1.1rem;color:rgba(240,240,240,0.82);line-height:1.7;max-width:650px;margin:0 auto 2.5rem;">Explore our completed engineering projects — from precision bearings supply to full-scale conveyor systems — delivered across Tanzania's industrial landscape.</p>
+                <div class="hero-actions">
+                    <a href="/contact/" class="btn btn-primary">Start Your Project<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
                 </div>
             </div>
         </div>
     </section>
+
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card reveal">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">Clients</div>
+                </div>
+                <div class="stat-card reveal" style="transition-delay:0.1s">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Projects</div>
+                </div>
+                <div class="stat-card reveal" style="transition-delay:0.2s">
+                    <div class="stat-number">6+</div>
+                    <div class="stat-label">Countries</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="portfolio-section">
+        <div class="container">
+            <div class="section-intro">
+                <div class="label reveal">Featured Projects</div>
+            </div>
+            <div class="portfolio-grid-asymmetric">
+                <div class="portfolio-item reveal">
+                    <img loading="lazy" src="/assets/images/nano-banana/portfolio-electric-motors.png" alt="Mechanical Parts" onerror="this.src='/assets/images/nano-banana/1558618047-f4e70de53ec2.jpg'" />
+                    <div class="portfolio-item-info">
+                        <div class="portfolio-cat">Mechanical Parts</div>
+                        <h4>Bearings Supply for All Applications</h4>
+                    </div>
+                </div>
+                <div class="portfolio-item reveal" style="transition-delay:0.1s">
+                    <img loading="lazy" src="/assets/images/nano-banana/industry-diesel.png" alt="Cummins" onerror="this.src='/assets/images/nano-banana/1486262715619-67b85e0b08d3.jpg'" />
+                    <div class="portfolio-item-info">
+                        <div class="portfolio-cat">Power Systems</div>
+                        <h4>Cummins Engine Installation</h4>
+                    </div>
+                </div>
+                <div class="portfolio-item reveal" style="transition-delay:0.2s">
+                    <img loading="lazy" src="/assets/images/nano-banana/blog-mechanical-engineering.png" alt="Electric Motors" onerror="this.src='/assets/images/nano-banana/1581091226825-a6a2a5aee158.jpg'" />
+                    <div class="portfolio-item-info">
+                        <div class="portfolio-cat">Electrical</div>
+                        <h4>Electric Motors Supply &amp; Commissioning</h4>
+                    </div>
+                </div>
+                <div class="portfolio-item reveal" style="transition-delay:0.3s">
+                    <img loading="lazy" src="/assets/images/nano-banana/portfolio-conveyor-systems.png" alt="Conveyors" onerror="this.src='/assets/images/nano-banana/1565043589221-1a6fd9ae45c7.jpg'" />
+                    <div class="portfolio-item-info">
+                        <div class="portfolio-cat">Mining &amp; Industry</div>
+                        <h4>Factory Conveyor Systems</h4>
+                    </div>
+                </div>
+                <div class="portfolio-item reveal" style="transition-delay:0.4s">
+                    <img loading="lazy" src="/assets/images/nano-banana/portfolio-sensors.png" alt="Sensors" onerror="this.src='/assets/images/nano-banana/1518770660439-4636190af475.jpg'" />
+                    <div class="portfolio-item-info">
+                        <div class="portfolio-cat">Automation</div>
+                        <h4>Intelligent Sensors for Real-time Monitoring</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="brand-wall">
+        <div class="container">
+            <div class="label reveal" style="justify-content:center;">Trusted Brands</div>
+            <div class="brand-wall-track">
+                <img src="https://cdn.simpleicons.org/skf/888888" alt="SKF" width="72" height="28" />
+                <img src="https://cdn.simpleicons.org/siemens/888888" alt="Siemens" width="72" height="28" />
+                <img src="https://cdn.simpleicons.org/abb/888888" alt="ABB" width="72" height="28" />
+                <img src="https://cdn.simpleicons.org/cummins/888888" alt="Cummins" width="72" height="28" />
+                <img src="https://cdn.simpleicons.org/timken/888888" alt="Timken" width="72" height="28" />
+                <img src="https://cdn.simpleicons.org/donaldson/888888" alt="Donaldson" width="72" height="28" />
+                <img src="https://cdn.simpleicons.org/parker/888888" alt="Parker" width="72" height="28" />
+                <img src="https://cdn.simpleicons.org/gates/888888" alt="Gates" width="72" height="28" />
+                <img src="https://cdn.simpleicons.org/bosch/888888" alt="Bosch" width="72" height="28" />
+                <img src="https://cdn.simpleicons.org/schneiderelectric/888888" alt="Schneider Electric" width="72" height="28" />
+                <img src="https://cdn.simpleicons.org/generalelectric/888888" alt="GE" width="72" height="28" />
+                <img src="https://cdn.simpleicons.org/caterpillar/888888" alt="Caterpillar" width="72" height="28" />
+            </div>
+        </div>
+    </div>
 
     <div class="cta-band">
         <div class="container">
